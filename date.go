@@ -38,7 +38,7 @@ func StringToDate(date string) Date {
 		}
 	} else {
 		t, er := time.Parse("2006-01-02T15:04:05.000Z", date)
-		HandleError(er)
+		HandleError("MantisDateNoMatch", er)
 		dateReturn = Date{
 			Year:       string(t.Year()),
 			Month:      string(t.Month()),
@@ -50,7 +50,6 @@ func StringToDate(date string) Date {
 		}
 	}
 
-	//fmt.Println(dateReturn)
 	return dateReturn
 }
 
@@ -61,6 +60,5 @@ func (d *Date) DateToString() string {
 	}
 
 	dateString := d.Year + "-" + d.Month + "-" + d.Day + " " + d.Hour + ":" + d.Hour + ":" + d.Minute
-
 	return dateString
 }
