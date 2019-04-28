@@ -16,7 +16,7 @@ type Date struct {
 	Nanosecond string `json:"nanosecond"`
 }
 
-// Takes a date string and returns a Date struct
+// Takes a date string YYYY-MM-DD HH:MM:SS and returns a Date struct
 func StringToDate(date string) Date {
 	var dateReturn Date
 
