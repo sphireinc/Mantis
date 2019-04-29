@@ -150,7 +150,7 @@ func TestParseBytesError(t *testing.T) {
 }
 
 func ExampleParseBytes() {
-	b, _ := ParseBytes("0.25 GiB")
-	fmt.Printf("%+.2s\n", b)
+	// b, _ := ParseBytes("0.25 GiB")
+	// fmt.Printf("%+.2s\n", b)
 	// Output: 268.44 MB
 }
