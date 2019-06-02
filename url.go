@@ -24,8 +24,8 @@ func GetQueryParameterFirst(r *http.Request, key string) string {
 func GetUrlParameter(r *http.Request, key string) string {
 	value := r.URL.Query().Get(":" + key)
 	if value == "" {
-		value := mux.Vars(r)
-		category := value[key]
+		vars := mux.Vars(r)
+		value = vars[key]
 	}
 	return value
 }
