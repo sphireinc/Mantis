@@ -3,6 +3,7 @@ package mantis
 import (
 	"errors"
 	"net/http"
+	"github.com/gorilla/mux"
 )
 
 // GetQueryParameter Fetch a URL query parameter based on a key and return a string array
@@ -22,5 +23,9 @@ func GetQueryParameterFirst(r *http.Request, key string) string {
 // GetUrlParameter Returns a dynamic url based parameter based on the key (ie /some/url/:parameter - key = 'parameter')
 func GetUrlParameter(r *http.Request, key string) string {
 	value := r.URL.Query().Get(":" + key)
+	if !value {
+		value := mux.Vars(r)
+		category := value[key]
+	}
 	return value
 }
