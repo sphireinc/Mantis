@@ -1,64 +1,80 @@
 package mantis
 
 import (
-	"regexp"
+	"fmt"
 	"time"
 )
 
 // Date struct
 type Date struct {
-	Year   string `json:"year"`
-	Month  string `json:"month"`
-	Day    string `json:"day"`
-	Hour   string `json:"hour"`
-	Minute string `json:"minute"`
-	Second string `json:"second"`
-	// Nanosecond string `json:"nanosecond"`
+	Year       int          `json:"year"`
+	Month      time.Month   `json:"month"`
+	Day        int          `json:"day"`
+	Hour       int          `json:"hour"`
+	Minute     int          `json:"minute"`
+	Second     int          `json:"second"`
+	Nanosecond int          `json:"nanosecond"`
+	Unix       int64        `json:"unix"`
+	WeekDay    time.Weekday `json:"week_day"`
+	YearDay    int          `json:"year_day"`
+}
+
+// CurrentTime Returns a the current date
+func CurrentTime() Date {
+	current := time.Now()
+
+	return Date{
+		Year:       current.Year(),
+		Month:      current.Month(),
+		Day:        current.Day(),
+		Hour:       current.Hour(),
+		Nanosecond: current.Nanosecond(),
+		Second:     current.Second(),
+		Minute:     current.Minute(),
+		Unix:       current.Unix(),
+		YearDay:    current.YearDay(),
+		WeekDay:    current.Weekday(),
+	}
 }
 
 // Takes a date string YYYY-MM-DD HH:MM:SS and returns a Date struct
 func StringToDate(date string) Date {
-	var dateReturn Date
-
 	if date == "" {
 		return Date{}
 	}
 
-	pattern := `(\d\d\d\d)-(\d\d)-(\d\d)\s(\d\d)\:(\d\d):(\d\d)`
-	if matched, err := regexp.MatchString(pattern, date); err == nil && matched == true {
-		// We have a 0000-00-00 00:00:00 format date
-		dateReturn = Date{
-			Year:   string([]rune(date)[0:4]),
-			Month:  string([]rune(date)[5:7]),
-			Day:    string([]rune(date)[8:10]),
-			Hour:   string([]rune(date)[11:13]),
-			Minute: string([]rune(date)[14:16]),
-			Second: string([]rune(date)[17:19]),
-			// Nanosecond: string([]rune(date)[20:23]),
-		}
-	} else {
-		t, er := time.Parse("2006-01-02T15:04:05.000Z", date)
-		HandleError("MantisDateNoMatch", er)
-		dateReturn = Date{
-			Year:   string(t.Year()),
-			Month:  string(t.Month()),
-			Day:    string(t.Day()),
-			Hour:   string(t.Hour()),
-			Minute: string(t.Minute()),
-			Second: string(t.Second()),
-			// Nanosecond: string(t.Nanosecond()),
-		}
-	}
+	t, err := time.Parse("2006-01-02T15:04:05.000Z", date)
+	HandleError("Error in StringToDate time.Parse", err)
 
-	return dateReturn
+	return Date{
+		Year:   t.Year(),
+		Month:  t.Month(),
+		Day:    t.Day(),
+		Hour:   t.Hour(),
+		Minute: t.Minute(),
+		Second: t.Second(),
+	}
 }
 
-// Takes a Date struct and returns a string
+// DateToString Takes a Date struct and returns a string in format YYYY-MM-DD HH:II:SS
 func (d *Date) DateToString() string {
-	if d.Year == "" {
-		return ""
-	}
+	hour := itos(d.Hour)
+	minute := itos(d.Minute)
+	second := itos(d.Second)
+	day := itos(d.Day)
+	month := itos(int(d.Month))
+	year := itos(d.Year)
+	return fmt.Sprintf("%s-%s-%s %s:%s:%s", year, month, day, hour, minute, second)
+}
 
-	dateString := d.Year + "-" + d.Month + "-" + d.Day + " " + d.Hour + ":" + d.Minute + ":" + d.Second
-	return dateString
+// itos Converts an int to a string, prepends zero if less than 10
+func itos(intVal int) string {
+	if intVal == 0 {
+		return "0"
+	}
+	intValStr := string(intVal)
+	if intVal < 10 {
+		return "0" + intValStr
+	}
+	return intValStr
 }
