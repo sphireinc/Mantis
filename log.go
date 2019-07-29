@@ -15,27 +15,23 @@ type Log struct {
 
 // NewLog Setup our log
 func (L *Log) NewLog(filename string) {
-	if len(filename) == 0 {
-		appName := os.Getenv("APP_NAME") + ".log"
-		if len(appName) == 0 {
-			appName = "go_lang_app.log"
-		}
-		ex, err := os.Executable()
-		HandleError("NewLog get Executable", err)
-		filename = filepath.Dir(ex) + appName
-	}
-
-	logFile, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0664)
-	HandleFatalError(err)
-	L.Logger = log.New(logFile, "", log.LstdFlags)
-	L.Write("Log successfully initiated")
 	L.Filename = filename
+	if len(L.Filename) == 0 {
+		ex, err := os.Executable()
+		HandleError("NewLogGetExecutable", err)
+		L.Filename = filepath.Dir(ex) + string(os.PathSeparator) + "app.log"
+	}
+	logFile, err := os.OpenFile(L.Filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
+	HandleFatalError(err)
+	L.Logger = log.New(logFile, "", log.Ldate)
+	L.Write("Log successfully initiated")
 }
 
 // Write Write a message to log and prepend time
 func (L *Log) Write(msg string) {
-	date := CurrentTime()
-	L.Logger.Println(fmt.Sprintf("%s # Log := %s", date.DateToString(), msg))
+	logMessage := fmt.Sprintf("%s", msg)
+	fmt.Println(logMessage)
+	L.Logger.Println(logMessage)
 }
 
 // LogHTTPRequest
