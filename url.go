@@ -9,7 +9,6 @@ import (
 func GetQueryParameter(r *http.Request, key string) []string {
 	value, ok := r.URL.Query()[key]
 	if !ok || len(value) < 1 {
-		// HandleError("GetQueryParameter", errors.New("GetQueryParameter Failed to find key: "+key))
 		return nil
 	}
 	return value
