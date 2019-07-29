@@ -2,7 +2,7 @@ package mantis
 
 import (
 	"errors"
-	"github.com/gorilla/mux"
+	"github.com/gorilla/mux" // TODO: Still relies on GMux for vars - need to find alternative
 	"net/http"
 )
 
