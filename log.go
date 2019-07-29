@@ -3,6 +3,7 @@ package mantis
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"path/filepath"
 )
@@ -33,4 +34,16 @@ func (L *Log) NewLog(filename string) {
 func (L *Log) Write(msg string) {
 	date := CurrentTime()
 	L.Logger.Println(fmt.Sprintf("%s # Log := %s", date.DateToString(), msg))
+}
+
+func (L *Log) LogHandlerFunc() func(http.Handler) http.Handler {
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			defer func() {
+				requestID := w.Header().Get("X-Request-Id")
+				L.Write(fmt.Sprintf("%s %s %s %s %s", requestID, r.Method, r.URL.Path, r.RemoteAddr, r.UserAgent()))
+			}()
+			next.ServeHTTP(w, r)
+		})
+	}
 }
