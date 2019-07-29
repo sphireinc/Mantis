@@ -13,6 +13,7 @@ type Log struct {
 	Filename string
 }
 
+// NewLog Setup our log
 func (L *Log) NewLog(filename string) {
 	if len(filename) == 0 {
 		appName := os.Getenv("APP_NAME") + ".log"
@@ -31,11 +32,13 @@ func (L *Log) NewLog(filename string) {
 	L.Filename = filename
 }
 
+// Write Write a message to log and prepend time
 func (L *Log) Write(msg string) {
 	date := CurrentTime()
 	L.Logger.Println(fmt.Sprintf("%s # Log := %s", date.DateToString(), msg))
 }
 
+// LogHandlerFunc
 func (L *Log) LogHandlerFunc() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
