@@ -23,7 +23,7 @@ func GetQueryParameterFirst(r *http.Request, key string) string {
 
 // GetUrlParameter Returns a dynamic url based parameter based on the key (ie /some/url/:parameter - key = 'parameter')
 func GetUrlParameter(r *http.Request, key string) string {
-	value := r.URL.Query().Get(":" + key)
+	value := r.URL.Query().Get(key)
 	if value == "" {
 		vars := mux.Vars(r)
 		value = vars[key]
