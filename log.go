@@ -23,7 +23,7 @@ func (L *Log) NewLog(filename string) {
 	}
 	logFile, err := os.OpenFile(L.Filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
 	HandleFatalError(err)
-	L.Logger = log.New(logFile, "", log.Ldate)
+	L.Logger = log.New(logFile, "", log.LstdFlags)
 	L.Write("Log successfully initiated")
 }
 
