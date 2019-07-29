@@ -2,7 +2,6 @@ package mantis
 
 import (
 	"fmt"
-	"os"
 )
 
 var logger Log
@@ -24,6 +23,5 @@ func HandleFatalError(err error) {
 	if err != nil {
 		logger.Write(fmt.Sprintf("Fatal panic => %s", err.Error()))
 		panic(err)
-		os.Exit(1)
 	}
 }

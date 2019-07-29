@@ -1,7 +1,6 @@
 package mantis
 
 import (
-	"errors"
 	"github.com/gorilla/mux" // TODO: Still relies on GMux for vars - need to find alternative
 	"net/http"
 )
@@ -10,7 +9,7 @@ import (
 func GetQueryParameter(r *http.Request, key string) []string {
 	value, ok := r.URL.Query()[key]
 	if !ok || len(value) < 1 {
-		HandleError("GetQueryParameter ", errors.New("GetQueryParameter Failed to find key: "+key))
+		// HandleError("GetQueryParameter ", errors.New("GetQueryParameter Failed to find key: "+key))
 		return nil
 	}
 	return value
