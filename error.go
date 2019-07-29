@@ -1,5 +1,7 @@
 package mantis
 
+import "fmt"
+
 var logger Log
 
 // SetErrorLog Sets the logger interface to utilize to log
