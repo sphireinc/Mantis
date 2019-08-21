@@ -11,6 +11,7 @@ import (
 type Log struct {
 	Logger   *log.Logger
 	Filename string
+	Status   bool
 }
 
 // NewLog Setup our log
@@ -29,13 +30,17 @@ func (L *Log) NewLog(filename string) {
 
 // Write Write a message to log and prepend time
 func (L *Log) Write(msg string) {
-	logMessage := fmt.Sprintf("%s", msg)
-	fmt.Println(logMessage)
-	L.Logger.Println(logMessage)
+	if L.Status {
+		logMessage := fmt.Sprintf("%s", msg)
+		fmt.Println(logMessage)
+		L.Logger.Println(logMessage)
+	}
 }
 
 // LogHTTPRequest
 func (L *Log) LogHTTPRequest(name string, w http.ResponseWriter, r *http.Request) {
-	requestID := w.Header().Get("X-Request-Id")
-	L.Write(fmt.Sprintf("%s %s %s %s %s %s", name, r.Method, r.URL, requestID, r.RemoteAddr, r.UserAgent()))
+	if L.Status {
+		requestID := w.Header().Get("X-Request-Id")
+		L.Write(fmt.Sprintf("%s %s %s %s %s %s", name, r.Method, r.URL, requestID, r.RemoteAddr, r.UserAgent()))
+	}
 }
