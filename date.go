@@ -58,13 +58,7 @@ func StringToDate(date string) Date {
 
 // DateToString Takes a Date struct and returns a string in format YYYY-MM-DD HH:II:SS
 func (d *Date) DateToString() string {
-	hour := itos(d.Hour)
-	minute := itos(d.Minute)
-	second := itos(d.Second)
-	day := itos(d.Day)
-	month := itos(int(d.Month))
-	year := itos(d.Year)
-	return fmt.Sprintf("%s-%s-%s %s:%s:%s", year, month, day, hour, minute, second)
+	return fmt.Sprintf("%s-%s-%s %s:%s:%s", itos(d.Year), itos(int(d.Month)), itos(d.Day), itos(d.Hour), itos(d.Minute), itos(d.Second))
 }
 
 // itos Converts an int to a string, prepends zero if less than 10

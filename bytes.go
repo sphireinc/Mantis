@@ -39,13 +39,13 @@ const (
 	// KiB Kibibyte (NIST) - 1024 bytes
 	KiB BytesUnit = 1024
 	// MiB Mebibyte (NIST) - 2^20 bytes
-	MiB BytesUnit = 1024 * KiB
+	MiB = 1024 * KiB
 	// GiB Gibibyte (NIST) - 2^30 bytes
-	GiB BytesUnit = 1024 * MiB
+	GiB = 1024 * MiB
 	// TiB Tebibyte (NIST) - 2^40 bytes
-	TiB BytesUnit = 1024 * GiB
+	TiB = 1024 * GiB
 	// PiB Pebibyte (NIST) - 2^50 bytes
-	PiB BytesUnit = 1024 * TiB
+	PiB = 1024 * TiB
 )
 
 var strToByteUnit = map[string]BytesUnit{
@@ -119,12 +119,12 @@ type Bytes int64
 func (b Bytes) Format(s fmt.State, verb rune) {
 	switch verb {
 	case 'd':
-		fmt.Fprintf(s, "%d B", int64(b))
+		_, _ = fmt.Fprintf(s, "%d B", int64(b))
 	case 's':
 		fallthrough
 	case 'v':
 		if b < 0 {
-			s.Write([]byte{'-'})
+			_, _ = s.Write([]byte{'-'})
 			b = b * -1
 		}
 		thresholds := bytesUnitThresholds
@@ -136,9 +136,9 @@ func (b Bytes) Format(s fmt.State, verb rune) {
 				f := t.unit.Convert(b)
 				if prec, ok := s.Precision(); ok {
 					format := fmt.Sprintf("%%.%df %%s", prec)
-					fmt.Fprintf(s, format, f, t.unit)
+					_, _ = fmt.Fprintf(s, format, f, t.unit)
 				} else {
-					fmt.Fprintf(s, "%s %s", strconv.FormatFloat(f, 'f', -1, 64), t.unit)
+					_, _ = fmt.Fprintf(s, "%s %s", strconv.FormatFloat(f, 'f', -1, 64), t.unit)
 				}
 				return
 			}
