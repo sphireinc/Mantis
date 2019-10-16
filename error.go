@@ -33,9 +33,12 @@ func HandleFatalError(err error) {
 }
 
 // JSONMarshalError takes an error and JSON Marshals it
-func JSONMarshalError(err error) []byte {
-	output, _ := json.Marshal(err)
-	return output
+func JSONMarshalError(err error) string {
+	type E struct {
+		Error string `json:"error"`
+	}
+	output, _ := json.Marshal(&E{Error:err.Error()})
+	return string(output)
 }
 
 // GetHTTPErrorCodeMessage returns the description of a numeric HTTP code

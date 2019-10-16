@@ -134,8 +134,6 @@ func TestGenerateV1(t *testing.T) {
 		}
 		//t0 := u0.Time()
 		//t1 := u1.Time()
-		//t.Logf("u0:   %s - %v", u0, t0)
-		//t.Logf("u1:   %s - %v", u1, t1)
 		//if t1.Before(t0) {
 		//	t.Errorf("time went backwards '%s' < '%s", t1, t0)
 		//}

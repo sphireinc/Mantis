@@ -2,6 +2,7 @@ package mantis
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -37,36 +38,40 @@ func CurrentTime() Date {
 	}
 }
 
-// Takes a date string YYYY-MM-DD HH:MM:SS and returns a Date struct
+// StringToDate takes a date string YYYY-MM-DD HH:MM:SS and returns a Date struct
 func StringToDate(date string) Date {
 	if date == "" {
 		return Date{}
 	}
 
-	t, err := time.Parse("2006-01-02T15:04:05.000Z", date)
+	current, err := time.Parse("2006-01-02 15:04:05", date)
 	HandleError("Error in StringToDate time.Parse", err)
 
 	return Date{
-		Year:   t.Year(),
-		Month:  t.Month(),
-		Day:    t.Day(),
-		Hour:   t.Hour(),
-		Minute: t.Minute(),
-		Second: t.Second(),
+		Year:       current.Year(),
+		Month:      current.Month(),
+		Day:        current.Day(),
+		Hour:       current.Hour(),
+		Nanosecond: current.Nanosecond(),
+		Second:     current.Second(),
+		Minute:     current.Minute(),
+		Unix:       current.Unix(),
+		YearDay:    current.YearDay(),
+		WeekDay:    current.Weekday(),
 	}
 }
 
-// DateToString Takes a Date struct and returns a string in format YYYY-MM-DD HH:II:SS
+// DateToString takes a Date struct and returns a string in format YYYY-MM-DD HH:II:SS
 func (d *Date) DateToString() string {
 	return fmt.Sprintf("%s-%s-%s %s:%s:%s", itos(d.Year), itos(int(d.Month)), itos(d.Day), itos(d.Hour), itos(d.Minute), itos(d.Second))
 }
 
-// itos Converts an int to a string, prepends zero if less than 10
+// itos converts an int to a string, prepends zero if less than 10
 func itos(intVal int) string {
 	if intVal == 0 {
-		return "0"
+		return "00"
 	}
-	intValStr := string(intVal)
+	intValStr := strconv.Itoa(intVal)
 	if intVal < 10 {
 		return "0" + intValStr
 	}
