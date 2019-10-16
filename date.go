@@ -20,7 +20,7 @@ type Date struct {
 	YearDay    int          `json:"year_day"`
 }
 
-// CurrentTime Returns a the current date
+// CurrentTime is a Date factory
 func CurrentTime() Date {
 	current := time.Now()
 
