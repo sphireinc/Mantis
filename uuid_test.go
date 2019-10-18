@@ -197,7 +197,7 @@ func TestGenerateV4(t *testing.T) {
 		if v := u.Variant(); v != VariantRFC4122 {
 			t.Errorf("incorrect variant '%d'. expected '%d'", v, VariantRFC4122)
 		}
-		t.Log(u)
+		//t.Log(u)
 	}
 }
 
