@@ -6,7 +6,7 @@ import (
 )
 
 type httpErrorCode struct {
-	code int16
+	code        int16
 	description string
 }
 
@@ -32,18 +32,24 @@ func HandleFatalError(err error) {
 	}
 }
 
+// JSONMarshalAndLogError logs and error then JSON Marshals it
+func JSONMarshalAndLogError(message string, err error) string {
+	HandleError(message, err)
+	return JSONMarshalError(err)
+}
+
 // JSONMarshalError takes an error and JSON Marshals it
 func JSONMarshalError(err error) string {
 	type E struct {
 		Error string `json:"error"`
 	}
-	output, _ := json.Marshal(&E{Error:err.Error()})
+	output, _ := json.Marshal(&E{Error: err.Error()})
 	return string(output)
 }
 
 // GetHTTPErrorCodeMessage returns the description of a numeric HTTP code
 func GetHTTPErrorCodeMessage(code int16) string {
-	codes := map[int16]httpErrorCode {
+	codes := map[int16]httpErrorCode{
 		100: {100, "Continue"},
 		101: {101, "Switching Protocols"},
 		102: {102, "Processing"},
