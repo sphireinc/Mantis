@@ -2,8 +2,16 @@ package mantis
 
 import (
 	"github.com/gorilla/mux" // TODO: Still relies on GMux for vars - need to find alternative
+	"io/ioutil"
 	"net/http"
 )
+
+// GetBody returns the body from the http request
+func GetBody(r *http.Request)[]byte {
+	body, err := ioutil.ReadAll(r.Body)
+	HandleError("Error reading body: %v", err)
+	return body
+}
 
 // GetQueryParameter fetches a URL query parameter based on a key and return a string array
 func GetQueryParameter(r *http.Request, key string) []string {
