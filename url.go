@@ -7,7 +7,7 @@ import (
 )
 
 // GetBody returns the body from the http request
-func GetBody(r *http.Request)[]byte {
+func GetBody(r *http.Request) []byte {
 	body, err := ioutil.ReadAll(r.Body)
 	HandleError("Error reading body: %v", err)
 	return body
