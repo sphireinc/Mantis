@@ -1,10 +1,17 @@
 package mantis
 
 import (
-	"github.com/gorilla/mux" // TODO: Still relies on GMux for vars - need to find alternative
+	"encoding/json"
+	"github.com/gorilla/mux"
 	"io/ioutil"
 	"net/http"
 )
+
+// ParseBodyIntoStruct takes the body from an HTTP request and parses it into a JSON friendly struct
+func ParseBodyIntoStruct(r *http.Request, obj interface{}) (interface{}, error){
+	err := json.NewDecoder(r.Body).Decode(&obj)
+	return obj, err
+}
 
 // GetBody returns the body from the http request
 func GetBody(r *http.Request) []byte {
