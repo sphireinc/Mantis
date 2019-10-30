@@ -8,7 +8,7 @@ import (
 )
 
 // ParseBodyIntoStruct takes the body from an HTTP request and parses it into a JSON friendly struct
-func ParseBodyIntoStruct(r *http.Request, obj interface{}) (interface{}, error){
+func ParseBodyIntoStruct(r *http.Request, obj interface{}) (interface{}, error) {
 	err := json.NewDecoder(r.Body).Decode(&obj)
 	return obj, err
 }
