@@ -1,1 +1,3 @@
-# mantis
+# Sphire Mantis
+
+Common library
