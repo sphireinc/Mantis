@@ -8,9 +8,10 @@ import (
 )
 
 // ParseBodyIntoStruct takes the body from an HTTP request and parses it into a JSON friendly struct
-func ParseBodyIntoStruct(r *http.Request, obj interface{}) (interface{}, error) {
-	err := json.NewDecoder(r.Body).Decode(&obj)
-	return obj, err
+//     var s someStruct
+//     mantis.ParseBodyIntoStruct(r, &s)
+func ParseBodyIntoStruct(r *http.Request, obj interface{}) error {
+	return json.NewDecoder(r.Body).Decode(obj)
 }
 
 // GetBody returns the body from the http request
