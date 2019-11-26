@@ -100,7 +100,7 @@ func TestGetQueryParameters(t *testing.T) {
 		actual   url.Values
 		expected url.Values
 	}{
-		{GetQueryParameters(val), t1 },
+		{GetQueryParameters(val), t1},
 	}
 
 	for i, test := range tests {
@@ -124,7 +124,7 @@ func TestParseUrl(t *testing.T) {
 		RawQuery:   "",
 		Fragment:   "",
 	}
-	
+
 	t2 := url.URL{
 		Scheme:     "https",
 		Opaque:     "",
