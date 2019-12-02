@@ -153,7 +153,7 @@ func TestParseUrl(t *testing.T) {
 	}
 
 	tests := []struct {
-		actual *url.URL
+		actual   *url.URL
 		expected *url.URL
 	}{
 		{firstTest, &t1},
