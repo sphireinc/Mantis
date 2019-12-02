@@ -61,7 +61,11 @@ func TestParseBodyIntoStruct(t *testing.T) {
 
 func TestGetBody(t *testing.T) {
 	val := getRequestHelper(true)
-	body := GetBody(val)
+	body, err := GetBody(val)
+
+	if err != nil {
+		t.Fatalf("Expected error to be nil, received error: %s", err.Error())
+	}
 
 	if bytes.Compare(body, readerString) == 1 {
 		t.Fatalf("expected '%s', got '%s'", string(body), string(readerString))
@@ -137,12 +141,23 @@ func TestParseUrl(t *testing.T) {
 		Fragment:   "",
 	}
 
+	firstTest, err1 := ParseUrl("")
+	secondTest, err2 := ParseUrl("https://google.com/maps?v=1")
+
+	if err1 != nil {
+		t.Fatalf("Expected error to be nil, received error: %s", err1.Error())
+	}
+
+	if err2 != nil {
+		t.Fatalf("Expected error to be nil, received error: %s", err2.Error())
+	}
+
 	tests := []struct {
-		actual   *url.URL
+		actual *url.URL
 		expected *url.URL
 	}{
-		{ParseUrl(""), &t1},
-		{ParseUrl("https://google.com/maps?v=1"), &t2},
+		{firstTest, &t1},
+		{secondTest, &t2},
 	}
 
 	for i, test := range tests {

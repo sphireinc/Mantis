@@ -9,17 +9,22 @@ import (
 )
 
 // ParseBodyIntoStruct takes the body from an HTTP request and parses it into a JSON friendly struct
-//     var s someStruct
-//     mantis.ParseBodyIntoStruct(r, &s)
+// Usage:
+//      var s someStruct
+//      mantis.ParseBodyIntoStruct(r, &s)
 func ParseBodyIntoStruct(r *http.Request, obj interface{}) error {
 	return json.NewDecoder(r.Body).Decode(obj)
 }
 
 // GetBody returns the body from the http request
-func GetBody(r *http.Request) []byte {
+func GetBody(r *http.Request) ([]byte, error) {
 	body, err := ioutil.ReadAll(r.Body)
-	HandleError("Error reading body: %v", err)
-	return body
+
+	if err != nil {
+		HandleError("Error reading body: %v", err)
+		return nil, err
+	}
+	return body, nil
 }
 
 // GetQueryParameter fetches a URL query parameter based on a key and return a string array
@@ -37,10 +42,11 @@ func GetQueryParameters(r *http.Request) url.Values {
 }
 
 // ParseUrl returns a *url.URL from a given URL string
-func ParseUrl(rawurl string) *url.URL {
+func ParseUrl(rawurl string) (*url.URL, error) {
 	u, err := url.Parse(rawurl)
 	if err != nil {
 		log.Fatalf("unable to parse url %s: %s", rawurl, err)
+		return nil, err
 	}
-	return u
+	return u, nil
 }
