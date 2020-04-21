@@ -9,10 +9,10 @@ import (
 )
 
 // IsTrue determines if a string is boolean true/false
-func IsTrue(s string) bool {
-	b, err := strconv.ParseBool(strings.ToLower(s))
+func IsTrue(str string) bool {
+	converted, err := strconv.ParseBool(strings.ToLower(str))
 	if err == nil {
-		return b
+		return converted
 	}
 	return false
 }
