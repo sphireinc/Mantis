@@ -33,7 +33,7 @@ func TestIsTrue(t *testing.T) {
 	}
 }
 
-func TestJsonQuery(t *testing.T){
+func TestJsonQuery(t *testing.T) {
 	tests := []struct {
 		actual   string
 		expected string
@@ -50,7 +50,7 @@ func TestJsonQuery(t *testing.T){
 	}
 }
 
-func TestExists(t *testing.T){
+func TestExists(t *testing.T) {
 	dir, err := ioutil.TempDir("", "tmp")
 	if err != nil {
 		t.Fatalf(err.Error())
@@ -69,7 +69,7 @@ func TestExists(t *testing.T){
 	}
 }
 
-func TestContains(t *testing.T){
+func TestContains(t *testing.T) {
 	testData := make(map[string]string)
 	testData["k1"] = "v1"
 	testData["k2"] = "v2"

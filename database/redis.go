@@ -7,15 +7,15 @@ import (
 )
 
 type Redis struct {
-	Client    *redis.Pool
-	Conn      redis.Conn
-	Addr      string
-	Password  string
-	DB        int
-	Network   string // typically tcp
-	MaxIdle   int    // Maximum number of idle connections in the pool
-	MaxActive int    // max number of connections
-	IsConnected bool // Did we achieve a connection?
+	Client      *redis.Pool
+	Conn        redis.Conn
+	Addr        string
+	Password    string
+	DB          int
+	Network     string // typically tcp
+	MaxIdle     int    // Maximum number of idle connections in the pool
+	MaxActive   int    // max number of connections
+	IsConnected bool   // Did we achieve a connection?
 }
 
 // Connect
