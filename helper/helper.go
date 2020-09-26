@@ -28,3 +28,19 @@ func StrConvAtoiWithDefault(intAsString string, defaultValue int) int {
 	}
 	return intFromStr
 }
+
+// StringWithDefault
+func StringWithDefault(givenValue string, defaultValue string) string {
+	if givenValue == "" {
+		return defaultValue
+	}
+	return givenValue
+}
+
+// IntWithDefault
+func IntWithDefault(givenValue int, defaultValue int) int {
+	if givenValue == 0 {
+		return defaultValue
+	}
+	return givenValue
+}

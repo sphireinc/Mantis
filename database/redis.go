@@ -1,47 +1,28 @@
 package database
 
 import (
+	"context"
 	"errors"
-	"github.com/gomodule/redigo/redis"
+	"github.com/go-redis/redis/v8"
 	mantisError "github.com/sphireco/mantis/error"
+	"time"
 )
 
 type Redis struct {
-	Client      *redis.Pool
-	Conn        redis.Conn
-	Addr        string
-	Password    string
-	DB          int
-	Network     string // typically tcp
-	MaxIdle     int    // Maximum number of idle connections in the pool
-	MaxActive   int    // max number of connections
-	IsConnected bool   // Did we achieve a connection?
+	client      *redis.Client
+	context     context.Context
+	Options     *redis.Options
+	IsConnected bool
 }
 
-// Connect
-func (r *Redis) Connect() error {
-	if len(r.Addr) <= 0 || len(r.Network) <= 0 {
-		return errors.New("no valid configuration")
-	}
-
-	r.Client = &redis.Pool{
-		MaxIdle:   r.MaxIdle,
-		MaxActive: r.MaxActive,
-		Dial: func() (redis.Conn, error) {
-			return redis.Dial(r.Network, r.Addr)
-		},
-	}
-
-	r.Conn = r.Client.Get()
-
-	defer func() {
-		if err := r.Conn.Close(); err != nil {
-			mantisError.HandleError("error closing Redis connection", err)
-		}
-	}()
+// Init
+func (r *Redis) Init() error {
+	r.context = context.Background()
+	r.client = redis.NewClient(r.Options)
 
 	if r.CheckIfConnected() == true {
 		mantisError.HandleError("unable to connect to Redis", errors.New("ping failed"))
+		return errors.New("unable to connect to Redis")
 	}
 
 	return nil
@@ -49,39 +30,32 @@ func (r *Redis) Connect() error {
 
 // CheckIfConnected Checks our connection status to our Redis DB
 func (r *Redis) CheckIfConnected() bool {
-	r.IsConnected = ping(r.Conn)
+	if pong, err := r.client.Ping(r.context).Result(); err != nil && pong == "PONG" {
+		r.IsConnected = true
+	}
 	return r.IsConnected
-}
-
-// ping returns true if we are connected
-func ping(c redis.Conn) bool {
-	pong, err := c.Do("PING")
-	if err != nil {
-		return false
-	}
-
-	if s, err := redis.String(pong, err); err != nil || s != "PONG" {
-		return false
-	}
-
-	return true
 }
 
 // Get a key value pair from our Redis DB
 func (r *Redis) Get(key string) (string, error) {
-	value, err := redis.String(r.Conn.Do("GET", key))
+	value, err := r.client.Get(r.context, key).Result()
 
-	if err == redis.ErrNil || err != nil {
-		return "", errors.New("key does not exist or otherwise not found")
+	if err == redis.Nil {
+		return "", errors.New("key does not exist")
+	}
+
+	if err != nil {
+		return "", errors.New("err not nil attempting to Get key from Redis")
 	}
 
 	return value, nil
 }
 
 // Set a key value pair in our Redis DB
-func (r *Redis) Set(key string, value string) error {
-	if _, err := r.Conn.Do("SET", key, value); err != nil {
-		return err
-	}
-	return nil
+func (r *Redis) Set(key string, value string, expiration time.Duration) error {
+	return r.client.Set(r.context, key, value, expiration).Err()
+}
+
+func (r *Redis) GetRawConnectionAndContext() (*redis.Client, context.Context) {
+	return r.client, r.context
 }

@@ -47,11 +47,11 @@ func TestStrConvParseBoolHideError(t *testing.T) {
 
 func TestStrConvAtoiWithDefault(t *testing.T) {
 	tests := []struct {
-		given    string
-		defaultGiven int
-		expected int
+		given      string
+		defaultVal int
+		expected   int
 	}{
-		{"123",  15,123},
+		{"123", 15, 123},
 		{"65432", 15, 65432},
 		{"-65432", 15, -65432},
 		{"definitelyNotANumber", 25, 25},
@@ -59,7 +59,47 @@ func TestStrConvAtoiWithDefault(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := StrConvAtoiWithDefault(test.given, test.defaultGiven)
+			actual := StrConvAtoiWithDefault(test.given, test.defaultVal)
+			if !reflect.DeepEqual(actual, test.expected) {
+				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
+			}
+		})
+	}
+}
+
+func TestStringWithDefault(t *testing.T) {
+	tests := []struct {
+		given      string
+		defaultVal string
+		expected   string
+	}{
+		{"someStr", "aStr", "someStr"},
+		{"", "aStr", "aStr"},
+	}
+
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			actual := StringWithDefault(test.given, test.defaultVal)
+			if !reflect.DeepEqual(actual, test.expected) {
+				t.Fatalf("expected '%s', got '%s'", test.expected, actual)
+			}
+		})
+	}
+}
+
+func TestIntWithDefault(t *testing.T) {
+	tests := []struct {
+		given      int
+		defaultVal int
+		expected   int
+	}{
+		{1, 20, 1},
+		{0, 29, 29},
+	}
+
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			actual := IntWithDefault(test.given, test.defaultVal)
 			if !reflect.DeepEqual(actual, test.expected) {
 				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
 			}
