@@ -6,15 +6,15 @@ import (
 	mantisError "github.com/sphireco/mantis/error"
 )
 
-// Define the query struct
-type Query struct {
+// Define the MySQL struct
+type MySQL struct {
 	Query      string
 	Connection *sql.DB
 	Config     mysql.Config
 }
 
 // Connect to the database
-func (q *Query) Connect() error {
+func (q *MySQL) Connect() error {
 	var err error
 	q.Connection, err = sql.Open("mysql", q.Config.FormatDSN())
 	if err != nil {
@@ -25,13 +25,13 @@ func (q *Query) Connect() error {
 }
 
 // Select for when one result is expected
-func (q *Query) SelectOne(args ...interface{}) *sql.Row {
+func (q *MySQL) SelectOne(args ...interface{}) *sql.Row {
 	row := q.Connection.QueryRow(q.Query, args...)
 	return row
 }
 
 // Select for when more than one result is expected
-func (q *Query) Select(args ...interface{}) (*sql.Rows, error) {
+func (q *MySQL) Select(args ...interface{}) (*sql.Rows, error) {
 	rows, err := q.Connection.Query(q.Query, args...)
 	if err != nil {
 		mantisError.HandleError("Error during select", err)
@@ -41,7 +41,7 @@ func (q *Query) Select(args ...interface{}) (*sql.Rows, error) {
 }
 
 // Insert a query
-func (q *Query) Insert(args ...interface{}) (int64, error) {
+func (q *MySQL) Insert(args ...interface{}) (int64, error) {
 	stmt, err := q.Connection.Prepare(q.Query)
 	if err != nil {
 		mantisError.HandleError("Error preparing insertion query", err)
@@ -63,7 +63,7 @@ func (q *Query) Insert(args ...interface{}) (int64, error) {
 }
 
 // Perform an update
-func (q *Query) Update(args ...interface{}) (int64, error) {
+func (q *MySQL) Update(args ...interface{}) (int64, error) {
 	stmt, err := q.Connection.Prepare(q.Query)
 	if err != nil {
 		mantisError.HandleError("Error preparing update query", err)
@@ -85,7 +85,7 @@ func (q *Query) Update(args ...interface{}) (int64, error) {
 }
 
 // Perform a deletion
-func (q *Query) Delete(args ...interface{}) (int64, error) {
+func (q *MySQL) Delete(args ...interface{}) (int64, error) {
 	stmt, err := q.Connection.Prepare(q.Query)
 	if err != nil {
 		mantisError.HandleError("Error preparing deletion query", err)
