@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"testing"
+	"time"
 )
 
 func TestReverse(t *testing.T) {
@@ -60,6 +61,28 @@ func TestStrConvAtoiWithDefault(t *testing.T) {
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			actual := StrConvAtoiWithDefault(test.given, test.defaultVal)
+			if !reflect.DeepEqual(actual, test.expected) {
+				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
+			}
+		})
+	}
+}
+
+func TestStrConvAtoiWithDefaultTimeDuration(t *testing.T) {
+	tests := []struct {
+		given      string
+		defaultVal int
+		expected   time.Duration
+	}{
+		{"123", 15, time.Duration(123)},
+		{"65432", 15, time.Duration(65432)},
+		{"-65432", 15, time.Duration(-65432)},
+		{"definitelyNotANumber", 25, time.Duration(25)},
+	}
+
+	for i, test := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			actual := StrConvAtoiWithDefaultTimeDuration(test.given, test.defaultVal)
 			if !reflect.DeepEqual(actual, test.expected) {
 				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
 			}

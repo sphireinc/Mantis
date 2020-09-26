@@ -1,6 +1,9 @@
 package helper
 
-import "strconv"
+import (
+	"strconv"
+	"time"
+)
 
 // Reverse a string
 func Reverse(s string) string {
@@ -27,6 +30,15 @@ func StrConvAtoiWithDefault(intAsString string, defaultValue int) int {
 		intFromStr = defaultValue
 	}
 	return intFromStr
+}
+
+// StrConvAtoiWithDefaultTimeDuration same as strconv.Atoi except only returns the value or a default value
+func StrConvAtoiWithDefaultTimeDuration(intAsString string, defaultValue int) time.Duration {
+	intFromStr, intFromStrErr := strconv.Atoi(intAsString)
+	if intFromStrErr != nil {
+		intFromStr = defaultValue
+	}
+	return time.Duration(intFromStr)
 }
 
 // StringWithDefault
