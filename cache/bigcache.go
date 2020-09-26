@@ -10,13 +10,14 @@ type BigCache struct {
 	Config bigcache.Config
 }
 
-func (b *BigCache) Init() (*bigcache.BigCache, error) {
-	cache, err := bigcache.NewBigCache(b.Config)
+func (b *BigCache) Init() error {
+	var err error
+	b.Cache, err = bigcache.NewBigCache(b.Config)
 
 	if err != nil {
 		mantisError.HandleFatalError(err)
-		return nil, err
+		return err
 	}
 
-	return cache, nil
+	return nil
 }
