@@ -3,6 +3,7 @@ module github.com/sphireco/mantis
 go 1.15
 
 require (
+	github.com/allegro/bigcache v1.2.1
 	github.com/elgs/gosplitargs v0.0.0-20161028071935-a491c5eeb3c8 // indirect
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-redis/redis v6.15.9+incompatible // indirect

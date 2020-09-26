@@ -1,4 +1,4 @@
-package memcache
+package cache
 
 import (
 	mantisError "github.com/sphireco/mantis/error"
