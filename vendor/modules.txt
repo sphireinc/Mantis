@@ -43,6 +43,10 @@ github.com/kr/text
 github.com/pmezard/go-difflib/difflib
 # github.com/stretchr/testify v1.6.1
 github.com/stretchr/testify/assert
+# github.com/victorspringer/http-cache v0.0.0-20190721184638-fe78e97af707
+## explicit
+github.com/victorspringer/http-cache
+github.com/victorspringer/http-cache/adapter/memory
 # go.opentelemetry.io/otel v0.11.0
 go.opentelemetry.io/otel
 go.opentelemetry.io/otel/api/correlation
