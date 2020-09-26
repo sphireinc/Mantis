@@ -1,5 +1,7 @@
 # github.com/cespare/xxhash/v2 v2.1.1
 github.com/cespare/xxhash/v2
+# github.com/davecgh/go-spew v1.1.0
+github.com/davecgh/go-spew/spew
 # github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
 github.com/dgryski/go-rendezvous
 # github.com/elgs/gosplitargs v0.0.0-20161028071935-a491c5eeb3c8
@@ -26,9 +28,21 @@ github.com/go-sql-driver/mysql
 ## explicit
 # github.com/gorilla/mux v1.7.3
 ## explicit
+# github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff
+## explicit
+github.com/jmcvetta/randutil
 # github.com/jwilder/gojq v0.0.0-20161018055142-c550732d4a52
 ## explicit
 github.com/jwilder/gojq
+# github.com/kr/pretty v0.2.1
+## explicit
+github.com/kr/pretty
+# github.com/kr/text v0.1.0
+github.com/kr/text
+# github.com/pmezard/go-difflib v1.0.0
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v1.6.1
+github.com/stretchr/testify/assert
 # go.opentelemetry.io/otel v0.11.0
 go.opentelemetry.io/otel
 go.opentelemetry.io/otel/api/correlation
@@ -45,3 +59,11 @@ go.opentelemetry.io/otel/label
 # google.golang.org/appengine v1.6.5
 ## explicit
 google.golang.org/appengine/cloudsql
+# gopkg.in/jmcvetta/napping.v3 v3.2.0
+## explicit
+gopkg.in/jmcvetta/napping.v3
+# gopkg.in/jmcvetta/neoism.v1 v1.3.1
+## explicit
+gopkg.in/jmcvetta/neoism.v1
+# gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c
+gopkg.in/yaml.v3
