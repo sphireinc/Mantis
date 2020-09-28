@@ -7,18 +7,29 @@ import (
 	"time"
 )
 
-type MemCache struct {
-	Client     *cache.Client
-	Algorithm  memory.Algorithm
-	Capacity   int
-	RefreshKey string
+type memCache struct {
+	Client       *cache.Client
+	Algorithm    memory.Algorithm
+	Capacity     int
+	RefreshKey   string
+	memCacheTime time.Duration
 }
 
-// StartCache starts our in-memory LRU cache.
-func (m *MemCache) Init(MemCacheTime time.Duration) error {
+// NewMemCache creates a new MemCache instance
+func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, cacheTime time.Duration) *memCache {
+	return &memCache{
+		Algorithm:  algorithm,
+		Capacity:   capacity,
+		RefreshKey: refreshKey,
+		memCacheTime: cacheTime * time.Minute,
+	}
+}
+
+// StartCache starts our in-memory cache.
+func (m *memCache) Init() error {
 	memoryCache, err := memory.NewAdapter(
-		memory.AdapterWithAlgorithm(memory.LFU),
-		memory.AdapterWithCapacity(10000000),
+		memory.AdapterWithAlgorithm(m.Algorithm),
+		memory.AdapterWithCapacity(m.Capacity),
 	)
 	if err != nil {
 		mantisError.HandleError("Error starting memory cache", err)
@@ -27,8 +38,8 @@ func (m *MemCache) Init(MemCacheTime time.Duration) error {
 
 	m.Client, err = cache.NewClient(
 		cache.ClientWithAdapter(memoryCache),
-		cache.ClientWithTTL(MemCacheTime*time.Minute),
-		cache.ClientWithRefreshKey("opn"),
+		cache.ClientWithTTL(m.memCacheTime),
+		cache.ClientWithRefreshKey(m.RefreshKey),
 	)
 
 	if err != nil {
