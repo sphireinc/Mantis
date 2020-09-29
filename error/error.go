@@ -61,7 +61,7 @@ func GetHTTPErrorCodeMessage(code int16) string {
 		204: {204, "No Content"},
 		205: {205, "Reset Content"},
 		206: {206, "Partial Content"},
-		207: {207, "Multi-Status"},
+		207: {207, "Multi-status"},
 		300: {300, "Multiple Choices"},
 		301: {301, "Moved Permanently"},
 		302: {302, "Moved Temporarily"},
