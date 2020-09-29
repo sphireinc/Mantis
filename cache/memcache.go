@@ -18,9 +18,9 @@ type memCache struct {
 // NewMemCache creates a new MemCache instance
 func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, cacheTime time.Duration) *memCache {
 	return &memCache{
-		Algorithm:  algorithm,
-		Capacity:   capacity,
-		RefreshKey: refreshKey,
+		Algorithm:    algorithm,
+		Capacity:     capacity,
+		RefreshKey:   refreshKey,
 		memCacheTime: cacheTime * time.Minute,
 	}
 }

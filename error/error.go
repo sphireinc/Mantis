@@ -3,6 +3,7 @@ package error
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sphireco/mantis/log"
 )
 
 type httpErrorCode struct {
@@ -10,10 +11,10 @@ type httpErrorCode struct {
 	description string
 }
 
-var logger Log
+var logger log.Log
 
 // SetErrorLog can be used to swap logger instance to use a different Log
-func SetErrorLog(newLogger Log) {
+func SetErrorLog(newLogger log.Log) {
 	logger = newLogger
 }
 

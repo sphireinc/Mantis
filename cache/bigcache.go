@@ -5,20 +5,13 @@ import (
 	mantisError "github.com/sphireco/mantis/error"
 )
 
-type bigCache struct {
+type BigCache struct {
 	Cache  *bigcache.BigCache
 	Config bigcache.Config
 }
 
-// NewBigCache
-func NewBigCache(config bigcache.Config) *bigCache {
-	return &bigCache{
-		Config: config,
-	}
-}
-
 // Init
-func (b *bigCache) Init() error {
+func (b *BigCache) Init() error {
 	var err error
 	b.Cache, err = bigcache.NewBigCache(b.Config)
 

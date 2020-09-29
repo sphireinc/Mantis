@@ -4,12 +4,13 @@ import (
 	"errors"
 	"fmt"
 	validation "github.com/go-ozzo/ozzo-validation"
+	"github.com/sphireco/mantis/log"
 	"testing"
 )
 
 func TestSetErrorLog(t *testing.T) {
 	defer func() {
-		var logger Log
+		var logger log.Log
 		SetErrorLog(logger)
 	}()
 }

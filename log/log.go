@@ -1,7 +1,8 @@
-package error
+package log
 
 import (
 	"fmt"
+	mantisError "github.com/sphireco/mantis/error"
 	"log"
 	"net/http"
 	"os"
@@ -17,13 +18,16 @@ type Log struct {
 // NewLog Setup our log
 func (L *Log) NewLog(filename string) {
 	L.Filename = filename
-	if len(L.Filename) == 0 {
+	if L.Filename == "" {
 		ex, err := os.Executable()
-		HandleError("NewLogGetExecutable", err)
+		mantisError.HandleError("NewLogGetExecutable", err)
 		L.Filename = filepath.Dir(ex) + string(os.PathSeparator) + "app.log"
 	}
 	logFile, err := os.OpenFile(L.Filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
-	HandleFatalError(err)
+	if err != nil {
+		mantisError.HandleFatalError(err)
+	}
+
 	L.Logger = log.New(logFile, "", log.LstdFlags)
 	L.Write("Log successfully initiated")
 }
