@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	validation "github.com/go-ozzo/ozzo-validation"
-	"github.com/sphireco/mantis/log"
+	"github.com/sphireinc/mantis/log"
 	"testing"
 )
 

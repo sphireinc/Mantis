@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/go-redis/redis/v8"
-	mantisError "github.com/sphireco/mantis/error"
+	mantisError "github.com/sphireinc/mantis/error"
 	"time"
 )
 

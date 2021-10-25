@@ -3,7 +3,7 @@ package error
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sphireco/mantis/log"
+	"github.com/sphireinc/mantis/log"
 )
 
 type httpErrorCode struct {

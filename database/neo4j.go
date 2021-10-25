@@ -1,7 +1,7 @@
 package database
 
 import (
-	mantisError "github.com/sphireco/mantis/error"
+	mantisError "github.com/sphireinc/mantis/error"
 	"gopkg.in/jmcvetta/neoism.v1"
 	"net/url"
 )

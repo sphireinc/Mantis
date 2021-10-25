@@ -2,7 +2,7 @@ package url
 
 import (
 	"encoding/json"
-	mantisError "github.com/sphireco/mantis/error"
+	mantisError "github.com/sphireinc/mantis/error"
 	"io/ioutil"
 	"log"
 	"net/http"

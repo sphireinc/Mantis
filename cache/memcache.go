@@ -1,7 +1,7 @@
 package cache
 
 import (
-	mantisError "github.com/sphireco/mantis/error"
+	mantisError "github.com/sphireinc/mantis/error"
 	"github.com/victorspringer/http-cache"
 	"github.com/victorspringer/http-cache/adapter/memory"
 	"time"

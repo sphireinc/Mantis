@@ -1,4 +1,4 @@
-module github.com/sphireco/mantis
+module github.com/sphireinc/mantis
 
 go 1.15
 

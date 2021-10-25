@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 	"github.com/go-sql-driver/mysql"
-	mantisError "github.com/sphireco/mantis/error"
+	mantisError "github.com/sphireinc/mantis/error"
 )
 
 // Define the MySQL struct

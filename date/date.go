@@ -2,7 +2,7 @@ package date
 
 import (
 	"fmt"
-	mantisError "github.com/sphireco/mantis/error"
+	mantisError "github.com/sphireinc/mantis/error"
 	"strconv"
 	"time"
 )
