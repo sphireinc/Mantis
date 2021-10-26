@@ -17,6 +17,7 @@ type CypherQuery struct {
 	Parameters neoism.Props
 }
 
+// Connect attempts to connect to the DB
 func (n *Neo4j) Connect() error {
 	var err error
 	n.conn, err = neoism.Connect(n.DSN.String())
@@ -27,11 +28,12 @@ func (n *Neo4j) Connect() error {
 	return nil
 }
 
+// NewNode creates a new node
 func (n *Neo4j) NewNode(node neoism.Props) (*neoism.Node, error) {
 	return n.conn.CreateNode(node)
 }
 
-// CyperQuery perform a query - results will be populated with the query results - it must be a slice of structs.
+// CypherQuery perform a query - results will be populated with the query results - it must be a slice of structs.
 func (n *Neo4j) CypherQuery(query CypherQuery) (interface{}, error) {
 	err := n.conn.Cypher(&neoism.CypherQuery{
 		Statement:  query.Statement,
@@ -47,7 +49,7 @@ func (n *Neo4j) CypherQuery(query CypherQuery) (interface{}, error) {
 	return query.Results, nil
 }
 
-// TransactCypherQuery
+// TransactCypherQuery creates a CyperQuery Transaction
 func (n *Neo4j) TransactCypherQuery(queries []CypherQuery) (interface{}, error) {
 	var cypherQuery []*neoism.CypherQuery
 

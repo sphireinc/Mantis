@@ -6,7 +6,6 @@ import (
 	mantisError "github.com/sphireinc/mantis/error"
 )
 
-// Define the MySQL struct
 type MySQL struct {
 	Query      string
 	Connection *sql.DB
@@ -24,13 +23,13 @@ func (q *MySQL) Connect() error {
 	return nil
 }
 
-// Select for when one result is expected
+// SelectOne selects for a single result
 func (q *MySQL) SelectOne(args ...interface{}) *sql.Row {
 	row := q.Connection.QueryRow(q.Query, args...)
 	return row
 }
 
-// Select for when more than one result is expected
+// Select for more than one result is expected
 func (q *MySQL) Select(args ...interface{}) (*sql.Rows, error) {
 	rows, err := q.Connection.Query(q.Query, args...)
 	if err != nil {
@@ -62,7 +61,7 @@ func (q *MySQL) Insert(args ...interface{}) (int64, error) {
 	return id, nil
 }
 
-// Perform an update
+// Update performs an update
 func (q *MySQL) Update(args ...interface{}) (int64, error) {
 	stmt, err := q.Connection.Prepare(q.Query)
 	if err != nil {
@@ -84,7 +83,7 @@ func (q *MySQL) Update(args ...interface{}) (int64, error) {
 	return affected, nil
 }
 
-// Perform a deletion
+// Delete performs a deletion
 func (q *MySQL) Delete(args ...interface{}) (int64, error) {
 	stmt, err := q.Connection.Prepare(q.Query)
 	if err != nil {

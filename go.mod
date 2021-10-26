@@ -1,6 +1,6 @@
 module github.com/sphireinc/mantis
 
-go 1.15
+go 1.17
 
 require (
 	github.com/allegro/bigcache v1.2.1

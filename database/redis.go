@@ -15,7 +15,6 @@ type Redis struct {
 	IsConnected bool
 }
 
-// Init
 func (r *Redis) Init() error {
 	r.context = context.Background()
 	r.client = redis.NewClient(r.Options)
