@@ -1,4 +1,4 @@
-package url
+package requests
 
 import (
 	"encoding/json"
@@ -42,11 +42,11 @@ func GetQueryParameters(r *http.Request) url.Values {
 	return r.URL.Query()
 }
 
-// ParseUrl returns a *url.URL from a given URL string
+// ParseUrl returns a *requests.URL from a given URL string
 func ParseUrl(rawurl string) (*url.URL, error) {
 	u, err := url.Parse(rawurl)
 	if err != nil {
-		log.Fatalf("unable to parse url %s: %s", rawurl, err)
+		log.Fatalf("unable to parse requests %s: %s", rawurl, err)
 		return nil, err
 	}
 	return u, nil

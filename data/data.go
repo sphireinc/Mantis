@@ -29,7 +29,7 @@ func JsonQuery(jsonObj string, query string) (interface{}, error) {
 	return res, nil
 }
 
-// Exists checks if a given directory path exists
+// DirectoryExists checks if a given directory path exists
 func DirectoryExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {
@@ -41,7 +41,7 @@ func DirectoryExists(path string) (bool, error) {
 	return false, err
 }
 
-// Contains checks if a map[string]string has a given key
+// MapStringStringContains contains checks if a map[string]string has a given key
 func MapStringStringContains(item map[string]string, key string) bool {
 	if _, ok := item[key]; ok {
 		return true
