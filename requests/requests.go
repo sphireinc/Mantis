@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type Request struct {
@@ -39,7 +40,7 @@ func (R *Request) Get() *Response {
 	}
 
 	// convert the body to type string
-	response.BodyString = string(response.Body)
+	response.BodyString = strings.TrimRight(string(response.Body), "\r\n")
 	return &response
 }
 
@@ -63,6 +64,6 @@ func (R *Request) Post() *Response {
 	}
 
 	// convert the body to type string
-	response.BodyString = string(response.Body)
+	response.BodyString = strings.TrimRight(string(response.Body), "\r\n")
 	return &response
 }
