@@ -7,7 +7,7 @@ import (
 )
 
 type MySQL struct {
-	Query      string
+	LastQuery  string
 	Connection *sql.DB
 	Config     mysql.Config
 }
@@ -20,18 +20,18 @@ func (q *MySQL) Connect() error {
 		mantisError.HandleError("Error creating MySQL Connection", err)
 		return err
 	}
+	q.Connection.SetMaxOpenConns(10)
 	return nil
 }
 
 // SelectOne selects for a single result
-func (q *MySQL) SelectOne(args ...interface{}) *sql.Row {
-	row := q.Connection.QueryRow(q.Query, args...)
-	return row
+func (q *MySQL) SelectOne(query string, args ...interface{}) *sql.Row {
+	return q.Connection.QueryRow(query, args...)
 }
 
 // Select for more than one result is expected
-func (q *MySQL) Select(args ...interface{}) (*sql.Rows, error) {
-	rows, err := q.Connection.Query(q.Query, args...)
+func (q *MySQL) Select(query string, args ...interface{}) (*sql.Rows, error) {
+	rows, err := q.Connection.Query(query, args...)
 	if err != nil {
 		mantisError.HandleError("Error during select", err)
 		return nil, err
@@ -40,8 +40,8 @@ func (q *MySQL) Select(args ...interface{}) (*sql.Rows, error) {
 }
 
 // Insert a query
-func (q *MySQL) Insert(args ...interface{}) (int64, error) {
-	stmt, err := q.Connection.Prepare(q.Query)
+func (q *MySQL) Insert(query string, args ...interface{}) (int64, error) {
+	stmt, err := q.Connection.Prepare(query)
 	if err != nil {
 		mantisError.HandleError("Error preparing insertion query", err)
 		return 0, err
@@ -62,8 +62,8 @@ func (q *MySQL) Insert(args ...interface{}) (int64, error) {
 }
 
 // Update performs an update
-func (q *MySQL) Update(args ...interface{}) (int64, error) {
-	stmt, err := q.Connection.Prepare(q.Query)
+func (q *MySQL) Update(query string, args ...interface{}) (int64, error) {
+	stmt, err := q.Connection.Prepare(query)
 	if err != nil {
 		mantisError.HandleError("Error preparing update query", err)
 		return 0, err
@@ -84,8 +84,8 @@ func (q *MySQL) Update(args ...interface{}) (int64, error) {
 }
 
 // Delete performs a deletion
-func (q *MySQL) Delete(args ...interface{}) (int64, error) {
-	stmt, err := q.Connection.Prepare(q.Query)
+func (q *MySQL) Delete(query string, args ...interface{}) (int64, error) {
+	stmt, err := q.Connection.Prepare(query)
 	if err != nil {
 		mantisError.HandleError("Error preparing deletion query", err)
 		return 0, err
