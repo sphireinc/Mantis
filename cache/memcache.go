@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type memCache struct {
+type MemCache struct {
 	Client       *cache.Client
 	Algorithm    memory.Algorithm
 	Capacity     int
@@ -15,8 +15,8 @@ type memCache struct {
 }
 
 // NewMemCache creates a new MemCache instance
-func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, cacheTime time.Duration) *memCache {
-	return &memCache{
+func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, cacheTime time.Duration) *MemCache {
+	return &MemCache{
 		Algorithm:    algorithm,
 		Capacity:     capacity,
 		RefreshKey:   refreshKey,
@@ -25,7 +25,7 @@ func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, ca
 }
 
 // Init starts our in-memory cache.
-func (m *memCache) Init() error {
+func (m *MemCache) Init() error {
 	memoryCache, err := memory.NewAdapter(
 		memory.AdapterWithAlgorithm(m.Algorithm),
 		memory.AdapterWithCapacity(m.Capacity),
