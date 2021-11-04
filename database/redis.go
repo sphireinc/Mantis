@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"github.com/go-redis/redis/v8"
-	mantisError "github.com/sphireinc/mantis/error"
 	"time"
 )
 
@@ -20,7 +19,6 @@ func (r *Redis) Init() error {
 	r.client = redis.NewClient(r.Options)
 
 	if r.CheckIfConnected() == true {
-		mantisError.HandleError("unable to connect to Redis", errors.New("ping failed"))
 		return errors.New("unable to connect to Redis")
 	}
 

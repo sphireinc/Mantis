@@ -1,56 +1,20 @@
-package error
+package http
 
-import (
-	"encoding/json"
-	"fmt"
-	"github.com/sphireinc/mantis/log"
-)
+import "fmt"
 
-type httpErrorCode struct {
+type ResponseCodes struct {
 	code        int16
 	description string
 }
 
-var logger log.Log
-
-// SetErrorLog can be used to swap logger instance to use a different Log
-func SetErrorLog(newLogger log.Log) {
-	logger = newLogger
+func (R *ResponseCodes) String() string {
+	return fmt.Sprintf("{Code: %d, Description: %s}", R.code, R.description)
 }
 
-// HandleError handles an error with an error message.
-func HandleError(message string, err error) {
-	if err != nil {
-		logger.Write(fmt.Sprintf("%s => %s", message, err.Error()))
-	}
-}
-
-// HandleFatalError is (nicer) wrapper to panic.
-func HandleFatalError(err error) {
-	if err != nil {
-		logger.Write(fmt.Sprintf("Fatal panic => %s", err.Error()))
-		panic(err)
-	}
-}
-
-// JSONMarshalAndLogError logs and error then JSON Marshals it
-func JSONMarshalAndLogError(message string, err error) string {
-	HandleError(message, err)
-	return JSONMarshalError(err)
-}
-
-// JSONMarshalError takes an error and JSON Marshals it
-func JSONMarshalError(err error) string {
-	type E struct {
-		Error string `json:"error"`
-	}
-	output, _ := json.Marshal(&E{Error: err.Error()})
-	return string(output)
-}
-
-// GetHTTPErrorCodeMessage returns the description of a numeric HTTP code
-func GetHTTPErrorCodeMessage(code int16) string {
-	codes := map[int16]httpErrorCode{
+// GetHTTPResponseCode returns the description of a numeric HTTP code
+func GetHTTPResponseCode(code int16) ResponseCodes {
+	codes := map[int16]ResponseCodes{
+		001: {001, "Unknown"},
 		100: {100, "Continue"},
 		101: {101, "Switching Protocols"},
 		102: {102, "Processing"},
@@ -61,7 +25,7 @@ func GetHTTPErrorCodeMessage(code int16) string {
 		204: {204, "No Content"},
 		205: {205, "Reset Content"},
 		206: {206, "Partial Content"},
-		207: {207, "Multi-status"},
+		207: {207, "Multi-Status"},
 		300: {300, "Multiple Choices"},
 		301: {301, "Moved Permanently"},
 		302: {302, "Moved Temporarily"},
@@ -112,8 +76,8 @@ func GetHTTPErrorCodeMessage(code int16) string {
 	}
 
 	if val, ok := codes[code]; ok {
-		return val.description
+		return val
 	}
 
-	return "Unknown"
+	return codes[001]
 }

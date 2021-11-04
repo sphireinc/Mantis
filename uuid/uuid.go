@@ -24,7 +24,7 @@ var ErrInvalidFormat = errors.New("uuid: invalid format")
 // UUID is a Universally unique identifier as described in RFC4122/DCE1.1
 type UUID [16]byte
 
-// Nil UUID is a uuid with all zeros
+// Nil UUID is an uuid with all zeros
 var Nil = UUID{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 
 // RFC4122 Predefined Namespace UUIDs https://tools.ietf.org/html/rfc4122#appendix-C
@@ -62,7 +62,7 @@ func (u *UUID) SetVersion(ver byte) {
 }
 
 // SetDCESecurity sets the security information in a Time-Based UUID as defined by
-// DCE 1.1 Authentication and Security Services: http://pubs.opengroup.org/onlinepubs/9696989899/chap5.htm#tagcjh_08_02_01_01)
+// DCE 1.1 Authentication and Security Services: http://pubs.opengroup.org/onlinepubs/9696989899/chap5.htm#tagcjh_08_02_01_01
 func (u *UUID) SetDCESecurity(domain byte, id uint32) {
 	if ver := u.Version(); ver < 0 || ver > 2 {
 		return
@@ -222,9 +222,9 @@ const (
 //     xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 //
 // The variant is designated by up to 4 bits in N
-// - v0. 0xxx : N = 0..7 ; returns VariantNCS
-// - v1. 10xx : N = 8..b ; returns VariantRFC4122
-// - v2. 110x : N = c..d ; returns VariantMicrosoft
+// - v0. 0xxx : N = 0...7 ; returns VariantNCS
+// - v1. 10xx : N = 8...b ; returns VariantRFC4122
+// - v2. 110x : N = c...d ; returns VariantMicrosoft
 // - any other pattern is unknown and returns UnknownVariant
 func (u UUID) Variant() Variant {
 	switch {
@@ -242,7 +242,7 @@ func (u UUID) Variant() Variant {
 }
 
 // SetVariant sets the variant version and the data bits
-// of N in the the UUID format:
+// of N in the UUID format:
 //     xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx
 func (u *UUID) SetVariant(v Variant) {
 	switch v {
@@ -546,7 +546,7 @@ func (u *UUID) unmarshalURN(text []byte) error {
 	return u.unmarshalPlain(text[n:])
 }
 
-// MustParseUUIDString parses a uuid string and returns the UUID
+// MustParseUUIDString parses an uuid string and returns the UUID
 // If the parse fails, it panics
 func MustParseUUIDString(s string) UUID {
 	u, err := ParseUUIDString(s)

@@ -1,8 +1,8 @@
 package date
 
 import (
+	"errors"
 	"fmt"
-	mantisError "github.com/sphireinc/mantis/error"
 	"strconv"
 	"time"
 )
@@ -40,15 +40,17 @@ func CurrentTime() Date {
 }
 
 // StringToDate takes a date string YYYY-MM-DD HH:MM:SS and returns a Date struct
-func StringToDate(date string) Date {
+func StringToDate(date string) (Date, error) {
 	if date == "" {
-		return Date{}
+		return Date{}, errors.New("no date string given")
 	}
 
 	current, err := time.Parse("2006-01-02 15:04:05", date)
-	mantisError.HandleError("Error in StringToDate time.Parse", err)
+	if err != nil {
+		return Date{}, err
+	}
 
-	return Date{
+	dateObj := Date{
 		Year:       current.Year(),
 		Month:      current.Month(),
 		Day:        current.Day(),
@@ -60,6 +62,7 @@ func StringToDate(date string) Date {
 		YearDay:    current.YearDay(),
 		WeekDay:    current.Weekday(),
 	}
+	return dateObj, nil
 }
 
 // DateToString takes a Date struct and returns a string in format YYYY-MM-DD HH:II:SS

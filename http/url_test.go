@@ -1,8 +1,7 @@
-package requests
+package http
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -17,75 +16,59 @@ type ReaderStruct struct {
 	B string
 }
 
-var readerStruct = ReaderStruct{
-	A: "123",
-	B: "456",
-}
-
-var readerString, _ = json.Marshal(&readerStruct)
-
-func getRequestHelper(useReaderString bool) *http.Request {
-	w := httptest.NewRecorder()
-
+func getRequestHelper(target string, readerString string, contentType string) *http.Request {
 	var r *http.Request
-	if useReaderString {
-		r = httptest.NewRequest(http.MethodPost, "/some/test", strings.NewReader(string(readerString)))
-		r.Header.Set("Content-Type", "application/json")
-	} else {
-		r = httptest.NewRequest(http.MethodPost, "/?a=1&b=2", strings.NewReader("a=1&b=2"))
-		r.Header.Set("Content-Type", "application/x-www-urlencoded-form")
-	}
-
-	func(w http.ResponseWriter, r *http.Request) {
-		_ = r.ParseForm()
-	}(w, r)
+	r = httptest.NewRequest(http.MethodPost, target, strings.NewReader(readerString))
+	r.Header.Set("Content-Type", contentType)
+	func(w http.ResponseWriter, r *http.Request) { _ = r.ParseForm() }(httptest.NewRecorder(), r)
 	return r
 }
 
 func TestParseBodyIntoStruct(t *testing.T) {
-	val := getRequestHelper(true)
+	val := getRequestHelper("/some/test", `{"a": "123", "b": "456"}`, "application/json")
 	rSVal := ReaderStruct{}
 
 	if err := ParseBodyIntoStruct(val, &rSVal); err != nil {
 		t.Errorf("ParseBodyIntoStruct Failed while reading: " + err.Error())
 	}
 
-	if rSVal.A != readerStruct.A {
-		t.Fatalf("expected '%s', got '%s'", rSVal.A, readerStruct.A)
+	if rSVal.A != "123" {
+		t.Fatalf("expected '%s', got '%s'", rSVal.A, "123")
 	}
 
-	if rSVal.B != readerStruct.B {
-		t.Fatalf("expected '%s', got '%s'", rSVal.B, readerStruct.B)
+	if rSVal.B != "456" {
+		t.Fatalf("expected '%s', got '%s'", rSVal.B, "456")
 	}
 }
 
 func TestGetBody(t *testing.T) {
-	val := getRequestHelper(true)
+	val := getRequestHelper("/some/test", `{"a": "123", "b": "456"}`, "application/json")
 	body, err := GetBody(val)
 
 	if err != nil {
 		t.Fatalf("Expected error to be nil, received error: %s", err.Error())
 	}
 
-	if bytes.Compare(body, readerString) == 1 {
-		t.Fatalf("expected '%s', got '%s'", string(body), string(readerString))
+	if bytes.Compare(body, []byte(`{"a": "123", "b": "456"}`)) == 1 {
+		t.Fatalf("expected '%s', got '%s'", string(body), `{"a": "123", "b": "456"}`)
 	}
 }
 
 func TestGetQueryParameter(t *testing.T) {
-	val := getRequestHelper(false)
+	val := getRequestHelper("/?a=1&b=2", "a=1&b=2", "application/x-www-urlencoded-form")
 
 	tests := []struct {
 		actual   string
 		expected string
 	}{
-		{GetQueryParameter(val, "a"), "1"},
-		{GetQueryParameter(val, "b"), "2"},
-		{GetQueryParameter(val, "z"), ""},
+		{"a", "1"},
+		{"b", "2"},
+		{"z", ""},
 	}
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			test.actual, _ = GetQueryParameter(val, test.actual)
 			if !reflect.DeepEqual(test.actual, test.expected) {
 				t.Fatalf("expected '%s', got '%s'", test.expected, test.actual)
 			}
@@ -94,7 +77,7 @@ func TestGetQueryParameter(t *testing.T) {
 }
 
 func TestGetQueryParameters(t *testing.T) {
-	val := getRequestHelper(false)
+	val := getRequestHelper("/?a=1&b=2", "a=1&b=2", "application/x-www-urlencoded-form")
 
 	t1 := url.Values{}
 	t1.Set("a", "1")

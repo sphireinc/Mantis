@@ -41,7 +41,7 @@ func StrConvAtoiWithDefaultTimeDuration(intAsString string, defaultValue int) ti
 	return time.Duration(intFromStr)
 }
 
-// StringWithDefault
+// StringWithDefault returns the given string, or a default string
 func StringWithDefault(givenValue string, defaultValue string) string {
 	if givenValue == "" {
 		return defaultValue
@@ -49,7 +49,7 @@ func StringWithDefault(givenValue string, defaultValue string) string {
 	return givenValue
 }
 
-// IntWithDefault
+// IntWithDefault returns the given int or a default int
 func IntWithDefault(givenValue int, defaultValue int) int {
 	if givenValue == 0 {
 		return defaultValue

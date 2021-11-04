@@ -1,24 +1,17 @@
-package error
+package log
 
 import (
 	"errors"
 	"fmt"
 	validation "github.com/go-ozzo/ozzo-validation"
-	"github.com/sphireinc/mantis/log"
 	"testing"
 )
-
-func TestSetErrorLog(t *testing.T) {
-	defer func() {
-		var logger log.Log
-		SetErrorLog(logger)
-	}()
-}
 
 func TestHandleError(t *testing.T) {
 	defer func() {
 		if r := recover(); r != nil {
-			HandleError("Error test", errors.New("something went wrong"))
+			L := Log{}
+			L.HandleError("Error test", errors.New("something went wrong"))
 		}
 	}()
 }
@@ -26,34 +19,10 @@ func TestHandleError(t *testing.T) {
 func TestHandleFatalError(t *testing.T) {
 	defer func() {
 		if r := recover(); r != nil {
-			HandleFatalError(errors.New("something went wrong"))
+			L := Log{}
+			L.HandleFatalError(errors.New("something went wrong"))
 		}
 	}()
-}
-
-func TestGetHTTPErrorCodeMessage(t *testing.T) {
-	tests := []struct {
-		code     int16
-		expected string
-	}{
-		{200, "OK"},
-		{203, "Non-Authoritative Information"},
-		{302, "Moved Temporarily"},
-		{404, "Not Found"},
-		{418, "I\"m a teapot"},
-		{511, "Network Authentication Required"},
-		{718, "The Bronx"},
-		{212, "Unknown"},
-	}
-
-	for i, test := range tests {
-		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := GetHTTPErrorCodeMessage(test.code)
-			if actual != test.expected {
-				t.Fatalf("expected '%s', got '%s'", test.expected, actual)
-			}
-		})
-	}
 }
 
 func TestJSONMarshalError(t *testing.T) {
@@ -124,7 +93,8 @@ func TestJSONMarshalAndLogError(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := JSONMarshalAndLogError(test.expected, test.err)
+			L := Log{}
+			actual := L.JSONMarshalAndLogError(test.expected, test.err)
 			if actual != test.expected {
 				t.Fatalf("expected '%s', got '%s'", test.expected, actual)
 			}

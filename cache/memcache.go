@@ -1,7 +1,6 @@
 package cache
 
 import (
-	mantisError "github.com/sphireinc/mantis/error"
 	"github.com/victorspringer/http-cache"
 	"github.com/victorspringer/http-cache/adapter/memory"
 	"time"
@@ -25,14 +24,13 @@ func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, ca
 	}
 }
 
-// StartCache starts our in-memory cache.
+// Init starts our in-memory cache.
 func (m *memCache) Init() error {
 	memoryCache, err := memory.NewAdapter(
 		memory.AdapterWithAlgorithm(m.Algorithm),
 		memory.AdapterWithCapacity(m.Capacity),
 	)
 	if err != nil {
-		mantisError.HandleError("Error starting memory cache", err)
 		return err
 	}
 
@@ -43,7 +41,6 @@ func (m *memCache) Init() error {
 	)
 
 	if err != nil {
-		mantisError.HandleError("Error starting http cache", err)
 		return err
 	}
 

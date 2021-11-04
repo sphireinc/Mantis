@@ -1,8 +1,9 @@
-package requests
+package http
 
 import (
 	"bytes"
 	"encoding/json"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -55,7 +56,12 @@ func (R *Request) Post() *Response {
 	if response.Error != nil {
 		log.Fatalln(response.Error)
 	}
-	defer response.RawResponse.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(response.RawResponse.Body)
 
 	// Read the response body
 	response.Body, response.Error = ioutil.ReadAll(response.RawResponse.Body)

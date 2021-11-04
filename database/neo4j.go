@@ -1,7 +1,6 @@
 package database
 
 import (
-	mantisError "github.com/sphireinc/mantis/error"
 	"gopkg.in/jmcvetta/neoism.v1"
 	"net/url"
 )
@@ -22,7 +21,6 @@ func (n *Neo4j) Connect() error {
 	var err error
 	n.conn, err = neoism.Connect(n.DSN.String())
 	if err != nil {
-		mantisError.HandleError("error in Neo4j Connect()", err)
 		return err
 	}
 	return nil
@@ -42,7 +40,6 @@ func (n *Neo4j) CypherQuery(query CypherQuery) (interface{}, error) {
 	})
 
 	if err != nil {
-		mantisError.HandleError("error in Neo4j CypherQuery()", err)
 		return nil, err
 	}
 
@@ -55,7 +52,6 @@ func (n *Neo4j) TransactCypherQuery(queries []CypherQuery) (interface{}, error) 
 
 	transaction, err := n.conn.Begin(cypherQuery)
 	if err != nil {
-		mantisError.HandleError("error in Neo4j TransactCypherQuery() transaction begin", err)
 		return nil, err
 	}
 
@@ -66,14 +62,12 @@ func (n *Neo4j) TransactCypherQuery(queries []CypherQuery) (interface{}, error) 
 		}
 		err = n.conn.Cypher(&query)
 		if err != nil {
-			mantisError.HandleError("error in Neo4j TransactCypherQuery() query build", err)
 			return nil, err
 		}
 	}
 
 	err = transaction.Commit()
 	if err != nil {
-		mantisError.HandleError("error in Neo4j TransactCypherQuery() transaction commit", err)
 		return nil, err
 	}
 
