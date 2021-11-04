@@ -4,6 +4,14 @@ import (
 	"encoding/json"
 )
 
+type ResponseJsonError struct {
+	Error string `json:"error,omitempty"`
+}
+
+type ResponseJsonOk struct {
+	Data string `json:"data,omitempty"`
+}
+
 type ResponseCodes struct {
 	code        int16
 	description string

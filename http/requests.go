@@ -11,11 +11,11 @@ import (
 )
 
 type Request struct {
-	URL          string            `json:"url"`
-	Headers      map[string]string `json:"headers"`
-	PostBody     map[string]string `json:"post_body"`
-	PostBodyJSON []byte            `json:"post_body_json"`
-	ContentType  string            `json:"content_type"`
+	URL          string            `json:"url,omitempty"`
+	Headers      map[string]string `json:"headers,omitempty"`
+	PostBody     map[string]string `json:"post_body,omitempty"`
+	PostBodyJSON []byte            `json:"post_body_json,omitempty"`
+	ContentType  string            `json:"content_type,omitempty"`
 }
 
 func (r *Request) String() string {
@@ -27,11 +27,11 @@ func (r *Request) String() string {
 }
 
 type Response struct {
-	Request     *Request       `json:"request"`
-	Body        []byte         `json:"body"`
-	BodyString  string         `json:"body_string"`
-	RawResponse *http.Response `json:"raw_response"`
-	Error       error          `json:"error"`
+	Request     *Request       `json:"request,omitempty"`
+	Body        []byte         `json:"body,omitempty"`
+	BodyString  string         `json:"body_string,omitempty"`
+	RawResponse *http.Response `json:"raw_response,omitempty"`
+	Error       error          `json:"error,omitempty"`
 }
 
 func (r *Response) String() string {
