@@ -1,6 +1,7 @@
 package byte
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"regexp"
@@ -13,6 +14,14 @@ type ParseErr struct {
 	Func string
 	Str  string
 	Err  error
+}
+
+func (e *ParseErr) String() string {
+	marshaledStruct, err := json.Marshal(e)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 func (e *ParseErr) Error() string {

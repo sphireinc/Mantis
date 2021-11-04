@@ -1,6 +1,7 @@
 package log
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -14,6 +15,14 @@ type Log struct {
 	Filename    string      `json:"filename,omitempty"`
 	Status      bool        `json:"status,omitempty"`
 	PrintToTerm bool        `json:"print_to_term,omitempty"`
+}
+
+func (l *Log) String() string {
+	marshaledStruct, err := json.Marshal(l)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 // New creates a new Log instance given filename
@@ -46,20 +55,20 @@ func New(filename string) (*Log, error) {
 }
 
 // Write a message to log and prepend time
-func (L *Log) Write(msg string) {
-	if L.Status {
+func (l *Log) Write(msg string) {
+	if l.Status {
 		logMessage := fmt.Sprintf(" %s", msg)
-		if L.PrintToTerm {
+		if l.PrintToTerm {
 			fmt.Println(logMessage)
 		}
-		L.Logger.Println(logMessage)
+		l.Logger.Println(logMessage)
 	}
 }
 
 // LogHTTPRequest logs an HTTP request from writer with a given name
-func (L *Log) LogHTTPRequest(name string, w http.ResponseWriter, r *http.Request) {
-	if L.Status {
+func (l *Log) LogHTTPRequest(name string, w http.ResponseWriter, r *http.Request) {
+	if l.Status {
 		requestID := w.Header().Get("X-Request-Id")
-		L.Write(fmt.Sprintf("%s %s %s %s %s %s", name, r.Method, r.URL, requestID, r.RemoteAddr, r.UserAgent()))
+		l.Write(fmt.Sprintf("%s %s %s %s %s %s", name, r.Method, r.URL, requestID, r.RemoteAddr, r.UserAgent()))
 	}
 }

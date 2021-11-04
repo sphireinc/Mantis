@@ -8,6 +8,7 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net"
@@ -114,6 +115,14 @@ type rfc4122Generator struct {
 
 	clockTickFunc func(uint16) uint16
 	timestampFunc func() uint64
+}
+
+func (r *rfc4122Generator) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 var rfc4122 = rfc4122Generator{

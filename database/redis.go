@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"github.com/go-redis/redis/v8"
 	"time"
@@ -12,6 +13,14 @@ type Redis struct {
 	context     context.Context
 	Options     *redis.Options
 	IsConnected bool
+}
+
+func (r *Redis) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 func (r *Redis) Init() error {

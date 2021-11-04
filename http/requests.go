@@ -18,6 +18,14 @@ type Request struct {
 	ContentType  string            `json:"content_type"`
 }
 
+func (r *Request) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
+}
+
 type Response struct {
 	Request     *Request       `json:"request"`
 	Body        []byte         `json:"body"`
@@ -26,10 +34,18 @@ type Response struct {
 	Error       error          `json:"error"`
 }
 
-func (R *Request) Get() *Response {
+func (r *Response) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
+}
+
+func (r *Request) Get() *Response {
 	response := Response{}
 
-	response.RawResponse, response.Error = http.Get(R.URL)
+	response.RawResponse, response.Error = http.Get(r.URL)
 	if response.Error != nil {
 		log.Fatalln(response.Error)
 	}
@@ -45,14 +61,14 @@ func (R *Request) Get() *Response {
 	return &response
 }
 
-func (R *Request) Post() *Response {
+func (r *Request) Post() *Response {
 	response := Response{}
 
 	// Encode the data
-	R.PostBodyJSON, _ = json.Marshal(R.PostBody)
+	r.PostBodyJSON, _ = json.Marshal(r.PostBody)
 
 	// Leverage Go's HTTP Post function to make request
-	response.RawResponse, response.Error = http.Post(R.URL, R.ContentType, bytes.NewBuffer(R.PostBodyJSON))
+	response.RawResponse, response.Error = http.Post(r.URL, r.ContentType, bytes.NewBuffer(r.PostBodyJSON))
 	if response.Error != nil {
 		log.Fatalln(response.Error)
 	}

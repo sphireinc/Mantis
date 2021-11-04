@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"encoding/json"
 	"github.com/victorspringer/http-cache"
 	"github.com/victorspringer/http-cache/adapter/memory"
 	"time"
@@ -12,6 +13,14 @@ type MemCache struct {
 	Capacity     int
 	RefreshKey   string
 	memCacheTime time.Duration
+}
+
+func (m *MemCache) String() string {
+	marshaledStruct, err := json.Marshal(m)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 // NewMemCache creates a new MemCache instance

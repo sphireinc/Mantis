@@ -2,6 +2,7 @@ package database
 
 import (
 	"database/sql"
+	"encoding/json"
 	"github.com/go-sql-driver/mysql"
 )
 
@@ -11,25 +12,33 @@ type MySQL struct {
 	Config     mysql.Config
 }
 
+func (m *MySQL) String() string {
+	marshaledStruct, err := json.Marshal(m)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
+}
+
 // Connect to the database
-func (q *MySQL) Connect() error {
+func (m *MySQL) Connect() error {
 	var err error
-	q.Connection, err = sql.Open("mysql", q.Config.FormatDSN())
+	m.Connection, err = sql.Open("mysql", m.Config.FormatDSN())
 	if err != nil {
 		return err
 	}
-	q.Connection.SetMaxOpenConns(10)
+	m.Connection.SetMaxOpenConns(10)
 	return nil
 }
 
 // SelectOne selects for a single result
-func (q *MySQL) SelectOne(query string, args ...interface{}) *sql.Row {
-	return q.Connection.QueryRow(query, args...)
+func (m *MySQL) SelectOne(query string, args ...interface{}) *sql.Row {
+	return m.Connection.QueryRow(query, args...)
 }
 
 // Select for more than one result is expected
-func (q *MySQL) Select(query string, args ...interface{}) (*sql.Rows, error) {
-	rows, err := q.Connection.Query(query, args...)
+func (m *MySQL) Select(query string, args ...interface{}) (*sql.Rows, error) {
+	rows, err := m.Connection.Query(query, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -37,8 +46,8 @@ func (q *MySQL) Select(query string, args ...interface{}) (*sql.Rows, error) {
 }
 
 // Insert a query
-func (q *MySQL) Insert(query string, args ...interface{}) (int64, error) {
-	stmt, err := q.Connection.Prepare(query)
+func (m *MySQL) Insert(query string, args ...interface{}) (int64, error) {
+	stmt, err := m.Connection.Prepare(query)
 	if err != nil {
 		return -1, err
 	}
@@ -56,8 +65,8 @@ func (q *MySQL) Insert(query string, args ...interface{}) (int64, error) {
 }
 
 // Update performs an update
-func (q *MySQL) Update(query string, args ...interface{}) (int64, error) {
-	stmt, err := q.Connection.Prepare(query)
+func (m *MySQL) Update(query string, args ...interface{}) (int64, error) {
+	stmt, err := m.Connection.Prepare(query)
 	if err != nil {
 		return -1, err
 	}
@@ -75,8 +84,8 @@ func (q *MySQL) Update(query string, args ...interface{}) (int64, error) {
 }
 
 // Delete performs a deletion
-func (q *MySQL) Delete(query string, args ...interface{}) (int64, error) {
-	stmt, err := q.Connection.Prepare(query)
+func (m *MySQL) Delete(query string, args ...interface{}) (int64, error) {
+	stmt, err := m.Connection.Prepare(query)
 	if err != nil {
 		return -1, err
 	}

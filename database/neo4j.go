@@ -1,6 +1,7 @@
 package database
 
 import (
+	"encoding/json"
 	"gopkg.in/jmcvetta/neoism.v1"
 	"net/url"
 )
@@ -10,10 +11,26 @@ type Neo4j struct {
 	DSN  url.URL
 }
 
+func (n *Neo4j) String() string {
+	marshaledStruct, err := json.Marshal(n)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
+}
+
 type CypherQuery struct {
 	Results    interface{}
 	Statement  string
 	Parameters neoism.Props
+}
+
+func (c *CypherQuery) String() string {
+	marshaledStruct, err := json.Marshal(c)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 // Connect attempts to connect to the DB

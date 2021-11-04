@@ -1,14 +1,20 @@
 package http
 
-import "fmt"
+import (
+	"encoding/json"
+)
 
 type ResponseCodes struct {
 	code        int16
 	description string
 }
 
-func (R *ResponseCodes) String() string {
-	return fmt.Sprintf("{Code: %d, Description: %s}", R.code, R.description)
+func (r *ResponseCodes) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 // GetHTTPResponseCode returns the description of a numeric HTTP code

@@ -6,23 +6,23 @@ import (
 )
 
 // HandleError handles an error with an error message.
-func (L *Log) HandleError(message string, err error) {
+func (l *Log) HandleError(message string, err error) {
 	if err != nil {
-		L.Write(fmt.Sprintf("%s => %s", message, err.Error()))
+		l.Write(fmt.Sprintf("%s => %s", message, err.Error()))
 	}
 }
 
 // HandleFatalError is (nicer) wrapper to panic.
-func (L *Log) HandleFatalError(err error) {
+func (l *Log) HandleFatalError(err error) {
 	if err != nil {
-		L.Write(fmt.Sprintf("Fatal panic => %s", err.Error()))
+		l.Write(fmt.Sprintf("Fatal panic => %s", err.Error()))
 		panic(err)
 	}
 }
 
 // JSONMarshalAndLogError logs and error then JSON Marshals it
-func (L *Log) JSONMarshalAndLogError(message string, err error) string {
-	L.HandleError(message, err)
+func (l *Log) JSONMarshalAndLogError(message string, err error) string {
+	l.HandleError(message, err)
 	return JSONMarshalError(err)
 }
 

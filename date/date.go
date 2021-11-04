@@ -1,6 +1,7 @@
 package date
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"strconv"
@@ -19,6 +20,14 @@ type Date struct {
 	Unix       int64        `json:"unix"`
 	WeekDay    time.Weekday `json:"week_day"`
 	YearDay    int          `json:"year_day"`
+}
+
+func (d *Date) String() string {
+	marshaledStruct, err := json.Marshal(d)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
 }
 
 // CurrentTime is a Date factory
