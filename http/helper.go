@@ -8,8 +8,27 @@ type ResponseJsonError struct {
 	Error string `json:"error,omitempty"`
 }
 
+func (r *ResponseJsonError) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
+}
+
 type ResponseJsonOk struct {
 	Data string `json:"data,omitempty"`
+}
+
+func (r *ResponseJsonOk) String() string {
+	marshaledStruct, err := json.Marshal(r)
+	if err != nil {
+		jsonError := ResponseJsonError{
+			Error: err.Error(),
+		}
+		return jsonError.String()
+	}
+	return string(marshaledStruct)
 }
 
 type ResponseCodes struct {
