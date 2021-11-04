@@ -24,8 +24,8 @@ func (m *MemCache) String() string {
 }
 
 // NewMemCache creates a new MemCache instance
-func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, cacheTime time.Duration) *MemCache {
-	return &MemCache{
+func NewMemCache(algorithm memory.Algorithm, capacity int, refreshKey string, cacheTime time.Duration) MemCache {
+	return MemCache{
 		Algorithm:    algorithm,
 		Capacity:     capacity,
 		RefreshKey:   refreshKey,
