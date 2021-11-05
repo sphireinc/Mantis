@@ -40,8 +40,14 @@ func (m *MySQL) Connect() error {
 }
 
 // SelectOne selects for a single result
-func (m *MySQL) SelectOne(query string, args ...interface{}) *sql.Row {
-	return m.Connection.QueryRow(query, args...)
+func (m *MySQL) SelectOne(query string, args ...interface{}) (interface{}, error) {
+	var into interface{}
+	row := m.Connection.QueryRow(query, args...)
+	err := row.Scan(&into)
+	if err == sql.ErrNoRows {
+		return nil, sql.ErrNoRows
+	}
+	return into, nil
 }
 
 // Select for more than one result is expected
