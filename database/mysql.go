@@ -12,6 +12,14 @@ type MySQL struct {
 	Config     mysql.Config
 }
 
+func (m *MySQL) ConfigString() string {
+	marshaledStruct, err := json.Marshal(m.Config)
+	if err != nil {
+		return err.Error()
+	}
+	return string(marshaledStruct)
+}
+
 func (m *MySQL) String() string {
 	marshaledStruct, err := json.Marshal(m)
 	if err != nil {
