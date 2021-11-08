@@ -11,8 +11,10 @@ import (
 )
 
 type Request struct {
+	Client       http.Client
+	Request      *Request          `json:"request,omitempty"`
 	URL          string            `json:"url,omitempty"`
-	Headers      map[string]string `json:"headers,omitempty"`
+	Headers      http.Header       `json:"headers,omitempty"`
 	PostBody     map[string]string `json:"post_body,omitempty"`
 	PostBodyJSON []byte            `json:"post_body_json,omitempty"`
 	ContentType  string            `json:"content_type,omitempty"`
@@ -28,6 +30,7 @@ func (r *Request) String() string {
 
 type Response struct {
 	Request     *Request       `json:"request,omitempty"`
+	RawRequest  *http.Request  `json:"raw_request,omitempty"`
 	Body        []byte         `json:"body,omitempty"`
 	BodyString  string         `json:"body_string,omitempty"`
 	RawResponse *http.Response `json:"raw_response,omitempty"`
@@ -43,15 +46,22 @@ func (r *Response) String() string {
 }
 
 func (r *Request) Get() *Response {
-	response := Response{}
-
-	response.RawResponse, response.Error = http.Get(r.URL)
-	if response.Error != nil {
-		log.Fatalln(response.Error)
+	req, err := http.NewRequest("GET", r.URL, nil)
+	if err != nil {
+		log.Fatalln(err)
 	}
 
-	// read the response body on the line below.
-	response.Body, response.Error = ioutil.ReadAll(response.RawResponse.Body)
+	res, err := r.Client.Do(req)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	response := Response{
+		Request:     r,
+		RawRequest:  req,
+		RawResponse: res,
+	}
+	response.Body, response.Error = ioutil.ReadAll(res.Body)
 	if response.Error != nil {
 		log.Fatalln(response.Error)
 	}
