@@ -51,6 +51,8 @@ func (r *Request) Get() *Response {
 		log.Fatalln(err)
 	}
 
+	req.Header = r.Headers
+
 	res, err := r.Client.Do(req)
 	if err != nil {
 		log.Fatalln(err)
