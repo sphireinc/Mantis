@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-// import "github.com/jet/go-mantis/uuid"
+// Original credit::::: "github.com/jet/go-mantis/uuid" -
 
 // ErrInvalidFormat is returned if the textual representation being unmarshaled is not a valid UUID
 var ErrInvalidFormat = errors.New("uuid: invalid format")
