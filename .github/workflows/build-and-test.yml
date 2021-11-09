@@ -21,5 +21,8 @@ jobs:
     - name: Tidy
       run: go mod tidy
 
+    - name: Vendor
+      run: go mod vendor
+
     - name: Test
       run: go test -v ./...
