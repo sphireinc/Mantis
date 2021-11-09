@@ -2,7 +2,7 @@
 [![Latest Release](https://img.shields.io/badge/Latest%20Release-v1.1.4-blue)](https://github.com/sphireinc/Mantis/releases/latest)
 
 <p>
-    <img src="https://raw.githubusercontent.com/sphireinc/Mantis/master/_logo/mantis_logo.svg" alt="Sphire Mantis Logo"/>
+    <img src="https://raw.githubusercontent.com/sphireinc/Mantis/master/_logo/mantis_logo.png" alt="Sphire Mantis Logo"/>
 </p>
 
 > A broadly featured Go helper library with standalone packages
