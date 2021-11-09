@@ -1,6 +1,5 @@
 [![Actions Status](https://github.com/sphireinc/mantis/workflows/Build%20and%20Test/badge.svg)](https://github.com/sphireinc/mantis/actions)
-<a target="_blank" href="https://github.com/sphireinc/Mantis/releases/latest"><img src="https://img.shields.io/badge/Latest%20Release-v1.1.4-blue" alt=""/></a>&nbsp;
-
+[![Latest Release](https://img.shields.io/badge/Latest%20Release-v1.1.4-blue)](https://github.com/sphireinc/Mantis/releases/latest)
 
 <p>
     <img src="https://raw.githubusercontent.com/sphireinc/Mantis/master/_logo/mantis_logo.svg" alt="Sphire Mantis Logo"/>
