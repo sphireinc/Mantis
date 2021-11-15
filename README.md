@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/sphireinc/mantis/workflows/Build%20and%20Test/badge.svg)](https://github.com/sphireinc/mantis/actions)
+[![Build and Test](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml)
 [![Latest Release](https://img.shields.io/badge/Latest%20Release-v1.1.4-blue)](https://github.com/sphireinc/Mantis/releases/latest)
 
 <p>
