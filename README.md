@@ -1,5 +1,8 @@
-[![Actions Status](https://github.com/sphireinc/mantis/workflows/Build%20and%20Test/badge.svg)](https://github.com/sphireinc/mantis/actions)
-[![Latest Release](https://img.shields.io/badge/Latest%20Release-v1.1.4-blue)](https://github.com/sphireinc/Mantis/releases/latest)
+[![Build and Test](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml)
+[![](https://img.shields.io/github/go-mod/go-version/sphireinc/mantis)]()
+[![Release Date](https://img.shields.io/github/release-date/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
+
 
 <p>
     <img src="https://raw.githubusercontent.com/sphireinc/Mantis/master/_logo/mantis_logo.png" alt="Sphire Mantis Logo"/>
