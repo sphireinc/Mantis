@@ -11,6 +11,7 @@ func TestBase64EncodeStd(t *testing.T) {
 		encodedStr string
 	}{
 		{"abc123!?$*&()'-=@~", "YWJjMTIzIT8kKiYoKSctPUB+"},
+		{"someotherstring", "c29tZW90aGVyc3RyaW5n"},
 		{"", ""},
 	}
 
@@ -30,6 +31,7 @@ func TestBase64EncodeUrl(t *testing.T) {
 		encodedStr string
 	}{
 		{"abc123!?$*&()'-=@~", "YWJjMTIzIT8kKiYoKSctPUB-"},
+		{"someotherstring", "c29tZW90aGVyc3RyaW5n"},
 		{"", ""},
 	}
 
@@ -50,11 +52,15 @@ func TestBase64Decode(t *testing.T) {
 	}{
 		{"YWJjMTIzIT8kKiYoKSctPUB-", "abc123!?$*&()'-=@~"},
 		{"YWJjMTIzIT8kKiYoKSctPUB+", "abc123!?$*&()'-=@~"},
+		{"c29tZW90aGVyc3RyaW5n", "someotherstring"},
 	}
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			decodedStr, _ := Base64Decode(test.encodedStr)
+			decodedStr, err := Base64Decode(test.encodedStr)
+			if err != nil {
+				t.Fatalf(err.Error())
+			}
 			if test.rawStr != string(decodedStr) {
 				t.Fatalf("expected '%s', got '%s'", test.rawStr, string(decodedStr))
 			}

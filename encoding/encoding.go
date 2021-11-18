@@ -3,6 +3,7 @@ package encoding
 import (
 	"encoding/base64"
 	"errors"
+	"strings"
 )
 
 // Base64EncodeStd encodes a string into a standard Base64 string
@@ -19,14 +20,17 @@ func Base64EncodeUrl(data string) string {
 
 // Base64Decode decodes a base64 encoded string
 func Base64Decode(encodedData string) ([]byte, error) {
-	lastChar := encodedData[len(encodedData)-1:]
-	if lastChar == "+" {
-		return base64.StdEncoding.DecodeString(encodedData)
-	}
+	// + and / for toBase64 && - and _ for toBase64URL
+	minusSign := strings.Index(encodedData, "-")
+	underscore := strings.Index(encodedData, "_")
 
-	if lastChar == "-" {
+	if minusSign >= 0 || underscore >= 0 {
 		return base64.URLEncoding.DecodeString(encodedData)
 	}
 
-	return nil, errors.New("invalid base64 encoded string")
+	decoded, err := base64.StdEncoding.DecodeString(encodedData)
+	if err != nil {
+		return nil, errors.New("invalid base64 encoded string")
+	}
+	return decoded, err
 }

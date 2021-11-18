@@ -119,6 +119,10 @@ the root via `go test ./...`
     * `(d *Date) DateToString()`
   * `CurrentTime()`
   * `StringToDate(date string)`
+* `encoding`
+  * `Base64EncodeStd(data string)`
+  * `Base64EncodeUrl(data string)`
+  * `Base64Decode(encodedData string)`
 * `helper`
   * `Reverse(s string)`
   * `StrConvParseBoolHideError(boolean string)`
