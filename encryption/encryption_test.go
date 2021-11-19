@@ -2,6 +2,7 @@ package encryption
 
 import (
 	"fmt"
+	"math"
 	"testing"
 )
 
@@ -31,6 +32,30 @@ func TestHash(t *testing.T) {
 
 			if hash.Output != test.output {
 				t.Fatalf("expected '%s', got '%s'", test.output, hash.Output)
+			}
+		})
+	}
+}
+
+func TestCreateRandomString(t *testing.T) {
+	for i := range [10]int{} {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			bytes := int(math.Pow(2, float64(i+1)))
+			strLen := len(CreateRandomString(bytes))
+			if strLen <= bytes*2 {
+				t.Fatalf("expected '%d', got '%d'", bytes*2, strLen)
+			}
+		})
+	}
+}
+
+func TestCreateRandomBytes(t *testing.T) {
+	for i := range [10]int{} {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			bytes := int(math.Pow(2, float64(i+1)))
+			strLen := len(CreateRandomBytes(bytes))
+			if strLen <= 0 {
+				t.Fatalf("got length bytes '%d'", strLen)
 			}
 		})
 	}

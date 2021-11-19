@@ -3,11 +3,14 @@ package encryption
 import (
 	"crypto/hmac"
 	"crypto/md5"
+	"crypto/rand"
 	"crypto/sha256"
 	"crypto/sha512"
 	"encoding/base64"
 	"encoding/hex"
 	"io"
+	"strings"
+	"time"
 )
 
 const (
@@ -102,4 +105,21 @@ func (h *Hash) hmac512() {
 	hmac512 := hmac.New(sha512.New, []byte(h.Input))
 	hmac512.Write([]byte(h.Input))
 	h.Output = base64.StdEncoding.EncodeToString(hmac512.Sum(nil))
+}
+
+// CreateRandomString generates a random string of n bytes
+func CreateRandomString(bytes int) string {
+	return hex.EncodeToString(CreateRandomBytes(bytes))
+}
+
+func CreateRandomBytes(bytes int) []byte {
+	if bytes == 0 {
+		bytes = 16 // default to 16 bytes
+	}
+
+	randomBytes := make([]byte, bytes)
+	_, _ = rand.Read(randomBytes[:])
+
+	nowTime := strings.Replace(time.Now().String(), " ", "_", -1)
+	return append([]byte(nowTime), randomBytes...)
 }
