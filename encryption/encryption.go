@@ -27,10 +27,6 @@ type Hash struct {
 	Algorithm int
 }
 
-func (h Hash) String() string {
-	return h.Input
-}
-
 func (h *Hash) Hash() {
 	switch h.Algorithm {
 	case 0:

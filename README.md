@@ -123,6 +123,9 @@ the root via `go test ./...`
   * `Base64EncodeStd(data string)`
   * `Base64EncodeUrl(data string)`
   * `Base64Decode(encodedData string)`
+* `encryption`
+  * `type Hash struct`
+    * `(h *Hash) Hash()`
 * `helper`
   * `Reverse(s string)`
   * `StrConvParseBoolHideError(boolean string)`
