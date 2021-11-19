@@ -320,8 +320,8 @@ func (u UUID) String() string {
 //
 //    %s    canonical form lowercase (123e4567-e89b-12d3-a456-426655440000)
 //    %+s   canonical form UPPERCASE (123E4567-E89B-12D3-A456-426655440000)
-//    %x    hash-like lowercase (123e4567e89b12d3a456426655440000)
-//    %X    hash-like UPPERCASE (123E4567E89B12D3A456426655440000)
+//    %x    encryption-like lowercase (123e4567e89b12d3a456426655440000)
+//    %X    encryption-like UPPERCASE (123E4567E89B12D3A456426655440000)
 //    %v    equivalent to %s
 //    %+v   equivalent to %+s
 //    %q    equivalent to %s enclosed in double-quotes
