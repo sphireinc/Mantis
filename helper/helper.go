@@ -1,8 +1,8 @@
 package helper
 
 import (
+	"os"
 	"strconv"
-	"time"
 )
 
 // Reverse a string
@@ -14,8 +14,16 @@ func Reverse(s string) string {
 	return string(runes)
 }
 
-// StrConvParseBoolHideError same as strconv.ParseBool except hides the error (returns false)
-func StrConvParseBoolHideError(boolean string) bool {
+// DeferFileClose prevents non-closure file closing error
+func DeferFileClose(file *os.File) {
+	err := file.Close()
+	if err != nil {
+
+	}
+}
+
+// StringToBool same as strconv.ParseBool except hides the error (returns false)
+func StringToBool(boolean string) bool {
 	ret, err := strconv.ParseBool(boolean)
 	if err != nil {
 		return false
@@ -23,36 +31,20 @@ func StrConvParseBoolHideError(boolean string) bool {
 	return ret
 }
 
-// StrConvAtoiWithDefault same as strconv.Atoi except only returns the value or a default value
-func StrConvAtoiWithDefault(intAsString string, defaultValue int) int {
-	intFromStr, intFromStrErr := strconv.Atoi(intAsString)
+// AtoiWithDefault same as strconv.Atoi except only returns the value or a default value if nil
+func AtoiWithDefault(value string, defaultValue int) int {
+	intFromStr, intFromStrErr := strconv.Atoi(value)
 	if intFromStrErr != nil {
-		intFromStr = defaultValue
+		return defaultValue
 	}
 	return intFromStr
 }
 
-// StrConvAtoiWithDefaultTimeDuration same as strconv.Atoi except only returns the value or a default value
-func StrConvAtoiWithDefaultTimeDuration(intAsString string, defaultValue int) time.Duration {
-	intFromStr, intFromStrErr := strconv.Atoi(intAsString)
-	if intFromStrErr != nil {
-		intFromStr = defaultValue
+// Default returns the defaultVal given if originalVal is empty/nil
+func Default[T comparable](originalVal T, defaultVal T) T {
+	var zero T
+	if originalVal == zero {
+		return defaultVal
 	}
-	return time.Duration(intFromStr)
-}
-
-// StringWithDefault returns the given string, or a default string
-func StringWithDefault(givenValue string, defaultValue string) string {
-	if givenValue == "" {
-		return defaultValue
-	}
-	return givenValue
-}
-
-// IntWithDefault returns the given int or a default int
-func IntWithDefault(givenValue int, defaultValue int) int {
-	if givenValue == 0 {
-		return defaultValue
-	}
-	return givenValue
+	return originalVal
 }

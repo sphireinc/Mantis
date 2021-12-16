@@ -3,12 +3,15 @@
 github.com/allegro/bigcache
 github.com/allegro/bigcache/queue
 # github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
-## explicit
+## explicit; go 1.13
 # github.com/cespare/xxhash/v2 v2.1.2
+## explicit; go 1.11
 github.com/cespare/xxhash/v2
 # github.com/davecgh/go-spew v1.1.1
+## explicit
 github.com/davecgh/go-spew/spew
 # github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f
+## explicit
 github.com/dgryski/go-rendezvous
 # github.com/elgs/gosplitargs v0.0.0-20161028071935-a491c5eeb3c8
 ## explicit
@@ -17,7 +20,7 @@ github.com/elgs/gosplitargs
 ## explicit
 github.com/go-ozzo/ozzo-validation
 # github.com/go-redis/redis/v8 v8.11.4
-## explicit
+## explicit; go 1.13
 github.com/go-redis/redis/v8
 github.com/go-redis/redis/v8/internal
 github.com/go-redis/redis/v8/internal/hashtag
@@ -27,7 +30,7 @@ github.com/go-redis/redis/v8/internal/proto
 github.com/go-redis/redis/v8/internal/rand
 github.com/go-redis/redis/v8/internal/util
 # github.com/go-sql-driver/mysql v1.6.0
-## explicit
+## explicit; go 1.10
 github.com/go-sql-driver/mysql
 # github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff
 ## explicit
@@ -36,15 +39,19 @@ github.com/jmcvetta/randutil
 ## explicit
 github.com/jwilder/gojq
 # github.com/kr/pretty v0.3.0
-## explicit
+## explicit; go 1.12
 github.com/kr/pretty
 # github.com/kr/text v0.2.0
+## explicit
 github.com/kr/text
 # github.com/pmezard/go-difflib v1.0.0
+## explicit
 github.com/pmezard/go-difflib/difflib
 # github.com/rogpeppe/go-internal v1.6.1
+## explicit; go 1.11
 github.com/rogpeppe/go-internal/fmtsort
 # github.com/stretchr/testify v1.5.1
+## explicit; go 1.13
 github.com/stretchr/testify/assert
 # github.com/victorspringer/http-cache v0.0.0-20190721184638-fe78e97af707
 ## explicit
@@ -57,4 +64,5 @@ gopkg.in/jmcvetta/napping.v3
 ## explicit
 gopkg.in/jmcvetta/neoism.v1
 # gopkg.in/yaml.v2 v2.4.0
+## explicit; go 1.15
 gopkg.in/yaml.v2

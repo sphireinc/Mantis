@@ -134,8 +134,8 @@ var dceSec = rfc4122Generator{
 	timestampFunc: timestamp32,
 }
 
-func (g *rfc4122Generator) newV1() (UUID, error) {
-	hw, ts, clk, err := g.tick()
+func (r *rfc4122Generator) newV1() (UUID, error) {
+	hw, ts, clk, err := r.tick()
 	if err != nil {
 		return Nil, err
 	}
@@ -152,35 +152,35 @@ func (g *rfc4122Generator) newV1() (UUID, error) {
 	return u, nil
 }
 
-func (g *rfc4122Generator) tick() ([6]byte, uint64, uint16, error) {
+func (r *rfc4122Generator) tick() ([6]byte, uint64, uint16, error) {
 	var err error
-	g.initOnce.Do(func() {
-		hwAddr, e := g.getHwAddr()
+	r.initOnce.Do(func() {
+		hwAddr, e := r.getHwAddr()
 		if e != nil {
 			err = e
 			return
 		}
-		g.hwAddr = hwAddr
+		r.hwAddr = hwAddr
 		cbs := make([]byte, 2)
 		if _, f := rand.Read(cbs); f != nil {
 			err = fmt.Errorf("uuid: init clock seq failed: %v", f)
 		}
-		g.clockSeq = binary.BigEndian.Uint16(cbs)
+		r.clockSeq = binary.BigEndian.Uint16(cbs)
 	})
 	if err != nil {
 		return [6]byte{}, 0, 0, err
 	}
-	g.mu.Lock()
-	defer g.mu.Unlock()
-	ts := g.timestampFunc()
-	if g.lastTime >= ts {
-		g.clockSeq = g.clockTickFunc(g.clockSeq)
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	ts := r.timestampFunc()
+	if r.lastTime >= ts {
+		r.clockSeq = r.clockTickFunc(r.clockSeq)
 	}
-	g.lastTime = ts
-	return g.hwAddr, g.lastTime, g.clockSeq, nil
+	r.lastTime = ts
+	return r.hwAddr, r.lastTime, r.clockSeq, nil
 }
 
-func (g *rfc4122Generator) getRandHwAddr() ([6]byte, error) {
+func (r *rfc4122Generator) getRandHwAddr() ([6]byte, error) {
 	var hwAddr [6]byte
 	if _, err := rand.Read(hwAddr[:]); err != nil {
 		return [6]byte{}, err
@@ -190,10 +190,10 @@ func (g *rfc4122Generator) getRandHwAddr() ([6]byte, error) {
 	return hwAddr, nil
 }
 
-func (g *rfc4122Generator) getHwAddr() ([6]byte, error) {
+func (r *rfc4122Generator) getHwAddr() ([6]byte, error) {
 	ifaces, err := net.Interfaces()
 	if err != nil {
-		return g.getRandHwAddr()
+		return r.getRandHwAddr()
 	}
 	for _, iface := range ifaces {
 		if len(iface.HardwareAddr) >= 6 {
@@ -206,7 +206,7 @@ func (g *rfc4122Generator) getHwAddr() ([6]byte, error) {
 			return hwAddr, nil
 		}
 	}
-	return g.getRandHwAddr()
+	return r.getRandHwAddr()
 }
 
 // Variant of the UUID version

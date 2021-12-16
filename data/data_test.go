@@ -10,24 +10,25 @@ import (
 
 func TestIsTrue(t *testing.T) {
 	tests := []struct {
-		actual   bool
+		actual   string
 		expected bool
 	}{
-		{IsTrue("true"), true},
-		{IsTrue("TRUE"), true},
-		{IsTrue("1"), true},
-		{IsTrue("false"), false},
-		{IsTrue("0"), false},
-		{IsTrue("2"), false},
-		{IsTrue("d7#$"), false},
-		{IsTrue("trU3"), false},
-		{IsTrue("FALSE"), false},
+		{"true", true},
+		{"TRUE", true},
+		{"1", true},
+		{"false", false},
+		{"0", false},
+		{"2", false},
+		{"d7#$", false},
+		{"trU3", false},
+		{"FALSE", false},
 	}
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			if !reflect.DeepEqual(test.actual, test.expected) {
-				t.Fatalf("expected '%t', got '%t'", test.expected, test.actual)
+			result := IsStringTrue(test.actual)
+			if !reflect.DeepEqual(result, test.expected) {
+				t.Fatalf("expected '%t', got '%t'", test.expected, result)
 			}
 		})
 	}
@@ -59,7 +60,7 @@ func TestExists(t *testing.T) {
 		_ = os.RemoveAll(dir)
 	}()
 
-	check, err := DirectoryExists(dir)
+	check, err := Exists(dir, Directory)
 	if err != nil {
 		t.Fatalf(err.Error())
 	}
@@ -70,23 +71,47 @@ func TestExists(t *testing.T) {
 }
 
 func TestContains(t *testing.T) {
-	testData := make(map[string]string)
+	testData := make(map[string]any)
 	testData["k1"] = "v1"
-	testData["k2"] = "v2"
-	testData["k3"] = "v3"
+	testData["k2"] = 5
+	testData["k3"] = nil
 
 	tests := []struct {
 		actual   bool
 		expected bool
 	}{
-		{MapStringStringContains(testData, "k1"), true},
-		{MapStringStringContains(testData, "k2"), true},
-		{MapStringStringContains(testData, "k3"), true},
-		{MapStringStringContains(testData, "k4"), false},
-		{MapStringStringContains(testData, ""), false},
+		{MapHasKey(testData, "k1"), true},
+		{MapHasKey(testData, "k2"), true},
+		{MapHasKey(testData, "k3"), true},
+		{MapHasKey(testData, "k4"), false},
+		{MapHasKey(testData, ""), false},
+	}
+
+	testData2 := make(map[int]any)
+	testData2[1] = "v1"
+	testData2[2] = 3
+	testData2[17] = "v3"
+
+	tests2 := []struct {
+		actual   bool
+		expected bool
+	}{
+		{MapHasKey(testData2, 1), true},
+		{MapHasKey(testData2, 2), true},
+		{MapHasKey(testData2, 17), true},
+		{MapHasKey(testData2, 3), false},
+		{MapHasKey(testData2, -1), false},
 	}
 
 	for i, test := range tests {
+		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
+			if !reflect.DeepEqual(test.actual, test.expected) {
+				t.Fatalf("expected '%t', got '%t'", test.expected, test.actual)
+			}
+		})
+	}
+
+	for i, test := range tests2 {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			if !reflect.DeepEqual(test.actual, test.expected) {
 				t.Fatalf("expected '%t', got '%t'", test.expected, test.actual)

@@ -8,13 +8,14 @@ import (
 	"crypto/sha512"
 	"encoding/base64"
 	"encoding/hex"
-	"io"
+	"encoding/json"
+	"hash"
 	"strings"
 	"time"
 )
 
 const (
-	Md5 int = iota
+	Md5 int8 = iota
 	Sha224
 	Sha256
 	Sha384
@@ -24,87 +25,99 @@ const (
 	Hmac512
 )
 
-type Hash struct {
-	Input     string
+type mantisHash struct {
+	input     string
+	isHashed  bool
 	Output    string
-	Algorithm int
+	algorithm int8
 }
 
-func (h *Hash) Hash() {
-	switch h.Algorithm {
-	case 0:
-		h.md5()
-	case 1:
-		h.sha224()
-	case 2:
-		h.sha256()
-	case 3:
-		h.sha384()
-	case 4:
-		h.sha512()
-	case 5:
-		h.sha512224()
-	case 6:
-		h.sha512256()
-	case 7:
-		h.hmac512()
+// MarshalJSON implements the JSON encoding interface
+func (h *mantisHash) MarshalJSON() ([]byte, error) {
+	return json.Marshal(map[string]interface{}{
+		"input":     h.input,
+		"output":    h.Output,
+		"algorithm": h.algorithm,
+	})
+}
+
+// New returns an instance of mantisHash given our input and algorithm
+func New(input string, algorithm int8) *mantisHash {
+	return &mantisHash{
+		input:     input,
+		algorithm: algorithm,
 	}
 }
 
-// md5 returns an MD5 string given an input string
-func (h *Hash) md5() {
-	hash := md5.New()
-	_, _ = io.WriteString(hash, h.Input)
-	h.Output = hex.EncodeToString(hash.Sum(nil))
+// IsHashed tells us whether our mantisHash has been mantisHash()'d
+func (h *mantisHash) IsHashed() bool {
+	return h.isHashed
 }
 
-// sha224 returns an SHA224 string given an input string
-func (h *Hash) sha224() {
-	hash := sha256.New224()
-	hash.Write([]byte(h.Input))
-	h.Output = hex.EncodeToString(hash.Sum(nil))
+// Algorithm returns the chosen algorithm as a string and int
+func (h *mantisHash) Algorithm() (int8, string) {
+	switch h.algorithm {
+	case 0:
+		return Md5, "md5"
+	case 1:
+		return Sha224, "SHA-224"
+	case 2:
+		return Sha256, "SHA-256"
+	case 3:
+		return Sha384, "SHA-384"
+	case 4:
+		return Sha512, "SHA-512"
+	case 5:
+		return Sha512224, "SHA-512/224"
+	case 6:
+		return Sha512256, "SHA-512/256"
+	case 7:
+		return Hmac512, "HMAC-512"
+	}
+	return -1, ""
 }
 
-// sha256 returns an SHA256 string given an input string
-func (h *Hash) sha256() {
-	hash := sha256.New()
-	hash.Write([]byte(h.Input))
-	h.Output = hex.EncodeToString(hash.Sum(nil))
+// GetInput returns the initial input
+func (h *mantisHash) GetInput() string {
+	return h.input
 }
 
-// sha384 returns an SHA384 string given an input string
-func (h *Hash) sha384() {
-	hash := sha512.New384()
-	hash.Write([]byte(h.Input))
-	h.Output = hex.EncodeToString(hash.Sum(nil))
+// GetOutput returns the hashed output
+func (h *mantisHash) GetOutput() string {
+	return h.Output
 }
 
-// sha512 returns an SHA-512 string given an input string
-func (h *Hash) sha512() {
-	hash := sha512.New()
-	hash.Write([]byte(h.Input))
-	h.Output = hex.EncodeToString(hash.Sum(nil))
-}
+// Hash performs our hash, fills in Output, and unsets input
+func (h *mantisHash) Hash() {
+	if h.algorithm == Hmac512 {
+		hmac512 := hmac.New(sha512.New, []byte(h.input))
+		hmac512.Write([]byte(h.input))
+		h.Output = base64.StdEncoding.EncodeToString(hmac512.Sum(nil))
+	} else {
+		var hasher hash.Hash
 
-// sha512224 returns an SHA512-224 string given an input string
-func (h *Hash) sha512224() {
-	hash := sha512.New512_224()
-	hash.Write([]byte(h.Input))
-	h.Output = hex.EncodeToString(hash.Sum(nil))
-}
+		switch h.algorithm {
+		case Md5:
+			hasher = md5.New()
+		case Sha224:
+			hasher = sha256.New224()
+		case Sha256:
+			hasher = sha256.New()
+		case Sha384:
+			hasher = sha512.New384()
+		case Sha512:
+			hasher = sha512.New()
+		case Sha512224:
+			hasher = sha512.New512_224()
+		case Sha512256:
+			hasher = sha512.New512_256()
+		}
 
-// sha512256 returns an SHA512-256 string given an input string
-func (h *Hash) sha512256() {
-	hash := sha512.New512_256()
-	hash.Write([]byte(h.Input))
-	h.Output = hex.EncodeToString(hash.Sum(nil))
-}
-
-// hmac512 returns an HMAC-512 string given an input string
-func (h *Hash) hmac512() {
-	hmac512 := hmac.New(sha512.New, []byte(h.Input))
-	hmac512.Write([]byte(h.Input))
-	h.Output = base64.StdEncoding.EncodeToString(hmac512.Sum(nil))
+		hasher.Write([]byte(h.input))
+		h.isHashed = true
+		h.input = ""
+		h.Output = hex.EncodeToString(hasher.Sum(nil))
+	}
 }
 
 // CreateRandomString generates a random string of n bytes
@@ -112,6 +125,7 @@ func CreateRandomString(bytes int) string {
 	return hex.EncodeToString(CreateRandomBytes(bytes))
 }
 
+// CreateRandomBytes creates a random bytes of bytes int
 func CreateRandomBytes(bytes int) []byte {
 	if bytes == 0 {
 		bytes = 16 // default to 16 bytes

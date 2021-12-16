@@ -8,7 +8,7 @@ import (
 
 func TestHash(t *testing.T) {
 	tests := []struct {
-		algorithm int
+		algorithm int8
 		input     string
 		output    string
 	}{
@@ -24,13 +24,14 @@ func TestHash(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			hash := Hash{
-				Input:     test.input,
-				Algorithm: test.algorithm,
-			}
+			hash := New(test.input, test.algorithm)
 			hash.Hash()
 
-			if hash.Output != test.output {
+			if test.input != hash.GetInput() {
+				t.Fatalf("test input and hash output do not match expected '%s', got '%s'", test.input, hash.GetInput())
+			}
+
+			if hash.IsHashed() && hash.GetOutput() != test.output {
 				t.Fatalf("expected '%s', got '%s'", test.output, hash.Output)
 			}
 		})

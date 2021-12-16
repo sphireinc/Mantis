@@ -3,8 +3,8 @@ package helper
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 	"testing"
-	"time"
 )
 
 func TestReverse(t *testing.T) {
@@ -38,7 +38,7 @@ func TestStrConvParseBoolHideError(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := StrConvParseBoolHideError(test.given)
+			actual := StringToBool(test.given)
 			if !reflect.DeepEqual(actual, test.expected) {
 				t.Fatalf("expected '%t', got '%t'", test.expected, actual)
 			}
@@ -60,7 +60,7 @@ func TestStrConvAtoiWithDefault(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := StrConvAtoiWithDefault(test.given, test.defaultVal)
+			actual := AtoiWithDefault(test.given, test.defaultVal)
 			if !reflect.DeepEqual(actual, test.expected) {
 				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
 			}
@@ -68,64 +68,21 @@ func TestStrConvAtoiWithDefault(t *testing.T) {
 	}
 }
 
-func TestStrConvAtoiWithDefaultTimeDuration(t *testing.T) {
-	tests := []struct {
-		given      string
-		defaultVal int
-		expected   time.Duration
-	}{
-		{"123", 15, time.Duration(123)},
-		{"65432", 15, time.Duration(65432)},
-		{"-65432", 15, time.Duration(-65432)},
-		{"definitelyNotANumber", 25, time.Duration(25)},
-	}
-
-	for i, test := range tests {
-		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := StrConvAtoiWithDefaultTimeDuration(test.given, test.defaultVal)
-			if !reflect.DeepEqual(actual, test.expected) {
-				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
-			}
-		})
-	}
+func FuzzTestStrConvAtoiWithDefault(f *testing.F) {
+	f.Fuzz(func(t *testing.T, given string, defaultVal int) {
+		expected, _ := strconv.Atoi(given)
+		value := AtoiWithDefault(given, defaultVal)
+		if value != expected && value != defaultVal {
+			t.Fatalf("expected '%v' or '%v, got '%v'", expected, defaultVal, value)
+		}
+	})
 }
 
-func TestStringWithDefault(t *testing.T) {
-	tests := []struct {
-		given      string
-		defaultVal string
-		expected   string
-	}{
-		{"someStr", "aStr", "someStr"},
-		{"", "aStr", "aStr"},
-	}
-
-	for i, test := range tests {
-		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := StringWithDefault(test.given, test.defaultVal)
-			if !reflect.DeepEqual(actual, test.expected) {
-				t.Fatalf("expected '%s', got '%s'", test.expected, actual)
-			}
-		})
-	}
-}
-
-func TestIntWithDefault(t *testing.T) {
-	tests := []struct {
-		given      int
-		defaultVal int
-		expected   int
-	}{
-		{1, 20, 1},
-		{0, 29, 29},
-	}
-
-	for i, test := range tests {
-		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := IntWithDefault(test.given, test.defaultVal)
-			if !reflect.DeepEqual(actual, test.expected) {
-				t.Fatalf("expected '%d', got '%d'", test.expected, actual)
-			}
-		})
-	}
+func FuzzDefault(f *testing.F) {
+	f.Fuzz(func(t *testing.T, originalVal int, defaultVal int) {
+		value := Default(originalVal, defaultVal)
+		if value != originalVal && value != defaultVal {
+			t.Fatalf("expected '%v' or '%v, got '%v'", originalVal, defaultVal, value)
+		}
+	})
 }
