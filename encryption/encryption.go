@@ -25,7 +25,7 @@ const (
 	Hmac512
 )
 
-type mantisHash struct {
+type mHash struct {
 	input     string
 	isHashed  bool
 	Output    string
@@ -33,7 +33,7 @@ type mantisHash struct {
 }
 
 // MarshalJSON implements the JSON encoding interface
-func (h *mantisHash) MarshalJSON() ([]byte, error) {
+func (h *mHash) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]interface{}{
 		"input":     h.input,
 		"output":    h.Output,
@@ -41,21 +41,21 @@ func (h *mantisHash) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// New returns an instance of mantisHash given our input and algorithm
-func New(input string, algorithm int8) *mantisHash {
-	return &mantisHash{
+// New returns an instance of mHash given our input and algorithm
+func New(input string, algorithm int8) *mHash {
+	return &mHash{
 		input:     input,
 		algorithm: algorithm,
 	}
 }
 
-// IsHashed tells us whether our mantisHash has been mantisHash()'d
-func (h *mantisHash) IsHashed() bool {
+// IsHashed tells us whether our mHash has been mHash()'d
+func (h *mHash) IsHashed() bool {
 	return h.isHashed
 }
 
 // Algorithm returns the chosen algorithm as a string and int
-func (h *mantisHash) Algorithm() (int8, string) {
+func (h *mHash) Algorithm() (int8, string) {
 	switch h.algorithm {
 	case 0:
 		return Md5, "md5"
@@ -78,17 +78,17 @@ func (h *mantisHash) Algorithm() (int8, string) {
 }
 
 // GetInput returns the initial input
-func (h *mantisHash) GetInput() string {
+func (h *mHash) GetInput() string {
 	return h.input
 }
 
 // GetOutput returns the hashed output
-func (h *mantisHash) GetOutput() string {
+func (h *mHash) GetOutput() string {
 	return h.Output
 }
 
 // Hash performs our hash, fills in Output, and unsets input
-func (h *mantisHash) Hash() {
+func (h *mHash) Hash() {
 	if h.algorithm == Hmac512 {
 		hmac512 := hmac.New(sha512.New, []byte(h.input))
 		hmac512.Write([]byte(h.input))

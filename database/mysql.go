@@ -40,7 +40,7 @@ func (m *MySQL) Connect() error {
 }
 
 // SelectOne selects for a single result
-func (m *MySQL) SelectOne(query string, args ...interface{}) (interface{}, error) {
+func (m *MySQL) SelectOne(query string, args []any) (interface{}, error) {
 	var into interface{}
 	row := m.Connection.QueryRow(query, args...)
 	err := row.Scan(&into)
@@ -51,7 +51,7 @@ func (m *MySQL) SelectOne(query string, args ...interface{}) (interface{}, error
 }
 
 // Select for more than one result is expected
-func (m *MySQL) Select(query string, args ...interface{}) (*sql.Rows, error) {
+func (m *MySQL) Select(query string, args []any) (*sql.Rows, error) {
 	rows, err := m.Connection.Query(query, args...)
 	if err != nil {
 		return nil, err
@@ -60,7 +60,7 @@ func (m *MySQL) Select(query string, args ...interface{}) (*sql.Rows, error) {
 }
 
 // Insert a query
-func (m *MySQL) Insert(query string, args ...interface{}) (int64, error) {
+func (m *MySQL) Insert(query string, args []any) (int64, error) {
 	stmt, err := m.Connection.Prepare(query)
 	if err != nil {
 		return -1, err
@@ -79,7 +79,7 @@ func (m *MySQL) Insert(query string, args ...interface{}) (int64, error) {
 }
 
 // Update performs an update
-func (m *MySQL) Update(query string, args ...interface{}) (int64, error) {
+func (m *MySQL) Update(query string, args []any) (int64, error) {
 	stmt, err := m.Connection.Prepare(query)
 	if err != nil {
 		return -1, err
@@ -98,7 +98,7 @@ func (m *MySQL) Update(query string, args ...interface{}) (int64, error) {
 }
 
 // Delete performs a deletion
-func (m *MySQL) Delete(query string, args ...interface{}) (int64, error) {
+func (m *MySQL) Delete(query string, args []any) (int64, error) {
 	stmt, err := m.Connection.Prepare(query)
 	if err != nil {
 		return -1, err

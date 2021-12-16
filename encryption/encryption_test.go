@@ -25,10 +25,11 @@ func TestHash(t *testing.T) {
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			hash := New(test.input, test.algorithm)
+			originalInput := hash.GetInput()
 			hash.Hash()
 
-			if test.input != hash.GetInput() {
-				t.Fatalf("test input and hash output do not match expected '%s', got '%s'", test.input, hash.GetInput())
+			if test.input != originalInput {
+				t.Fatalf("test input and hash input do not match expected '%s', got '%s'", test.input, originalInput)
 			}
 
 			if hash.IsHashed() && hash.GetOutput() != test.output {
