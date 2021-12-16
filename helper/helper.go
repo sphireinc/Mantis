@@ -35,6 +35,7 @@ func StringToBool(boolean string) bool {
 func AtoiWithDefault(value string, defaultValue int) int {
 	intFromStr, intFromStrErr := strconv.Atoi(value)
 	if intFromStrErr != nil {
+
 		return defaultValue
 	}
 	return intFromStr
