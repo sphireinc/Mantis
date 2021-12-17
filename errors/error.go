@@ -21,11 +21,15 @@ func (e *Errors) Message() string {
 	return e.message
 }
 
-func (e *Errors) Time() string {
-	return e.timestamp.String()
+func (e *Errors) Time() time.Time {
+	return e.timestamp
 }
 
 // New creates a new errors instance
+// Usage:
+//   err = New(100, "%v is %v years old", []any{"Kim", 22})
+//  - or without args -
+//   err := New(100, "some message", nil)
 func New(code int32, message string, args []any) *Errors {
 	if len(args) > 0 {
 		message = fmt.Sprintf(message, args...)
