@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
@@ -288,6 +289,5 @@ func TestHashBasedUUID(t *testing.T) {
 // TestParseUUIDString parses a uuid in braced form and prints the canonical form
 func TestParseUUIDString(t *testing.T) {
 	uuid, _ := ParseUUIDString("{e3b4fa08-0365-403d-bc0c-5a3589a1401d}")
-	fmt.Println(uuid)
-	// Output: e3b4fa08-0365-403d-bc0c-5a3589a1401d
+	assert.Equal(t, uuid.String(), "e3b4fa08-0365-403d-bc0c-5a3589a1401d")
 }
