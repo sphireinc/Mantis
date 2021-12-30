@@ -16,7 +16,7 @@ func TestNew(t *testing.T) {
 	if err.Message() != "some message" {
 		t.Fatalf("Message  fail, test 1")
 	}
-	if err.Time().After(end) || err.Time().Before(start) || !err.Time().Equal(start) || !err.Time().Equal(end) {
+	if err.Time().After(end) || err.Time().Before(start) {
 		t.Fatalf(fmt.Sprintf("Time was %v, after %v and before %v", err.Time(), start, end))
 	}
 
@@ -29,7 +29,7 @@ func TestNew(t *testing.T) {
 	if err.Message() != "Kim is 22 years old" {
 		t.Fatalf("Message  fail, test 1")
 	}
-	if err.Time().After(end) || err.Time().Before(start) || !err.Time().Equal(start) || !err.Time().Equal(end) {
+	if err.Time().After(end) || err.Time().Before(start) {
 		t.Fatalf(fmt.Sprintf("Time was %v, after %v and before %v", err.Time(), start, end))
 	}
 }
