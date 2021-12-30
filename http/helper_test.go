@@ -2,13 +2,13 @@ package http
 
 import (
 	"fmt"
-	"reflect"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestGetHTTPErrorCodeMessage(t *testing.T) {
 	tests := []struct {
-		responseCode int16
+		responseCode int
 		expected     ResponseCodes
 	}{
 		{200, ResponseCodes{
@@ -24,9 +24,7 @@ func TestGetHTTPErrorCodeMessage(t *testing.T) {
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			responseCode := GetHTTPResponseCode(test.responseCode)
-			if !reflect.DeepEqual(responseCode, test.expected) {
-				t.Fatalf("expected '%s', got '%s'", test.expected.String(), responseCode.String())
-			}
+			assert.Equal(t, responseCode.String(), test.expected.String())
 		})
 	}
 }
