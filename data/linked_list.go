@@ -2,15 +2,15 @@ package data
 
 import "fmt"
 
-type node struct {
-	previous *node
-	next     *node
+type linkedListNode struct {
+	previous *linkedListNode
+	next     *linkedListNode
 	key      any
 }
 
 type list struct {
-	head *node
-	tail *node
+	head *linkedListNode
+	tail *linkedListNode
 }
 
 // NewLinkedList returns an instance of list
@@ -21,7 +21,7 @@ func NewLinkedList() *list {
 // Insert a key and value into a linked list
 func (L *list) Insert(key any) {
 	// create our new node
-	newNode := &node{
+	newNode := &linkedListNode{
 		next: L.head,
 		key:  key,
 	}
@@ -80,7 +80,7 @@ func (L *list) String(delimiter string) string {
 }
 
 func (L *list) Reverse() {
-	var prev *node
+	var prev *linkedListNode
 	current := L.head
 	for current != nil {
 		next := current.next
