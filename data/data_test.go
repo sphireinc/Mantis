@@ -1,14 +1,54 @@
 package data
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/stretchr/testify/assert"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"mantis/helper"
 	"os"
 	"reflect"
 	"testing"
 )
 
-func TestIsTrue(t *testing.T) {
+func TestExists(t *testing.T) {
+	// Directory
+	dir, err := ioutil.TempDir("", "tmp")
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+	defer func() { _ = os.RemoveAll(dir) }()
+
+	check, err := Exists(dir, Directory)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	if check == false {
+		t.Fatalf("expected: true, got %t", check)
+	}
+
+	// File
+	file, err := ioutil.TempFile("", "tmpfile")
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+	helper.DeferFileClose(file)
+
+	_, err = Exists(file.Name(), File)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	// Path
+	_, err = Exists(dir, Path)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+}
+
+func TestIsStringTrue(t *testing.T) {
 	tests := []struct {
 		actual   string
 		expected bool
@@ -34,43 +74,34 @@ func TestIsTrue(t *testing.T) {
 	}
 }
 
-func TestJsonQuery(t *testing.T) {
+func TestQueryJson(t *testing.T) {
+	// Test error paths first
+	_, err := QueryJson("", "a")
+	assert.NotNil(t, err)
+
+	_, err = QueryJson("{}", "a")
+	assert.NotNil(t, err)
+
 	tests := []struct {
-		actual   string
-		expected string
+		json     string
+		key      string
+		expected float64
 	}{
-		{"t", "t"},
+		{`{"a": 1, "b": 2}`, "b", 2},
 	}
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			if !reflect.DeepEqual(test.actual, test.expected) {
-				t.Fatalf("expected '%s', got '%s'", test.expected, test.actual)
+			result, err := QueryJson(test.json, test.key)
+			assert.Nil(t, err)
+			if !reflect.DeepEqual(result, test.expected) {
+				t.Fatalf("expected '%f', got '%f'", test.expected, result)
 			}
 		})
 	}
 }
 
-func TestExists(t *testing.T) {
-	dir, err := ioutil.TempDir("", "tmp")
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
-	defer func() {
-		_ = os.RemoveAll(dir)
-	}()
-
-	check, err := Exists(dir, Directory)
-	if err != nil {
-		t.Fatalf(err.Error())
-	}
-
-	if check == false {
-		t.Fatalf("expected: true, got %t", check)
-	}
-}
-
-func TestContains(t *testing.T) {
+func TestMapHasKey(t *testing.T) {
 	testData := make(map[string]any)
 	testData["k1"] = "v1"
 	testData["k2"] = 5
@@ -87,22 +118,6 @@ func TestContains(t *testing.T) {
 		{MapHasKey(testData, ""), false},
 	}
 
-	testData2 := make(map[int]any)
-	testData2[1] = "v1"
-	testData2[2] = 3
-	testData2[17] = "v3"
-
-	tests2 := []struct {
-		actual   bool
-		expected bool
-	}{
-		{MapHasKey(testData2, 1), true},
-		{MapHasKey(testData2, 2), true},
-		{MapHasKey(testData2, 17), true},
-		{MapHasKey(testData2, 3), false},
-		{MapHasKey(testData2, -1), false},
-	}
-
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			if !reflect.DeepEqual(test.actual, test.expected) {
@@ -110,12 +125,59 @@ func TestContains(t *testing.T) {
 			}
 		})
 	}
+}
 
-	for i, test := range tests2 {
-		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			if !reflect.DeepEqual(test.actual, test.expected) {
-				t.Fatalf("expected '%t', got '%t'", test.expected, test.actual)
-			}
-		})
+func TestGetEnvVariables(t *testing.T) {
+	assert.Greater(t, len(GetEnvVariables()), 0)
+}
+
+func TestUnmarshalFile(t *testing.T) {
+	sampleData := make(map[string]string)
+	sampleData["foo"] = "bar"
+	sampleData["bar"] = "baz"
+
+	yamlData, _ := yaml.Marshal(sampleData)
+	jsonData, _ := json.Marshal(sampleData)
+
+	// Create our temp files
+	yamlFile, err := ioutil.TempFile("", "tmpfile.*.yaml")
+	if err != nil {
+		t.Fatalf(err.Error())
 	}
+	jsonFile, err := ioutil.TempFile("", "tmpfile.*.json")
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+	bsonFile, err := ioutil.TempFile("", "tmpfile.*.bson")
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	// Defer close files
+	defer helper.DeferFileClose(yamlFile)
+	defer helper.DeferFileClose(jsonFile)
+	defer helper.DeferFileClose(bsonFile)
+
+	// Write our data to our files
+	_, err = yamlFile.Write(yamlData)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+	_, err = jsonFile.Write(jsonData)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+	_, err = bsonFile.Write(yamlData)
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	_, err = UnmarshalFile(yamlFile.Name())
+	assert.Nil(t, err)
+	_, err = UnmarshalFile(jsonFile.Name())
+	assert.Nil(t, err)
+	_, err = UnmarshalFile(bsonFile.Name())
+	assert.NotNil(t, err)
+	_, err = UnmarshalFile("blahblahblah")
+	assert.NotNil(t, err)
 }

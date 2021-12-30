@@ -31,6 +31,6 @@ func (S *stack) Len() int {
 	return len(S.values)
 }
 
-func (S *stack) Print() {
-	fmt.Printf("%+v", S.values)
+func (S *stack) String() string {
+	return fmt.Sprintf("%+v", S.values)
 }

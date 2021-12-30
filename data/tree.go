@@ -1,6 +1,8 @@
 package data
 
-import "strings"
+import (
+	"errors"
+)
 
 // source & credit: https://ieftimov.com/post/golang-datastructures-trees/
 
@@ -19,6 +21,30 @@ func NewTree(id string, name string, value any) *treeNode {
 		name:  name,
 		value: value,
 	}
+}
+
+// Insert a new node into our tree under a given parent
+func (tree *treeNode) Insert(id string, name string, value any, parentId string) (bool, error) {
+	parent := tree.FindById(parentId)
+	if parent == nil {
+		return false, errors.New("parent is nil")
+	}
+
+	for _, child := range parent.children {
+		if child.id == id {
+			return false, errors.New("duplicate child id")
+		}
+	}
+
+	child := &treeNode{
+		id:     id,
+		name:   name,
+		value:  value,
+		parent: parent,
+	}
+
+	parent.children = append(parent.children, child)
+	return true, nil
 }
 
 // FindById finds a given node by its ID (BFS)
@@ -47,21 +73,10 @@ func (tree *treeNode) FindByIdDFS(id string) *treeNode {
 
 	if len(tree.children) > 0 {
 		for _, child := range tree.children {
-			child.FindByIdDFS(id)
+			tree = child.FindByIdDFS(id)
 		}
 	}
-	return nil
-}
-
-// FindByName finds a given node by its name
-func (tree *treeNode) FindByName(name string) bool {
-	names := strings.Fields(tree.name)
-	for _, n := range names {
-		if n == name {
-			return true
-		}
-	}
-	return false
+	return tree
 }
 
 // Remove a given node from our tree

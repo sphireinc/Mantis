@@ -11,7 +11,7 @@ func TestList_NewLinkedList(t *testing.T) {
 	l.Insert("second")
 	l.Insert("third")
 	l.Insert("fourth")
-	assert.Equal(t, l.String(""), "fourth -> third -> second -> first")
+	assert.Equal(t, "fourth -> third -> second -> first", l.String(""))
 }
 
 func TestList_Pop(t *testing.T) {
@@ -20,13 +20,13 @@ func TestList_Pop(t *testing.T) {
 	l.Insert("second")
 	l.Insert("third")
 	l.Insert("fourth")
-	assert.Equal(t, l.String(""), "fourth -> third -> second -> first")
+	assert.Equal(t, "fourth -> third -> second -> first", l.String(""))
 	l.Pop()
-	assert.Equal(t, l.String(""), "fourth -> third -> second")
+	assert.Equal(t, "fourth -> third -> second", l.String(""))
 	l.Pop()
-	assert.Equal(t, l.String(""), "fourth -> third")
+	assert.Equal(t, "fourth -> third", l.String(""))
 	l.Pop()
-	assert.Equal(t, l.String(""), "fourth")
+	assert.Equal(t, "fourth", l.String(""))
 }
 
 func TestList_Reverse(t *testing.T) {
@@ -35,9 +35,9 @@ func TestList_Reverse(t *testing.T) {
 	l.Insert("second")
 	l.Insert("third")
 	l.Insert("fourth")
-	assert.Equal(t, l.String(""), "fourth -> third -> second -> first")
+	assert.Equal(t, "fourth -> third -> second -> first", l.String(""))
 	l.Reverse()
-	assert.Equal(t, l.String(""), "first -> second -> third -> fourth")
+	assert.Equal(t, "first -> second -> third -> fourth", l.String(""))
 }
 
 func TestList_Print(t *testing.T) {

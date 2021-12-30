@@ -11,7 +11,7 @@ func TestStack_NewStack(t *testing.T) {
 	s.Insert(5)
 	s.Insert(7)
 	s.Insert(9)
-	assert.Equal(t, s.Len(), 4)
+	assert.Equal(t, 4, s.Len())
 
 	s = NewStack()
 	data := make(map[string]string)
@@ -20,7 +20,7 @@ func TestStack_NewStack(t *testing.T) {
 	s.Insert(data)
 	s.Insert(data)
 	s.Insert(data)
-	assert.Equal(t, s.Len(), 4)
+	assert.Equal(t, 4, s.Len())
 
 	s = NewStack()
 	dataF := func() {}
@@ -28,7 +28,7 @@ func TestStack_NewStack(t *testing.T) {
 	s.Insert(dataF)
 	s.Insert(dataF)
 	s.Insert(dataF)
-	assert.Equal(t, s.Len(), 4)
+	assert.Equal(t, 4, s.Len())
 }
 
 func TestStack_Pop(t *testing.T) {
@@ -37,24 +37,24 @@ func TestStack_Pop(t *testing.T) {
 	s.Insert(5)
 	s.Insert(7)
 	s.Insert(9)
-	assert.Equal(t, s.Len(), 4)
+	assert.Equal(t, 4, s.Len())
 	s.Pop()
-	assert.Equal(t, s.Len(), 3)
+	assert.Equal(t, 3, s.Len())
 	s.Pop()
-	assert.Equal(t, s.Len(), 2)
+	assert.Equal(t, 2, s.Len())
 	s.Pop()
-	assert.Equal(t, s.Len(), 1)
+	assert.Equal(t, 1, s.Len())
 	s.Pop()
-	assert.Equal(t, s.Len(), 0)
+	assert.Equal(t, 0, s.Len())
 	s.Pop()
-	assert.Equal(t, s.Len(), 0)
+	assert.Equal(t, 0, s.Len())
 }
 
-func TestStack_Print(t *testing.T) {
+func TestStack_String(t *testing.T) {
 	s := NewStack()
 	s.Insert(3)
 	s.Insert(5)
 	s.Insert(7)
 	s.Insert(9)
-	s.Print()
+	assert.Equal(t, s.String(), "[3 5 7 9]")
 }
