@@ -26,7 +26,7 @@
   <a href="#sphire-mantis">About</a> •
   <a href="#importing">Importing</a> •
   <a href="#testing">Testing</a> •
-  <a href="#api-reference">API Reference</a> •
+  <a href="#api-reference">API Reference</a>
 </p>
 
 # Warning

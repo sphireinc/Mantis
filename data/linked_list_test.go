@@ -1,18 +1,33 @@
 package data
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
-func TestNewLinkedList(t *testing.T) {
+func newLinkedListHelper() *list {
 	l := NewLinkedList()
 	l.Insert("first key")
 	l.Insert("second key")
 	l.Insert("third key")
 	l.Insert("fourth key")
-	l.Display()
+	return l
+}
+
+func TestNewLinkedList(t *testing.T) {
+	l := newLinkedListHelper()
+	assert.Equal(t, l.String(""), "fourth key -> third key -> second key -> first key")
 	l.Pop()
-	l.Display()
+	assert.Equal(t, l.String(""), "fourth key -> third key -> second key")
 	l.Pop()
-	l.Display()
+	assert.Equal(t, l.String(""), "fourth key -> third key")
 	l.Pop()
-	l.Display()
+	assert.Equal(t, l.String(""), "fourth key")
+}
+
+func TestReverseLinkedList(t *testing.T) {
+	l := newLinkedListHelper()
+	assert.Equal(t, l.String(""), "fourth key -> third key -> second key -> first key")
+	l.Reverse()
+	assert.Equal(t, l.String(""), "first key -> second key -> third key -> fourth key")
 }
