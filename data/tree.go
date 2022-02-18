@@ -71,10 +71,11 @@ func (tree *treeNode) FindByIdDFS(id string) *treeNode {
 		return tree
 	}
 
-	if len(tree.children) > 0 {
-		for _, child := range tree.children {
-			tree = child.FindByIdDFS(id)
-		}
+	if len(tree.children) <= 0 {
+		return tree
+	}
+	for _, child := range tree.children {
+		tree = child.FindByIdDFS(id)
 	}
 	return tree
 }
