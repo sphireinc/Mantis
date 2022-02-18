@@ -32,6 +32,8 @@ jobs:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
     name: Codacy Security Scan
     runs-on: ubuntu-latest
+    exclude_paths:
+      - "vendor"
     steps:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout code
