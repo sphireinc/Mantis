@@ -10,7 +10,7 @@ jobs:
         go: [ '1.16', '1.17', '1.18.0-beta1' ]
     steps:
     - name: Checkout Code ${{ matrix.go }}
-    - uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
     - name: Setup Go ${{ matrix.go }}
       uses: actions/setup-go@v2
