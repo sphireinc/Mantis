@@ -18,8 +18,10 @@ function generate_go_documentation {
 
     # Setup
     rm -rf "${GO_DOC_HTML_OUTPUT:-godoc}"
+    echo ${GO_DOC_HTML_OUTPUT}
 
     # Extract Go module name from a Go module file
+    echo ${GO_MODULE}
     if [[ -z "$GO_MODULE" ]]; then
         local FILE
 
@@ -29,12 +31,14 @@ function generate_go_documentation {
             GO_MODULE=$(cat "$FILE" | extract_module_name)
         fi
     fi
+    echo ${GO_MODULE}
 
     # URL path to Go package and module documentation
     URL=$(normalize_url "http://${GO_DOC_HTTP:-localhost:6060}/pkg/$GO_MODULE/")
+    echo ${URL}
 
     # Starting godoc server
-    echo "Starting godoc server..."
+    echo "Starting godoc server...${GO_DOC_HTTP}"
     godoc -http="${GO_DOC_HTTP:-localhost:6060}" &
     PID=$!
 
