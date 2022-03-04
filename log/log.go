@@ -69,6 +69,6 @@ func (l *Log) Write(msg string) {
 func (l *Log) LogHTTPRequest(name string, w http.ResponseWriter, r *http.Request) {
 	if l.Status {
 		requestID := w.Header().Get("X-Request-Id")
-		l.Write(fmt.Sprintf("%s %s %s %s %s %s", name, r.Method, r.URL, requestID, r.RemoteAddr, r.UserAgent()))
+		l.Write(fmt.Sprintf("%s %s %s %s %s %s", name, r.Method, r.URL.EscapedPath(), requestID, r.RemoteAddr, r.UserAgent()))
 	}
 }
