@@ -19,9 +19,18 @@ require (
 )
 
 require (
+	code.rocketnine.space/tslocum/godoc-static v0.2.1 // indirect
+	github.com/PuerkitoBio/goquery v1.7.1 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/elgs/gosplitargs v0.0.0-20161028071935-a491c5eeb3c8 // indirect
 	github.com/jmcvetta/randutil v0.0.0-20150817122601-2bb1b664bcff // indirect
 	github.com/kr/pretty v0.3.0 // indirect
+	github.com/yuin/goldmark v1.4.1 // indirect
+	golang.org/x/mod v0.5.1 // indirect
+	golang.org/x/net v0.0.0-20211015210444-4f30a5c0130f // indirect
+	golang.org/x/sys v0.0.0-20211019181941-9d821ace8654 // indirect
+	golang.org/x/tools v0.1.9 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/jmcvetta/napping.v3 v3.2.0 // indirect
 )
