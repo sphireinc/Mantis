@@ -1,29 +1,28 @@
 name: Build and Test
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [pull_request]
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.16', '1.17', '1.18.0-beta1' ]
     steps:
+    - name: Checkout Code ${{ matrix.go }}
     - uses: actions/checkout@v2
 
-    - name: Set up Go
+    - name: Setup Go ${{ matrix.go }}
       uses: actions/setup-go@v2
       with:
         stable: false
-        go-version: 1.18.0-beta1
+        go-version: ${{ matrix.go }}
 
-    - name: Tidy
+    - name: Tidy ${{ matrix.go }}
       run: go mod tidy
 
-    - name: Vendor
+    - name: Vendor ${{ matrix.go }}
       run: go mod vendor
 
-    - name: Test
+    - name: Test ${{ matrix.go }}
       run: go test -v ./...
