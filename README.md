@@ -4,7 +4,6 @@
 [![Latest Release](https://img.shields.io/github/v/release/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![Codacy Security Scan](https://github.com/sphireinc/Mantis/actions/workflows/codacy-analysis.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/codacy-analysis.yml)
 [![CodeQL](https://github.com/sphireinc/Mantis/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/codeql-analysis.yml)
-[![Pages](https://github.com/sphireinc/Mantis/actions/workflows/pages/pages-build-deployment/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/pages/pages-build-deployment)
 
 <p>
     <img src="https://raw.githubusercontent.com/sphireinc/Mantis/master/_logo/mantis_logo.png" alt="Sphire Mantis Logo"/>
