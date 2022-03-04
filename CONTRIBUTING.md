@@ -60,8 +60,3 @@ changes to this project.
 Please follow the conduct guidelines above. Language issues are often contentious,
 and we'd like to keep discussion brief, civil and focused on what we're actually 
 doing, not wandering off into too much imaginary stuff.
-
-[//]: # (# Frequently Asked Questions)
-
-[//]: # ()
-[//]: # (*please add*)
