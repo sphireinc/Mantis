@@ -33,11 +33,10 @@ jobs:
         org: haveyoudebuggedit
         repo: gotestfmt
 
-    - name: Tidy ${{ matrix.go }}
-      run: go mod tidy
-
-    - name: Vendor ${{ matrix.go }}
-      run: go mod vendor
+    - name: Tidy and Vendor ${{ matrix.go }}
+      run: |
+        go mod tidy
+        go mod vendor
 
     - name: Test ${{ matrix.go }}
       run: |

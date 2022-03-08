@@ -17,6 +17,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
 
+      - name: Tidy and Vendor
+        run: |
+          go mod tidy
+          go mod vendor
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
