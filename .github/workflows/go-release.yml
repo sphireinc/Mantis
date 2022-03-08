@@ -32,7 +32,6 @@ jobs:
     steps:
       - name: Generate Docs Markdown
         run: |
-          go get github.com/princjef/gomarkdoc/cmd/gomarkdoc
           go install github.com/princjef/gomarkdoc/cmd/gomarkdoc
           gomarkdoc --output docs/aws.md ./aws
           gomarkdoc --output docs/byte.md ./byte
