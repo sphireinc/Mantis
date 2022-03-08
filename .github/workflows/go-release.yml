@@ -71,3 +71,10 @@ jobs:
           gomarkdoc --output docs/http.md ./http
           gomarkdoc --output docs/log.md ./log
           gomarkdoc --output docs/uuid.md ./uuid
+
+      - name: Archive markdown artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: archive-markdown
+          path: |
+            docs
