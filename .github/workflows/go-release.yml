@@ -19,6 +19,7 @@ jobs:
 
       - name: Tidy and Vendor
         run: |
+          go get -u
           go mod tidy
           go mod vendor
 
