@@ -28,12 +28,12 @@ jobs:
         go mod tidy
         go mod vendor
 
-  - name: Run go-mnd
+    - name: Run go-mnd
       uses: tommy-muehle/go-mnd@master
       with:
         args: ./...
 
-  - name: golangci-lint
+    - name: golangci-lint
       uses: golangci/golangci-lint-action@v2
       with:
         version: v1.29
