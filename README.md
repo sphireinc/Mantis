@@ -1,5 +1,4 @@
 [![Release Version](https://img.shields.io/github/v/release/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
-[![Tag Version](https://img.shields.io/github/v/tag/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![Release Date](https://img.shields.io/github/release-date/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![Build Status](https://github.com/sphireinc/Mantis/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
