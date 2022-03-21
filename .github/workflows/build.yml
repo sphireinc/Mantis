@@ -7,8 +7,10 @@ on:
   pull_request:
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
+    env:
+      GO111MODULE: on
     strategy:
       matrix:
         go: [ '1.18.0-beta1' ]
