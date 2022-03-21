@@ -1,5 +1,5 @@
 [![Latest Release](https://img.shields.io/github/v/release/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
-[![Build and Test](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml)
+[![Build and Test](https://github.com/sphireinc/Mantis/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml)
 [![](https://img.shields.io/github/go-mod/go-version/sphireinc/mantis)]()
 [![Release Date](https://img.shields.io/github/release-date/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![Codacy Security Scan](https://github.com/sphireinc/Mantis/actions/workflows/codacy-analysis.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/codacy-analysis.yml)
