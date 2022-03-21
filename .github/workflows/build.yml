@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GO111MODULE: on
     strategy:
       matrix:
         go: [ '1.18.0-beta1' ]
@@ -29,11 +27,6 @@ jobs:
         go get -u
         go mod tidy
         go mod vendor
-
-    - name: Run go-mnd
-      uses: tommy-muehle/go-mnd@master
-      with:
-        args: ./...
 
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v2
