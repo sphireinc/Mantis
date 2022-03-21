@@ -30,7 +30,7 @@
 
 Mantis is pre-production - use at your own risk. If you do decide to use it, be prepared for breaking changes in the API.
 
-# Sphire Mantis
+# Mantis
 
 Mantis is a common helper library within the Sphire ecosystem. Packages are largely developed 
 to have no effect on the parent application. Helper functions are (or will be in some cases) 
