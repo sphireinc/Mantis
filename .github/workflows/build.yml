@@ -28,12 +28,6 @@ jobs:
         go mod tidy
         go mod vendor
 
-    - name: golangci-lint
-      uses: golangci/golangci-lint-action@v2
-      with:
-        version: v1.29
-        only-new-issues: true
-
     - name: Set Up GoTestFmt
       uses: haveyoudebuggedit/gotestfmt-action@v2
       with:
