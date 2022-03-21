@@ -1,0 +1,83 @@
+name: Build, Test, and Release
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.18.0-beta1' ]
+    steps:
+    - name: Checkout Code ${{ matrix.go }}
+      uses: actions/checkout@v2
+
+    - name: Setup Go ${{ matrix.go }}
+      uses: actions/setup-go@v2
+      with:
+        stable: false
+        go-version: ${{ matrix.go }}
+
+    - name: Set Up GoTestFmt
+      uses: haveyoudebuggedit/gotestfmt-action@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        version: v2.0.0
+        org: sphire
+        repo: gotestfmt
+
+    - name: Tidy and Vendor ${{ matrix.go }}
+      run: |
+        go get -u
+        go mod tidy
+        go mod vendor
+
+    - name: Test ${{ matrix.go }}
+      run: |
+        set -euo pipefail
+        go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
+        
+    - name: Upload test log
+      uses: actions/upload-artifact@v2
+      if: always()
+      with:
+        name: test-log
+        path: /tmp/gotest.log
+        if-no-files-found: error
+
+    - name: Generate Docs Markdown
+      run: |
+        go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
+        gomarkdoc --output docs/aws.md ./aws
+        gomarkdoc --output docs/byte.md ./byte
+        gomarkdoc --output docs/cache.md ./cache
+        gomarkdoc --output docs/data.md ./data
+        gomarkdoc --output docs/database.md ./database
+        gomarkdoc --output docs/date.md ./date
+        gomarkdoc --output docs/encoding.md ./encoding
+        gomarkdoc --output docs/encryption.md ./encryption
+        gomarkdoc --output docs/errors.md ./errors
+        gomarkdoc --output docs/helper.md ./helper
+        gomarkdoc --output docs/http.md ./http
+        gomarkdoc --output docs/log.md ./log
+        gomarkdoc --output docs/uuid.md ./uuid
+
+    - name: Archive markdown artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: archive-markdown
+        path: |
+          docs
+
+    - name: Run GoReleaser
+      uses: goreleaser/goreleaser-action@v2
+      with:
+        distribution: goreleaser
+        version: latest
+        args: release --rm-dist
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
