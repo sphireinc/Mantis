@@ -25,11 +25,6 @@
   <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/uuid"><img src="https://img.shields.io/badge/UUID-lightgrey" alt=""/></a>&nbsp;
 </p>
 
-<p>
-  <a href="#sphire-mantis">About</a> •
-  <a href="#importing">Importing</a> •
-  <a href="#testing">Testing</a>
-</p>
 
 # Warning
 
@@ -41,7 +36,7 @@ Mantis is a common helper library within the Sphire ecosystem. Packages are larg
 to have no effect on the parent application. Helper functions are (or will be in some cases) 
 developed to accept, act on, and return data with no side effects.
 
-# Importing
+# Usage
 
 Running `go get github.com/sphireinc/mantis` will fetch the mantis project within your Go project.
 
@@ -60,12 +55,15 @@ func main(){
 }
 ```
 
-
-# Testing
+# Tests
 
 Each package can be tested independently via `go test`, or all packages can be tested from 
 the root via `go test ./...`
 
+
+# Contributing
+
+Please find our contribution guidelines within [CONTRIBUTING.md](https://github.com/sphireinc/Mantis/blob/master/CONTRIBUTING.md)
 
 # Thanks
 
