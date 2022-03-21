@@ -28,6 +28,17 @@ jobs:
         go mod tidy
         go mod vendor
 
+  - name: Run go-mnd
+      uses: tommy-muehle/go-mnd@master
+      with:
+        args: ./...
+
+  - name: golangci-lint
+      uses: golangci/golangci-lint-action@v2
+      with:
+        version: v1.29
+        only-new-issues: true
+
     - name: Set Up GoTestFmt
       uses: haveyoudebuggedit/gotestfmt-action@v2
       with:
@@ -70,12 +81,3 @@ jobs:
         name: archive-markdown
         path: |
           docs
-
-    - name: Run GoReleaser
-      uses: goreleaser/goreleaser-action@v2
-      with:
-        distribution: goreleaser
-        version: latest
-        args: release --rm-dist
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
