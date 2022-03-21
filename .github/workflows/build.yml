@@ -22,19 +22,17 @@ jobs:
         stable: false
         go-version: ${{ matrix.go }}
 
-    - name: Set Up GoTestFmt
-      uses: haveyoudebuggedit/gotestfmt-action@v2
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        version: v2.0.0
-        org: sphire
-        repo: gotestfmt
-
     - name: Tidy and Vendor ${{ matrix.go }}
       run: |
         go get -u
         go mod tidy
         go mod vendor
+
+    - name: Set Up GoTestFmt
+      uses: haveyoudebuggedit/gotestfmt-action@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        version: v2.0.0
 
     - name: Test ${{ matrix.go }}
       run: |
