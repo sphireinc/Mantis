@@ -4,7 +4,6 @@
 [![Build Status](https://github.com/sphireinc/Mantis/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/build-and-test.yml)
 [![Go Version](https://img.shields.io/github/go-mod/go-version/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![License](https://img.shields.io/github/license/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
-
 [![Codacy Security Scan](https://github.com/sphireinc/Mantis/actions/workflows/codacy-analysis.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/codacy-analysis.yml)
 [![CodeQL](https://github.com/sphireinc/Mantis/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/codeql-analysis.yml)
 
