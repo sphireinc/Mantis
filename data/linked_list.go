@@ -80,6 +80,7 @@ func (L *List) String(delimiter string) string {
 	return output[0 : len(output)-4]
 }
 
+// Reverse our linked list
 func (L *List) Reverse() {
 	var prev *linkedListNode
 	current := L.head

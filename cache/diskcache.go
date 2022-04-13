@@ -115,8 +115,6 @@ func (D *DiskCache) Get(key string) (any, error) {
 					return nil, err
 				}
 				return datum, nil
-			} else {
-				return nil, errors.New("cache file " + filename + " not found")
 			}
 		}
 	}
