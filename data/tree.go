@@ -58,9 +58,7 @@ func (tree *TreeNode) FindByID(id string) *TreeNode {
 			return next
 		}
 		if len(next.children) > 0 {
-			for _, child := range next.children {
-				queue = append(queue, child)
-			}
+			queue = append(queue, next.children...)
 		}
 	}
 	return nil

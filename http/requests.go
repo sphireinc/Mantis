@@ -13,7 +13,7 @@ import (
 // Request holds our http client and corresponding request data
 type Request struct {
 	Client       http.Client
-	Request      *Request          `json:"request,omitempty"`
+	Request      *Request
 	URL          string            `json:"url,omitempty"`
 	Headers      http.Header       `json:"headers,omitempty"`
 	PostBody     map[string]string `json:"post_body,omitempty"`
@@ -32,12 +32,12 @@ func (r *Request) String() string {
 
 // Response holds our response object, as well as a pointer to the original request
 type Response struct {
-	Request     *Request       `json:"request,omitempty"`
-	RawRequest  *http.Request  `json:"raw_request,omitempty"`
-	Body        []byte         `json:"body,omitempty"`
-	BodyString  string         `json:"body_string,omitempty"`
-	RawResponse *http.Response `json:"raw_response,omitempty"`
-	Error       error          `json:"error,omitempty"`
+	Request     *Request
+	RawRequest  *http.Request
+	Body        []byte `json:"body,omitempty"`
+	BodyString  string `json:"body_string,omitempty"`
+	RawResponse *http.Response
+	Error       error `json:"error,omitempty"`
 }
 
 // String converts our Response struct into a JSON string
@@ -91,10 +91,7 @@ func (r *Request) Post() *Response {
 		log.Fatalln(response.Error)
 	}
 	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-
-		}
+		_ = Body.Close()
 	}(response.RawResponse.Body)
 
 	// Read the response body

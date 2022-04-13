@@ -35,10 +35,7 @@ func newTmpDir() string {
 		log.Fatal(err)
 	}
 	defer func(path string) {
-		err := os.RemoveAll(path)
-		if err != nil {
-
-		}
+		_ = os.RemoveAll(path)
 	}(dir)
 	return dir
 }
@@ -59,10 +56,7 @@ func (D *DiskCache) newTmpFile(key string) *os.File {
 		log.Fatal(err)
 	}
 	defer func(name string) {
-		err := os.Remove(name)
-		if err != nil {
-
-		}
+		_ = os.Remove(name)
 	}(file.Name())
 	return file
 }

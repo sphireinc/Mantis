@@ -2,7 +2,6 @@ package database
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"time"
 
@@ -17,21 +16,12 @@ type Redis struct {
 	IsConnected bool
 }
 
-// String returns our Redis struct as a string
-func (r *Redis) String() string {
-	marshaledStruct, err := json.Marshal(r)
-	if err != nil {
-		return err.Error()
-	}
-	return string(marshaledStruct)
-}
-
 // Init creates a new Redis connection
 func (r *Redis) Init() error {
 	r.context = context.Background()
 	r.client = redis.NewClient(r.Options)
 
-	if r.CheckIfConnected() == true {
+	if r.CheckIfConnected() {
 		return errors.New("unable to connect to Redis")
 	}
 

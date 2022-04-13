@@ -16,10 +16,7 @@ func Reverse(s string) string {
 
 // DeferFileClose prevents non-closure file closing error
 func DeferFileClose(file *os.File) {
-	err := file.Close()
-	if err != nil {
-
-	}
+	_ = file.Close()
 }
 
 // StringToBool same as strconv.ParseBool except hides the error (returns false)

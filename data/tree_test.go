@@ -31,10 +31,10 @@ func TestTree_Insert(t *testing.T) {
 	_, err = tree.Insert("2", "two", "hello world two", "10000")
 	assert.Equal(t, "parent is nil", err.Error())
 
-	_, err = tree.Insert("8", "two", "hello world two", "1")
+	_, _ = tree.Insert("8", "two", "hello world two", "1")
 	assert.Equal(t, 2, len(tree.FindByID("1").children))
 
-	_, err = tree.Insert("9", "two", "hello world two", "1")
+	_, _ = tree.Insert("9", "two", "hello world two", "1")
 	assert.Equal(t, 3, len(tree.FindByID("1").children))
 }
 

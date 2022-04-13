@@ -40,15 +40,6 @@ type ResponseCodes struct {
 	description string
 }
 
-// String converts all of our response codes into a JSON string
-func (r *ResponseCodes) String() string {
-	marshaledStruct, err := json.Marshal(r)
-	if err != nil {
-		return err.Error()
-	}
-	return string(marshaledStruct)
-}
-
 // GetHTTPResponseCode returns the description of a numeric HTTP code
 func GetHTTPResponseCode(code int) ResponseCodes {
 	text := http.StatusText(code)

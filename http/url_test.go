@@ -17,8 +17,7 @@ type ReaderStruct struct {
 }
 
 func getRequestHelper(target string, readerString string, contentType string) *http.Request {
-	var r *http.Request
-	r = httptest.NewRequest(http.MethodPost, target, strings.NewReader(readerString))
+	var r = httptest.NewRequest(http.MethodPost, target, strings.NewReader(readerString))
 	r.Header.Set("Content-Type", contentType)
 	func(w http.ResponseWriter, r *http.Request) { _ = r.ParseForm() }(httptest.NewRecorder(), r)
 	return r
