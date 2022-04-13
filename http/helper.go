@@ -2,6 +2,7 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -38,6 +39,10 @@ func (r *ResponseJSONOk) String() string {
 type ResponseCodes struct {
 	code        int16
 	description string
+}
+
+func (r *ResponseCodes) String() string {
+	return fmt.Sprintf("%d %s", r.code, r.description)
 }
 
 // GetHTTPResponseCode returns the description of a numeric HTTP code
