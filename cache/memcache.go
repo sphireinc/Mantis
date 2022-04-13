@@ -2,11 +2,13 @@ package cache
 
 import (
 	"encoding/json"
+	"time"
+
 	"github.com/victorspringer/http-cache"
 	"github.com/victorspringer/http-cache/adapter/memory"
-	"time"
 )
 
+// MemCache primary struct for victorspringers http-cache
 type MemCache struct {
 	Client       *cache.Client
 	Algorithm    memory.Algorithm

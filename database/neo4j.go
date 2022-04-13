@@ -2,15 +2,18 @@ package database
 
 import (
 	"encoding/json"
-	"gopkg.in/jmcvetta/neoism.v1"
 	"net/url"
+
+	"gopkg.in/jmcvetta/neoism.v1"
 )
 
+// Neo4j is our primary struct
 type Neo4j struct {
 	conn *neoism.Database
 	DSN  url.URL
 }
 
+// String returns our Neo4j struct as a JSON string
 func (n *Neo4j) String() string {
 	marshaledStruct, err := json.Marshal(n)
 	if err != nil {
@@ -19,12 +22,14 @@ func (n *Neo4j) String() string {
 	return string(marshaledStruct)
 }
 
+// CypherQuery is our query struct
 type CypherQuery struct {
 	Results    interface{}
 	Statement  string
 	Parameters neoism.Props
 }
 
+// String returns our query struct as a JSON string
 func (c *CypherQuery) String() string {
 	marshaledStruct, err := json.Marshal(c)
 	if err != nil {

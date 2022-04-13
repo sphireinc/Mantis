@@ -3,14 +3,18 @@ package data
 import (
 	"encoding/json"
 	"errors"
-	"github.com/jwilder/gojq"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/jwilder/gojq"
+	"gopkg.in/yaml.v2"
 )
 
+// Path enumerators
+// File
+// Directory
 const (
 	Path int = iota
 	File
@@ -49,8 +53,8 @@ func IsStringTrue(str string) bool {
 	return false
 }
 
-// QueryJson queries a json object for a given path
-func QueryJson(obj string, query string) (interface{}, error) {
+// QueryJSON queries a json object for a given path
+func QueryJSON(obj string, query string) (interface{}, error) {
 	parser, err := gojq.NewStringQuery(obj)
 	if err != nil {
 		return "", err

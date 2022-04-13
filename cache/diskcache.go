@@ -16,11 +16,13 @@ type diskCache struct {
 	filename string
 }
 
+// DiskCache primary struct with an array of diskCache (key:filename) and the primary directory
 type DiskCache struct {
 	data      []diskCache
 	directory string
 }
 
+// New creates a new DiskCache using the tmp directory
 func New() *DiskCache {
 	return &DiskCache{
 		directory: newTmpDir(),
@@ -65,6 +67,7 @@ func (D *DiskCache) newTmpFile(key string) *os.File {
 	return file
 }
 
+// Set some data to a given key
 func (D *DiskCache) Set(key string, data any) error {
 	key = hash(key)
 	file := D.newTmpFile(key)
@@ -86,6 +89,7 @@ func (D *DiskCache) Set(key string, data any) error {
 	return nil
 }
 
+// Get the data pointed to by a key
 func (D *DiskCache) Get(key string) (any, error) {
 	key = hash(key)
 

@@ -10,6 +10,7 @@ import (
 	"strings"
 )
 
+// Request holds our http client and corresponding request data
 type Request struct {
 	Client       http.Client
 	Request      *Request          `json:"request,omitempty"`
@@ -20,6 +21,7 @@ type Request struct {
 	ContentType  string            `json:"content_type,omitempty"`
 }
 
+// String converts our Request struct into a JSON string
 func (r *Request) String() string {
 	marshaledStruct, err := json.Marshal(r)
 	if err != nil {
@@ -28,6 +30,7 @@ func (r *Request) String() string {
 	return string(marshaledStruct)
 }
 
+// Response holds our response object, as well as a pointer to the original request
 type Response struct {
 	Request     *Request       `json:"request,omitempty"`
 	RawRequest  *http.Request  `json:"raw_request,omitempty"`
@@ -37,6 +40,7 @@ type Response struct {
 	Error       error          `json:"error,omitempty"`
 }
 
+// String converts our Response struct into a JSON string
 func (r *Response) String() string {
 	marshaledStruct, err := json.Marshal(r)
 	if err != nil {
@@ -45,6 +49,7 @@ func (r *Response) String() string {
 	return string(marshaledStruct)
 }
 
+// Get performs a GET request hanging off of our Request pointer and returns a pointer to the Response object
 func (r *Request) Get() *Response {
 	req, err := http.NewRequest("GET", r.URL, nil)
 	if err != nil {
@@ -73,6 +78,7 @@ func (r *Request) Get() *Response {
 	return &response
 }
 
+// Post performs a POST request hanging off of our Request pointer and returns a pointer to the Response object
 func (r *Request) Post() *Response {
 	response := Response{}
 

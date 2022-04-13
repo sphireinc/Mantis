@@ -2,11 +2,13 @@ package aws
 
 import (
 	"context"
+	"log"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
-	"log"
 )
 
+// AWS primary struct with context and aws.config
 type AWS struct {
 	context context.Context
 	config  aws.Config

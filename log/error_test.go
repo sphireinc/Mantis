@@ -3,8 +3,9 @@ package log
 import (
 	"errors"
 	"fmt"
-	validation "github.com/go-ozzo/ozzo-validation"
 	"testing"
+
+	validation "github.com/go-ozzo/ozzo-validation"
 )
 
 func TestHandleError(t *testing.T) {

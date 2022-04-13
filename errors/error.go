@@ -2,25 +2,28 @@ package errors
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"time"
 )
 
+// Errors holds our code, message, timestamp
 type Errors struct {
 	code      int32
 	message   string
 	timestamp time.Time
 }
 
+// Code returns the error code
 func (e *Errors) Code() int32 {
 	return e.code
 }
 
+// Message returns the error message
 func (e *Errors) Message() string {
 	return e.message
 }
 
+// Time returns the error timestamp
 func (e *Errors) Time() time.Time {
 	return e.timestamp
 }
@@ -52,5 +55,5 @@ func (e *Errors) MarshalJSON() ([]byte, error) {
 
 // Marshal creates a Go STD error from our Errors object
 func (e *Errors) Marshal() error {
-	return errors.New(fmt.Sprintf("%v (error %v) %v", e.Time(), e.Code(), e.Message()))
+	return fmt.Errorf("%v (error %v) %v", e.Time(), e.Code(), e.Message())
 }

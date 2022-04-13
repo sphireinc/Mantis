@@ -6,17 +6,18 @@ import (
 
 // source & credit: https://ieftimov.com/post/golang-datastructures-trees/
 
-type treeNode struct {
+// TreeNode is a node within our tree
+type TreeNode struct {
 	id       string
 	name     string
 	value    any
-	parent   *treeNode
-	children []*treeNode
+	parent   *TreeNode
+	children []*TreeNode
 }
 
 // NewTree creates a new tree
-func NewTree(id string, name string, value any) *treeNode {
-	return &treeNode{
+func NewTree(id string, name string, value any) *TreeNode {
+	return &TreeNode{
 		id:    id,
 		name:  name,
 		value: value,
@@ -24,8 +25,8 @@ func NewTree(id string, name string, value any) *treeNode {
 }
 
 // Insert a new node into our tree under a given parent
-func (tree *treeNode) Insert(id string, name string, value any, parentId string) (bool, error) {
-	parent := tree.FindById(parentId)
+func (tree *TreeNode) Insert(id string, name string, value any, parentID string) (bool, error) {
+	parent := tree.FindByID(parentID)
 	if parent == nil {
 		return false, errors.New("parent is nil")
 	}
@@ -36,7 +37,7 @@ func (tree *treeNode) Insert(id string, name string, value any, parentId string)
 		}
 	}
 
-	child := &treeNode{
+	child := &TreeNode{
 		id:     id,
 		name:   name,
 		value:  value,
@@ -47,9 +48,9 @@ func (tree *treeNode) Insert(id string, name string, value any, parentId string)
 	return true, nil
 }
 
-// FindById finds a given node by its ID (BFS)
-func (tree *treeNode) FindById(id string) *treeNode {
-	queue := append(make([]*treeNode, 0), tree)
+// FindByID finds a given node by its ID (BFS)
+func (tree *TreeNode) FindByID(id string) *TreeNode {
+	queue := append(make([]*TreeNode, 0), tree)
 	for len(queue) > 0 {
 		next := queue[0]
 		queue = queue[1:]
@@ -65,8 +66,8 @@ func (tree *treeNode) FindById(id string) *treeNode {
 	return nil
 }
 
-// FindByIdDFS finds a given node by its ID (DFS)
-func (tree *treeNode) FindByIdDFS(id string) *treeNode {
+// FindByIDDFS finds a given node by its ID (DFS)
+func (tree *TreeNode) FindByIDDFS(id string) *TreeNode {
 	if tree.id == id {
 		return tree
 	}
@@ -75,13 +76,13 @@ func (tree *treeNode) FindByIdDFS(id string) *treeNode {
 		return tree
 	}
 	for _, child := range tree.children {
-		tree = child.FindByIdDFS(id)
+		tree = child.FindByIDDFS(id)
 	}
 	return tree
 }
 
 // Remove a given node from our tree
-func (tree *treeNode) Remove(node *treeNode) {
+func (tree *TreeNode) Remove(node *TreeNode) {
 	for idx, sibling := range node.parent.children {
 		if sibling == node {
 			node.parent.children = append(

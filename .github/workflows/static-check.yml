@@ -68,4 +68,4 @@ jobs:
         with:
           run: sec
           token: ${{ secrets.GITHUB_TOKEN }}
-          flags: "-exclude=G104"
+          flags: "-exclude=G501"

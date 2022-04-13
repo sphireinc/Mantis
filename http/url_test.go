@@ -124,8 +124,8 @@ func TestParseUrl(t *testing.T) {
 		Fragment:   "",
 	}
 
-	firstTest, err1 := ParseUrl("")
-	secondTest, err2 := ParseUrl("https://google.com/maps?v=1")
+	firstTest, err1 := ParseURL("")
+	secondTest, err2 := ParseURL("https://google.com/maps?v=1")
 
 	if err1 != nil {
 		t.Fatalf("Expected error to be nil, received error: %s", err1.Error())

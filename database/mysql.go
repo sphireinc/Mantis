@@ -3,15 +3,18 @@ package database
 import (
 	"database/sql"
 	"encoding/json"
+
 	"github.com/go-sql-driver/mysql"
 )
 
+// MySQL is our primary struct
 type MySQL struct {
 	LastQuery  string
 	Connection *sql.DB
 	Config     mysql.Config
 }
 
+// ConfigString turns our configuration into a JSON string
 func (m *MySQL) ConfigString() string {
 	marshaledStruct, err := json.Marshal(m.Config)
 	if err != nil {
@@ -20,6 +23,7 @@ func (m *MySQL) ConfigString() string {
 	return string(marshaledStruct)
 }
 
+// String returns our MySQL struct as a JSON string
 func (m *MySQL) String() string {
 	marshaledStruct, err := json.Marshal(m)
 	if err != nil {

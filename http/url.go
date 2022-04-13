@@ -32,7 +32,7 @@ func GetQueryParameters(r *http.Request) url.Values {
 	return r.URL.Query()
 }
 
-// ParseUrl returns a *http.URL from a given URL string
-func ParseUrl(rawurl string) (*url.URL, error) {
+// ParseURL returns a *http.URL from a given URL string
+func ParseURL(rawurl string) (*url.URL, error) {
 	return url.Parse(rawurl)
 }

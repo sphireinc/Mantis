@@ -3,13 +3,14 @@ package data
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"mantis/helper"
 	"os"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"gopkg.in/yaml.v2"
 )
 
 func TestExists(t *testing.T) {
@@ -76,10 +77,10 @@ func TestIsStringTrue(t *testing.T) {
 
 func TestQueryJson(t *testing.T) {
 	// Test error paths first
-	_, err := QueryJson("", "a")
+	_, err := QueryJSON("", "a")
 	assert.NotNil(t, err)
 
-	_, err = QueryJson("{}", "a")
+	_, err = QueryJSON("{}", "a")
 	assert.NotNil(t, err)
 
 	tests := []struct {
@@ -92,7 +93,7 @@ func TestQueryJson(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			result, err := QueryJson(test.json, test.key)
+			result, err := QueryJSON(test.json, test.key)
 			assert.Nil(t, err)
 			if !reflect.DeepEqual(result, test.expected) {
 				t.Fatalf("expected '%f', got '%f'", test.expected, result)

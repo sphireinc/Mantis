@@ -2,19 +2,23 @@ package data
 
 import "fmt"
 
-type stack struct {
+// Stack holds our data
+type Stack struct {
 	values []any
 }
 
-func NewStack() *stack {
-	return &stack{}
+// NewStack creates a new Stack
+func NewStack() *Stack {
+	return &Stack{}
 }
 
-func (S *stack) Insert(value any) {
+// Insert a value into our stack
+func (S *Stack) Insert(value any) {
 	S.values = append(S.values, value)
 }
 
-func (S *stack) Pop() any {
+// Pop a value from the top of our stack
+func (S *Stack) Pop() any {
 	i := len(S.values) - 1
 
 	if i < 0 {
@@ -27,10 +31,12 @@ func (S *stack) Pop() any {
 	return value
 }
 
-func (S *stack) Len() int {
+// Len returns the length of our stack
+func (S *Stack) Len() int {
 	return len(S.values)
 }
 
-func (S *stack) String() string {
+// String converts our stack into a list
+func (S *Stack) String() string {
 	return fmt.Sprintf("%+v", S.values)
 }

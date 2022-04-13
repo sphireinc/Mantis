@@ -1,5 +1,1 @@
 package mantis
-
-func main() {
-
-}

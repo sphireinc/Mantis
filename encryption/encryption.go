@@ -14,6 +14,14 @@ import (
 	"time"
 )
 
+// Md5 are our enumerators
+// Sha224
+// Sha256
+// Sha384
+// Sha512
+// Sha512224
+// Sha512256
+// Hmac512
 const (
 	Md5 int8 = iota
 	Sha224
@@ -25,7 +33,8 @@ const (
 	Hmac512
 )
 
-type mHash struct {
+// MHash our input/output tracking struct
+type MHash struct {
 	input     string
 	isHashed  bool
 	Output    string
@@ -33,7 +42,7 @@ type mHash struct {
 }
 
 // MarshalJSON implements the JSON encoding interface
-func (h *mHash) MarshalJSON() ([]byte, error) {
+func (h *MHash) MarshalJSON() ([]byte, error) {
 	return json.Marshal(map[string]interface{}{
 		"input":     h.input,
 		"output":    h.Output,
@@ -41,21 +50,21 @@ func (h *mHash) MarshalJSON() ([]byte, error) {
 	})
 }
 
-// New returns an instance of mHash given our input and algorithm
-func New(input string, algorithm int8) *mHash {
-	return &mHash{
+// New returns an instance of MHash given our input and algorithm
+func New(input string, algorithm int8) *MHash {
+	return &MHash{
 		input:     input,
 		algorithm: algorithm,
 	}
 }
 
-// IsHashed tells us whether our mHash has been mHash()'d
-func (h *mHash) IsHashed() bool {
+// IsHashed tells us whether our MHash has been MHash()'d
+func (h *MHash) IsHashed() bool {
 	return h.isHashed
 }
 
 // Algorithm returns the chosen algorithm as a string and int
-func (h *mHash) Algorithm() (int8, string) {
+func (h *MHash) Algorithm() (int8, string) {
 	switch h.algorithm {
 	case 0:
 		return Md5, "md5"
@@ -78,17 +87,17 @@ func (h *mHash) Algorithm() (int8, string) {
 }
 
 // GetInput returns the initial input
-func (h *mHash) GetInput() string {
+func (h *MHash) GetInput() string {
 	return h.input
 }
 
 // GetOutput returns the hashed output
-func (h *mHash) GetOutput() string {
+func (h *MHash) GetOutput() string {
 	return h.Output
 }
 
 // Hash performs our hash, fills in Output, and unsets input
-func (h *mHash) Hash() {
+func (h *MHash) Hash() {
 	if h.algorithm == Hmac512 {
 		hmac512 := hmac.New(sha512.New, []byte(h.input))
 		hmac512.Write([]byte(h.input))

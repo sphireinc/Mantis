@@ -37,7 +37,7 @@ func TestBase64EncodeUrl(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			encodedStr := Base64EncodeUrl(test.rawStr)
+			encodedStr := Base64EncodeURL(test.rawStr)
 			if encodedStr != test.encodedStr {
 				t.Fatalf("expected '%s', got '%s'", test.encodedStr, encodedStr)
 			}

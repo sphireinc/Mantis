@@ -8,18 +8,19 @@ type linkedListNode struct {
 	key      any
 }
 
-type list struct {
+// List holds our linked list
+type List struct {
 	head *linkedListNode
 	tail *linkedListNode
 }
 
-// NewLinkedList returns an instance of list
-func NewLinkedList() *list {
-	return &list{}
+// NewLinkedList returns an instance of List
+func NewLinkedList() *List {
+	return &List{}
 }
 
-// Insert a key and value into a linked list
-func (L *list) Insert(key any) {
+// Insert a key and value into a linked List
+func (L *List) Insert(key any) {
 	// create our new node
 	newNode := &linkedListNode{
 		next: L.head,
@@ -39,12 +40,12 @@ func (L *list) Insert(key any) {
 	L.tail = node
 }
 
-// Pop returns a key from a list (FIFO)
-func (L *list) Pop() any {
+// Pop returns a key from a List (FIFO)
+func (L *List) Pop() any {
 	// copy the tail to return the copy
 	tail := L.tail
 
-	// Reset our list positions
+	// Reset our List positions
 	node := L.tail
 	for node.previous != nil {
 		node = node.previous
@@ -57,13 +58,13 @@ func (L *list) Pop() any {
 	return tail.key
 }
 
-// Print our list
-func (L *list) Print() {
+// Print our List
+func (L *List) Print() {
 	fmt.Println(L.String(""))
 }
 
-// String returns our list as a string
-func (L *list) String(delimiter string) string {
+// String returns our List as a string
+func (L *List) String(delimiter string) string {
 	var output string
 
 	if delimiter == "" {
@@ -79,7 +80,7 @@ func (L *list) String(delimiter string) string {
 	return output[0 : len(output)-4]
 }
 
-func (L *list) Reverse() {
+func (L *List) Reverse() {
 	var prev *linkedListNode
 	current := L.head
 	for current != nil {

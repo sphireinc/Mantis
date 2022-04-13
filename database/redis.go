@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"github.com/go-redis/redis/v8"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
+// Redis is our primary struct
 type Redis struct {
 	client      *redis.Client
 	context     context.Context
@@ -15,6 +17,7 @@ type Redis struct {
 	IsConnected bool
 }
 
+// String returns our Redis struct as a string
 func (r *Redis) String() string {
 	marshaledStruct, err := json.Marshal(r)
 	if err != nil {
@@ -23,6 +26,7 @@ func (r *Redis) String() string {
 	return string(marshaledStruct)
 }
 
+// Init creates a new Redis connection
 func (r *Redis) Init() error {
 	r.context = context.Background()
 	r.client = redis.NewClient(r.Options)
@@ -62,6 +66,7 @@ func (r *Redis) Set(key string, value string, expiration time.Duration) error {
 	return r.client.Set(r.context, key, value, expiration).Err()
 }
 
+// GetRawConnectionAndContext returns both our Redis client and the latest context
 func (r *Redis) GetRawConnectionAndContext() (*redis.Client, context.Context) {
 	return r.client, r.context
 }

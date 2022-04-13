@@ -35,9 +35,21 @@ Mantis is pre-production - use at your own risk. If you do decide to use it, be 
 
 # Mantis
 
+Mantis is a 
+
 Mantis is a common helper library within the Sphire ecosystem. Packages are largely developed 
 to have no effect on the parent application. Helper functions are (or will be in some cases) 
 developed to accept, act on, and return data with no side effects.
+
+
+
+A collection of libraries implementing some patterns and functionality that is common across many applications. You can sort of think about Mantis as a "standard library" for Jet's Golang codebase.
+
+The goal of Mantis is twofold:
+
+Develop a suite of high-level behaviors which can be implemented by first or third-party libraries.
+Implement some core functionality not present in the go standard library which is common across many applications and libraries - without needing to import a lot of third-party libraries which may be yanked at any time, or cause import problems due to renaming.
+
 
 # Usage
 
@@ -63,6 +75,26 @@ func main(){
 Each package can be tested independently via `go test`, or all packages can be tested from 
 the root via `go test ./...`
 
+# Local Development
+
+You should ideally install these packages:
+
+```bash
+go install golang.org/x/lint/golint@latest
+go install github.com/securego/gosec/v2/cmd/gosec@latest
+go install golang.org/x/tools/cmd/goimports@latest
+go install honnef.co/go/tools/cmd/staticcheck@latest
+```
+
+Then you should run these commands, ideally as a pre-commit check:
+
+```bash
+go fmt
+go vet
+golint package_name
+staticcheck
+goimports -v -e -w package_name
+```
 
 # Contributing
 

@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Log is our primary log struct
 type Log struct {
 	Logger      *log.Logger `json:"logger,omitempty"`
 	Filename    string      `json:"filename,omitempty"`
@@ -17,6 +18,7 @@ type Log struct {
 	PrintToTerm bool        `json:"print_to_term,omitempty"`
 }
 
+// String converts our Log struct into a JSON string
 func (l *Log) String() string {
 	marshaledStruct, err := json.Marshal(l)
 	if err != nil {

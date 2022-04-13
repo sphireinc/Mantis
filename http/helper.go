@@ -5,11 +5,12 @@ import (
 	"net/http"
 )
 
-type ResponseJsonError struct {
+// ResponseJSONError is our response JSON error struct
+type ResponseJSONError struct {
 	Error string `json:"error,omitempty"`
 }
 
-func (r *ResponseJsonError) String() string {
+func (r *ResponseJSONError) String() string {
 	marshaledStruct, err := json.Marshal(r)
 	if err != nil {
 		return err.Error()
@@ -17,14 +18,15 @@ func (r *ResponseJsonError) String() string {
 	return string(marshaledStruct)
 }
 
-type ResponseJsonOk struct {
+// ResponseJSONOk is our response JSON struct
+type ResponseJSONOk struct {
 	Data string `json:"data,omitempty"`
 }
 
-func (r *ResponseJsonOk) String() string {
+func (r *ResponseJSONOk) String() string {
 	marshaledStruct, err := json.Marshal(r)
 	if err != nil {
-		jsonError := ResponseJsonError{
+		jsonError := ResponseJSONError{
 			Error: err.Error(),
 		}
 		return jsonError.String()
@@ -32,11 +34,13 @@ func (r *ResponseJsonOk) String() string {
 	return string(marshaledStruct)
 }
 
+// ResponseCodes holds our response codes and their description
 type ResponseCodes struct {
 	code        int16
 	description string
 }
 
+// String converts all of our response codes into a JSON string
 func (r *ResponseCodes) String() string {
 	marshaledStruct, err := json.Marshal(r)
 	if err != nil {

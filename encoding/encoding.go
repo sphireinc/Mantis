@@ -12,8 +12,8 @@ func Base64EncodeStd(data string) string {
 	return base64.StdEncoding.EncodeToString(dataToEncode)
 }
 
-// Base64EncodeUrl encodes a string into a Base64 string that is url-compatible
-func Base64EncodeUrl(data string) string {
+// Base64EncodeURL encodes a string into a Base64 string that is url-compatible
+func Base64EncodeURL(data string) string {
 	dataToEncode := []byte(data)
 	return base64.URLEncoding.EncodeToString(dataToEncode)
 }
