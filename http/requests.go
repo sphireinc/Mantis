@@ -12,10 +12,10 @@ import (
 
 // Request holds our http client and corresponding request data
 type Request struct {
-	Client       http.Client
-	Request      *Request
+	Client       http.Client       `json:"-"`
+	Request      *Request          `json:"-"`
 	URL          string            `json:"url,omitempty"`
-	Headers      http.Header       `json:"headers,omitempty"`
+	Headers      http.Header       `json:"-"`
 	PostBody     map[string]string `json:"post_body,omitempty"`
 	PostBodyJSON []byte            `json:"post_body_json,omitempty"`
 	ContentType  string            `json:"content_type,omitempty"`
@@ -32,12 +32,12 @@ func (r *Request) String() string {
 
 // Response holds our response object, as well as a pointer to the original request
 type Response struct {
-	Request     *Request
-	RawRequest  *http.Request
-	Body        []byte `json:"body,omitempty"`
-	BodyString  string `json:"body_string,omitempty"`
-	RawResponse *http.Response
-	Error       error `json:"error,omitempty"`
+	Request     *Request       `json:"-"`
+	RawRequest  *http.Request  `json:"-"`
+	Body        []byte         `json:"body,omitempty"`
+	BodyString  string         `json:"body_string,omitempty"`
+	RawResponse *http.Response `json:"-"`
+	Error       error          `json:"error,omitempty"`
 }
 
 // String converts our Response struct into a JSON string
