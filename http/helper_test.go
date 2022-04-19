@@ -17,7 +17,7 @@ func TestGetHTTPErrorCodeMessage(t *testing.T) {
 			description: "OK",
 		}},
 		{700, ResponseCodes{
-			code:        001,
+			code:        520,
 			description: "Unknown",
 		}},
 	}

@@ -49,6 +49,7 @@ func (r *ResponseCodes) String() string {
 func GetHTTPResponseCode(code int) ResponseCodes {
 	text := http.StatusText(code)
 	if text == "" {
+		code = 520
 		text = "Unknown"
 	}
 
