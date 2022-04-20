@@ -3,7 +3,6 @@ package http
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 )
 
 // ResponseJSONError is our response JSON error struct
@@ -47,7 +46,7 @@ func (r *ResponseCodes) String() string {
 
 // GetHTTPResponseCode returns the description of a numeric HTTP code
 func GetHTTPResponseCode(code int) ResponseCodes {
-	text := http.StatusText(code)
+	text := StatusText(code)
 	if text == "" {
 		code = 520
 		text = "Unknown"
