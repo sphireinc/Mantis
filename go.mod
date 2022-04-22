@@ -1,4 +1,4 @@
-module mantis
+module github.com/sphireinc/mantis
 
 go 1.18
 
