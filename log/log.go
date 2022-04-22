@@ -10,6 +10,14 @@ import (
 	"time"
 )
 
+const (
+	INFO = iota
+	WARN
+	ERROR
+	FATAL
+	PANIC
+)
+
 // Log is our primary log struct
 type Log struct {
 	Logger      *log.Logger `json:"logger,omitempty"`
@@ -64,6 +72,28 @@ func (l *Log) Write(msg string) {
 			fmt.Println(logMessage)
 		}
 		l.Logger.Println(logMessage)
+	}
+}
+
+// writer a message to log and prepend time
+func (l *Log) writer(logLevel int16, msg string) {
+	logMessage := func(msg string, logLevelStr string) string {
+		return fmt.Sprintf("%s %s", logLevelStr, msg)
+	}
+
+	if l.Status {
+		switch logLevel {
+		case INFO:
+			l.Logger.Println(logMessage("INFO", msg))
+		case WARN:
+			l.Logger.Println(logMessage("WARN", msg))
+		case ERROR:
+			l.Logger.Println(logMessage("ERROR", msg))
+		case FATAL:
+			l.Logger.Fatalln(logMessage("FATAL", msg))
+		case PANIC:
+			l.Logger.Panicln(logMessage("PANIC", msg))
+		}
 	}
 }
 
