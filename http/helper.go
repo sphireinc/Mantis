@@ -10,12 +10,10 @@ type ResponseJSONError struct {
 	Error string `json:"error,omitempty"`
 }
 
-func (r *ResponseJSONError) String() string {
-	marshaledStruct, err := json.Marshal(r)
-	if err != nil {
-		return err.Error()
-	}
-	return string(marshaledStruct)
+// Byte converts our ResponseJSONError struct into a JSON []byte
+func (r *ResponseJSONError) Byte() []byte {
+	marshaledStruct, _ := json.Marshal(r)
+	return marshaledStruct
 }
 
 // ResponseJSONOk is our response JSON struct
@@ -23,15 +21,10 @@ type ResponseJSONOk struct {
 	Data string `json:"data,omitempty"`
 }
 
-func (r *ResponseJSONOk) String() string {
-	marshaledStruct, err := json.Marshal(r)
-	if err != nil {
-		jsonError := ResponseJSONError{
-			Error: err.Error(),
-		}
-		return jsonError.String()
-	}
-	return string(marshaledStruct)
+// Byte converts our ResponseJSONOk struct into a JSON []byte
+func (r *ResponseJSONOk) Byte() []byte {
+	marshaledStruct, _ := json.Marshal(r)
+	return marshaledStruct
 }
 
 // ResponseCodes holds our response codes and their description

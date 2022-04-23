@@ -21,13 +21,11 @@ type Request struct {
 	ContentType  string            `json:"content_type,omitempty"`
 }
 
-// String converts our Request struct into a JSON string
-func (r *Request) String() string {
-	marshaledStruct, err := json.Marshal(r)
-	if err != nil {
-		return err.Error()
-	}
-	return string(marshaledStruct)
+// Byte converts our Request struct into a JSON []byte
+func (r *Request) Byte() []byte {
+	marshaledStruct, _ := json.Marshal(r)
+
+	return marshaledStruct
 }
 
 // Response holds our response object, as well as a pointer to the original request
@@ -40,13 +38,10 @@ type Response struct {
 	Error       error          `json:"error,omitempty"`
 }
 
-// String converts our Response struct into a JSON string
-func (r *Response) String() string {
-	marshaledStruct, err := json.Marshal(r)
-	if err != nil {
-		return err.Error()
-	}
-	return string(marshaledStruct)
+// Byte converts our Response struct into a JSON []byte
+func (r *Response) Byte() []byte {
+	marshaledStruct, _ := json.Marshal(r)
+	return marshaledStruct
 }
 
 // Get performs a GET request hanging off of our Request pointer and returns a pointer to the Response object
