@@ -96,7 +96,6 @@ func (l *Log) writer(logLevel int, msg string) {
 		return fmt.Sprintf("%s %s", logLevelStr, msg)
 	}
 
-	fmt.Println(msg, logLevel, l.MinLogLevel)
 	if logLevel < l.MinLogLevel {
 		return
 	}
