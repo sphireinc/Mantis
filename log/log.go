@@ -73,7 +73,7 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 }
 
 func (l *Log) SetLogLevel(level int) {
-	if level < INFO || level > FATAL {
+	if level < INFO || level > PANIC {
 		level = INFO
 	}
 	l.MinLogLevel = level
@@ -91,9 +91,14 @@ func (l *Log) Write(msg string) {
 }
 
 // writer a message to log and prepend time
-func (l *Log) writer(logLevel int16, msg string) {
+func (l *Log) writer(logLevel int, msg string) {
 	logMessage := func(logLevelStr string, msg string) string {
 		return fmt.Sprintf("%s %s", logLevelStr, msg)
+	}
+
+	fmt.Println(msg, logLevel, l.MinLogLevel)
+	if logLevel < l.MinLogLevel {
+		return
 	}
 
 	if l.Status {

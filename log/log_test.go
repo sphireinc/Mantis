@@ -7,13 +7,17 @@ import (
 )
 
 func TestLog(t *testing.T) {
-	lg, err := New(os.TempDir()+string(os.PathSeparator)+"sph_test.log", true, false)
+	lg, err := New(os.TempDir()+string(os.PathSeparator)+"sph_test.log", true, true)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	lg.Write("HELLO")
-	lg.Write("HELLO")
-	lg.Write("HELLO")
-	lg.Write("HELLO")
+	lg.SetLogLevel(INFO)
+
+	lg.Write("Write")
+	lg.Info("INFO")
+	lg.Warn("WARN")
+	lg.Error("ERROR")
+	lg.Fatal("FATAL")
+	lg.Panic("PANIC")
 }
