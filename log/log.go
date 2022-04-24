@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 const (
@@ -64,10 +63,9 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 		return nil, err
 	}
 
-	L.Logger = log.New(logFile, "", log.LstdFlags)
-	L.Logger.SetPrefix(time.Now().Format("2006-01-02 15:04:05"))
-	L.Write("Log successfully initiated")
+	L.Logger = log.New(logFile, "", log.LstdFlags|log.Lmicroseconds|log.LUTC)
 	L.Status = true
+	L.Write("Mantis.Log successfully initiated: " + filename)
 
 	return &L, nil
 }
@@ -75,7 +73,7 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 // Write a message to log and prepend time
 func (l *Log) Write(msg string) {
 	if l.Status {
-		logMessage := fmt.Sprintf(" %s", msg)
+		logMessage := fmt.Sprintf("%s", msg)
 		if l.PrintToTerm {
 			fmt.Println(logMessage)
 		}
