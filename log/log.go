@@ -24,6 +24,7 @@ type Log struct {
 	Filename    string      `json:"filename,omitempty"`
 	Status      bool        `json:"status,omitempty"`
 	PrintToTerm bool        `json:"print_to_term,omitempty"`
+	Overwrite   bool        `json:"overwrite,omitempty"`
 }
 
 // String converts our Log struct into a JSON string
@@ -36,7 +37,7 @@ func (l *Log) String() string {
 }
 
 // New creates a new Log instance given filename
-func New(filename string) (*Log, error) {
+func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 	// if filename is empty, create a local log where executable is
 	if filename == "" {
 		absPath, err := os.Executable()
@@ -48,10 +49,17 @@ func New(filename string) (*Log, error) {
 
 	L := Log{
 		Filename:    filename,
-		PrintToTerm: false,
+		PrintToTerm: printToTerm,
+		Overwrite:   overwrite,
 	}
 
-	logFile, err := os.OpenFile(L.Filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0755)
+	flags := os.O_WRONLY | os.O_CREATE | os.O_APPEND
+	if L.Overwrite {
+		flags = os.O_WRONLY | os.O_CREATE | os.O_TRUNC
+	}
+
+	logFile, err := os.OpenFile(L.Filename, flags, 0755)
+
 	if err != nil {
 		return nil, err
 	}
