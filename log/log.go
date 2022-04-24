@@ -77,7 +77,7 @@ func (l *Log) Write(msg string) {
 
 // writer a message to log and prepend time
 func (l *Log) writer(logLevel int16, msg string) {
-	logMessage := func(msg string, logLevelStr string) string {
+	logMessage := func(logLevelStr string, msg string) string {
 		return fmt.Sprintf("%s %s", logLevelStr, msg)
 	}
 
