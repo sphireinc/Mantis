@@ -24,6 +24,7 @@ type Log struct {
 	Status      bool        `json:"status,omitempty"`
 	PrintToTerm bool        `json:"print_to_term,omitempty"`
 	Overwrite   bool        `json:"overwrite,omitempty"`
+	MinLogLevel int         `json:"minLogLevel,omitempty"`
 }
 
 // String converts our Log struct into a JSON string
@@ -50,6 +51,7 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 		Filename:    filename,
 		PrintToTerm: printToTerm,
 		Overwrite:   overwrite,
+		MinLogLevel: INFO,
 	}
 
 	flags := os.O_WRONLY | os.O_CREATE | os.O_APPEND
@@ -68,6 +70,13 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 	L.Write("Mantis.Log successfully initiated: " + filename)
 
 	return &L, nil
+}
+
+func (l *Log) SetLogLevel(level int) {
+	if level < INFO || level > FATAL {
+		level = INFO
+	}
+	l.MinLogLevel = level
 }
 
 // Write a message to log and prepend time
