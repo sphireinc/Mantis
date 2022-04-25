@@ -40,7 +40,18 @@ type Response struct {
 
 // Byte converts our Response struct into a JSON []byte
 func (r *Response) Byte() []byte {
-	marshaledStruct, _ := json.Marshal(r)
+	var x map[string]interface{}
+	var err string
+
+	_ = json.Unmarshal(r.Body, &x)
+	if r.Error != nil {
+		err = r.Error.Error()
+	}
+	marshaledStruct, _ := json.Marshal(map[string]interface{}{
+		"body":        x,
+		"body_string": r.BodyString,
+		"error":       err,
+	})
 	return marshaledStruct
 }
 
