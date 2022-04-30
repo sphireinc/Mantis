@@ -12,6 +12,7 @@ require (
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/google/uuid v1.3.0
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/jwilder/gojq v0.0.0-20161018055142-c550732d4a52
 	github.com/stretchr/testify v1.5.1
 	github.com/victorspringer/http-cache v0.0.0-20190721184638-fe78e97af707
