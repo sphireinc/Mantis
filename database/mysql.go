@@ -98,7 +98,7 @@ func (m *MySQL) Select(into []any, query string, args ...any) ([]any, error) {
 	if !m.Connected {
 		return into, errors.New("not connected")
 	}
-	err := m.Connection.Select(&into, query, args...)
+	err := m.Connection.Select(into, query, args...)
 	return into, err
 }
 
@@ -142,7 +142,7 @@ func (m *MySQL) UpdateOne(namedQuery string, updateStruct any) (int64, error) {
 	if !m.Connected {
 		return -1, errors.New("not connected")
 	}
-	result, err := m.Connection.NamedExec(namedQuery, &updateStruct)
+	result, err := m.Connection.NamedExec(namedQuery, updateStruct)
 	if err != nil {
 		return -1, err
 	}
@@ -164,7 +164,7 @@ func (m *MySQL) Update(namedQuery string, updateStructs []any) error {
 	if !m.Connected {
 		return errors.New("not connected")
 	}
-	_, err := m.Connection.NamedExec(namedQuery, &updateStructs)
+	_, err := m.Connection.NamedExec(namedQuery, updateStructs)
 	return err
 }
 
@@ -172,7 +172,7 @@ func (m *MySQL) Update(namedQuery string, updateStructs []any) error {
 // 		persons := Person{Id: 0}
 // 		err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
 func (m *MySQL) DeleteOne(namedQuery string, deleteStruct any) error {
-	_, err := m.Connection.NamedExec(namedQuery, &deleteStruct)
+	_, err := m.Connection.NamedExec(namedQuery, deleteStruct)
 	return err
 }
 
@@ -183,7 +183,7 @@ func (m *MySQL) DeleteOne(namedQuery string, deleteStruct any) error {
 // 		}
 // 		err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
 func (m *MySQL) Delete(namedQuery string, deleteStructs []any) (int64, error) {
-	results, err := m.Connection.NamedExec(namedQuery, &deleteStructs)
+	results, err := m.Connection.NamedExec(namedQuery, deleteStructs)
 	if err != nil {
 		return -1, err
 	}
