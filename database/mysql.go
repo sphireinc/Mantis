@@ -6,7 +6,25 @@ import (
 	"errors"
 	"github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
+	"regexp"
+	"strings"
 )
+
+type MySQLError struct {
+	Name  string
+	Error error
+}
+
+func (m *MySQL) MatchError(err error) MySQLError {
+	matched, _ := regexp.MatchString("duplicate", strings.ToLower(err.Error()))
+	if matched {
+		return MySQLError{
+			Name:  "duplicate",
+			Error: err,
+		}
+	}
+	return MySQLError{}
+}
 
 // MySQL is our primary struct
 type MySQL struct {
@@ -91,7 +109,7 @@ func (m *MySQL) InsertOne(namedQuery string, insertStruct any) (int64, error) {
 	if !m.Connected {
 		return -1, errors.New("not connected")
 	}
-	result, err := m.Connection.NamedExec(namedQuery, &insertStruct)
+	result, err := m.Connection.NamedExec(namedQuery, insertStruct)
 	if err != nil {
 		return -1, err
 	}
@@ -113,7 +131,7 @@ func (m *MySQL) Insert(namedQuery string, insertStruct []any) error {
 	if !m.Connected {
 		return errors.New("not connected")
 	}
-	_, err := m.Connection.NamedExec(namedQuery, &insertStruct)
+	_, err := m.Connection.NamedExec(namedQuery, insertStruct)
 	return err
 }
 
