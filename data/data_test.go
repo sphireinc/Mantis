@@ -189,5 +189,6 @@ func TestMapToString(t *testing.T) {
 	testOne["bar"] = "baz"
 	testOne["baz"] = 1
 	testOne["bay"] = 4.0
-	assert.Equal(t, `{"bar":"baz","bay":4,"baz":1,"foo":"bar"}`, MapToString(testOne))
+	x, _ := MapToString(testOne)
+	assert.Equal(t, `{"bar":"baz","bay":4,"baz":1,"foo":"bar"}`, x)
 }

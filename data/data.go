@@ -110,10 +110,10 @@ func UnmarshalFile(filename string) (map[string]interface{}, error) {
 }
 
 // MapToString takes a map[any]any and returns it as a string
-func MapToString(mapInterface interface{}) string {
+func MapToString(mapInterface interface{}) (string, error) {
 	m, err := json.Marshal(mapInterface)
 	if err != nil {
-		return err.Error()
+		return "", err
 	}
-	return string(m)
+	return string(m), nil
 }
