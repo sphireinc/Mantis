@@ -85,13 +85,13 @@ func GetEnvVariables() map[string]string {
 }
 
 // UnmarshalFile loads and unmarshals either a JSON or YAML file
-func UnmarshalFile(filename string) (map[string]interface{}, error) {
+func UnmarshalFile(filename string) (interface{}, error) {
 	byteValue, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
 
-	var data map[string]interface{}
+	var data interface{}
 
 	filetype := filename[len(filename)-4:]
 	if filetype == "json" {
