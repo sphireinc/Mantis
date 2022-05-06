@@ -3,8 +3,8 @@ package data
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sphireinc/mantis/helper"
 	"io/ioutil"
-	"mantis/helper"
 	"os"
 	"reflect"
 	"testing"
@@ -181,4 +181,13 @@ func TestUnmarshalFile(t *testing.T) {
 	assert.NotNil(t, err)
 	_, err = UnmarshalFile("blahblahblah")
 	assert.NotNil(t, err)
+}
+
+func TestMapToString(t *testing.T) {
+	testOne := make(map[string]any)
+	testOne["foo"] = "bar"
+	testOne["bar"] = "baz"
+	testOne["baz"] = 1
+	testOne["bay"] = 4.0
+	assert.Equal(t, `{"bar":"baz","bay":4,"baz":1,"foo":"bar"}`, MapToString(testOne))
 }
