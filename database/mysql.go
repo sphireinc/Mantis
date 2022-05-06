@@ -84,7 +84,7 @@ func (m *MySQL) SelectOne(into any, query string, args ...any) (any, error) {
 	if !m.Connected {
 		return into, errors.New("not connected")
 	}
-	err := m.Connection.Get(into, query, args)
+	err := m.Connection.Get(into, query, args...)
 	if err == sql.ErrNoRows {
 		return nil, sql.ErrNoRows
 	}
