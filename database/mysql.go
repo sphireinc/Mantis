@@ -94,7 +94,7 @@ func (m *MySQL) SelectOne(into any, query string, args ...any) (any, error) {
 // Select for more than one result is expected
 //      countries := []Countries{}
 //      countries, err := db.Select(&countries, "SELECT * FROM countries ORDER BY name ASC")
-func (m *MySQL) Select(into []any, query string, args ...any) ([]any, error) {
+func (m *MySQL) Select(into any, query string, args ...any) (any, error) {
 	if !m.Connected {
 		return into, errors.New("not connected")
 	}
