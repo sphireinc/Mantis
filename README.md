@@ -28,25 +28,17 @@
 
 # Warning
 
-Mantis is pre-production - use at your own risk. If you do decide to use it, be prepared for breaking changes in the API.
+Mantis is pre-production - use at your own risk.
 
 # Mantis
 
-Mantis is a 
+Mantis is a collection of helper libraries written in order to reduce
+the need to code common patterns and functionality. Subpackages are developed, when possible, 
+to have zero side effects on the parent application - helper functions are (or in some cases will be)
+written in such a manner that they accept, act on, and return data.
 
-Mantis is a common helper library within the Sphire ecosystem. Packages are largely developed 
-to have no effect on the parent application. Helper functions are (or will be in some cases) 
-developed to accept, act on, and return data with no side effects.
-
-
-
-A collection of libraries implementing some patterns and functionality that is common across many applications. You can sort of think about Mantis as a "standard library" for Jet's Golang codebase.
-
-The goal of Mantis is twofold:
-
-Develop a suite of high-level behaviors which can be implemented by first or third-party libraries.
-Implement some core functionality not present in the go standard library which is common across many applications and libraries - without needing to import a lot of third-party libraries which may be yanked at any time, or cause import problems due to renaming.
-
+Mantis, much like its namesake ([Jet's Go-Mantis](https://github.com/jet/go-mantis) library), is the
+"standard library" for Sphire's Golang codebase, used heavily in projects like Sphire Core and Sphire Codex. 
 
 # Usage
 
@@ -62,8 +54,24 @@ import (
 )
 
 func main(){ 
-	var d mantisDate.Date = mantisDate.CurrentTime()
-	fmt.Println(d.String())
+	datem := mantisDate.CurrentTime() // return type: mantisDate.Date
+	fmt.Println(datem.String())
+}
+```
+
+```bash
+$ go run main.go
+{
+  "year": 2009,
+  "month": 11,
+  "day": 10,
+  "hour": 23,
+  "minute": 0,
+  "second": 0,
+  "nanosecond": 0,
+  "unix": 1257894000,
+  "week_day": 2,
+  "year_day": 314
 }
 ```
 
