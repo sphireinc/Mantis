@@ -1,16 +1,14 @@
 package log
 
 import (
-	"fmt"
+	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
 )
 
 func TestLog(t *testing.T) {
 	lg, err := New(os.TempDir()+string(os.PathSeparator)+"sph_test.log", true, true)
-	if err != nil {
-		fmt.Println(err)
-	}
+	assert.Nil(t, err)
 
 	lg.SetLogLevel(INFO)
 
@@ -18,6 +16,6 @@ func TestLog(t *testing.T) {
 	lg.Info("INFO")
 	lg.Warn("WARN")
 	lg.Error("ERROR")
-	lg.Fatal("FATAL")
-	lg.Panic("PANIC")
+	//lg.Fatal("FATAL")
+	//lg.Panic("PANIC")
 }
