@@ -3,12 +3,12 @@ package data
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sphireinc/mantis/helper"
 	"io/ioutil"
 	"os"
 	"reflect"
 	"testing"
 
+	"github.com/sphireinc/mantis/helper"
 	"github.com/stretchr/testify/assert"
 	"gopkg.in/yaml.v2"
 )

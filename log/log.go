@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 )
 
+// INFO, WARN, ERROR, FATAL, PANIC are the package level Log Levels
 const (
 	INFO = iota
 	WARN
@@ -72,6 +73,7 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 	return &L, nil
 }
 
+// SetLogLevel allows the log level to be set using package consts
 func (l *Log) SetLogLevel(level int) {
 	if level < INFO || level > PANIC {
 		level = INFO
@@ -82,11 +84,10 @@ func (l *Log) SetLogLevel(level int) {
 // Write a message to log and prepend time
 func (l *Log) Write(msg string) {
 	if l.Status {
-		logMessage := fmt.Sprintf("%s", msg)
 		if l.PrintToTerm {
-			fmt.Println(logMessage)
+			fmt.Println(msg)
 		}
-		l.Logger.Println(logMessage)
+		l.Logger.Println(msg)
 	}
 }
 

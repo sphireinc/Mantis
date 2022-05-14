@@ -72,7 +72,7 @@ jobs:
         with:
           run: sec
           token: ${{ secrets.GITHUB_TOKEN }}
-          flags: "-exclude=G501"
+          flags: "-exclude=G501,G302,G304"
 
   build:
     runs-on: ubuntu-latest

@@ -4,17 +4,20 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
-	"github.com/go-sql-driver/mysql"
-	"github.com/jmoiron/sqlx"
 	"regexp"
 	"strings"
+
+	"github.com/go-sql-driver/mysql"
+	"github.com/jmoiron/sqlx"
 )
 
+// MySQLError provides a common struct for MySQL Errors
 type MySQLError struct {
 	Name  string
 	Error error
 }
 
+// MatchError matches a MySQL error with a given list of known errors (to be expanded) and returns a MySQLError
 func (m *MySQL) MatchError(err error) MySQLError {
 	matched, _ := regexp.MatchString("duplicate", strings.ToLower(err.Error()))
 	if matched {
@@ -35,6 +38,7 @@ type MySQL struct {
 	Connected          bool
 }
 
+// Default creates a default config based on given parameters
 func (m *MySQL) Default(user, password, address, dbName string) {
 	m.Config = mysql.Config{
 		User:                 user,
