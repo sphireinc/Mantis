@@ -101,6 +101,17 @@ staticcheck
 goimports -v -e -w package_name
 ```
 
+# Go Cyclo
+
+Mantis makes use of `gocyclo` in order to ensure cyclomatic complexity remains low. All functions *should* 
+standardize below a 10, following Tom McCabes categorizations from his "Software Quality Metrics 
+to Identify Risk" presentation for the Department of Homeland Security:
+
+* 1 - 10 Simple procedure, little risk
+* 11 - 20 More complex, moderate risk
+* 21 - 50 Complex, high risk
+* \> 50 Untestable code, very high risk
+
 # Contributing
 
 Please find our contribution guidelines within [CONTRIBUTING.md](https://github.com/sphireinc/Mantis/blob/master/CONTRIBUTING.md)

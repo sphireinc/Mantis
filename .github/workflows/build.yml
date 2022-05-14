@@ -103,7 +103,7 @@ jobs:
       - name: gocyclo
         uses: danhunsaker/golang-github-actions@v1.3.0
         with:
-          run: gocyclo
+          run: cyclo
           token: ${{ secrets.GITHUB_TOKEN }}
 
 
