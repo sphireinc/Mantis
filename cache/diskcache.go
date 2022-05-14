@@ -93,21 +93,24 @@ func (D *DiskCache) Get(key string) (any, error) {
 			filename := D.directory + string(os.PathSeparator) + pattern
 
 			fileInfo, err := os.Stat(filename)
-			if fileInfo.IsDir() && (err == nil || !os.IsNotExist(err) || os.IsExist(err)) {
+			if fileInfo.IsDir() && err == nil {
 				file, err := os.Open(filename)
 				if err != nil {
 					return nil, err
 				}
+
 				reader := bufio.NewReader(file)
 				bytesArr, err := reader.Peek(1024)
 				if err != nil {
 					return nil, err
 				}
+
 				var datum any
 				err = json.Unmarshal(bytesArr, datum)
 				if err != nil {
 					return nil, err
 				}
+
 				return datum, nil
 			}
 		}

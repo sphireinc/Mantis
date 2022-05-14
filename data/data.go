@@ -29,18 +29,14 @@ const (
 func Exists(path string, pathType int) (bool, error) {
 	fileInfo, err := os.Stat(path)
 
-	switch pathType {
-	case 1:
-		if !fileInfo.IsDir() && (err == nil || !os.IsNotExist(err) || os.IsExist(err)) {
+	if !os.IsNotExist(err) {
+		if fileInfo.IsDir() && pathType == Path || pathType == Directory {
 			return true, nil
 		}
-	case 0:
-	case 2:
-		if fileInfo.IsDir() && (!os.IsNotExist(err) || os.IsExist(err)) {
+		if !fileInfo.IsDir() && pathType == File {
 			return true, nil
 		}
 	}
-
 	return false, err
 }
 
