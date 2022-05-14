@@ -158,6 +158,7 @@ jobs:
 
     - name: Build Markdown Pages
       run: |
+        go install github.com/princjef/gomarkdoc/cmd/gomarkdoc@latest
         gomarkdoc --output=docs/code/aws.md ./aws
         gomarkdoc --output=docs/code/byte.md ./byte
         gomarkdoc --output=docs/code/cache.md ./cache
