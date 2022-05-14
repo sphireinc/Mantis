@@ -105,7 +105,7 @@ jobs:
         with:
           run: cyclo
           token: ${{ secrets.GITHUB_TOKEN }}
-
+          flags: "-over=10"
 
 
   build:
