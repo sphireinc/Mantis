@@ -181,6 +181,8 @@ jobs:
     - name: commit
       run: |
         # Stage the file, commit and push
+        git checkout gh-pages
         git add ./docs/code
         git commit -m "gh-pages gomarkdoc GHABOT"
-        git push origin master
+        git push origin gh-pages
+        git checkout master
