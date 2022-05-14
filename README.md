@@ -112,6 +112,23 @@ to Identify Risk" presentation for the Department of Homeland Security:
 * 21 - 50 Complex, high risk
 * \> 50 Untestable code, very high risk
 
+# GoLoC
+
+| Language     | files | blank  | comment | code    |
+|--------------|-------|--------|---------|---------|
+| Go           | 615   | 20,351 | 22,051  | 105,753 |
+| Markdown     | 61    | 1,610  | 0       | 6,389   |
+| Plain Text   | 7     | 160    | 0       | 930     |
+| Makefile     | 4     | 128    | 36      | 476     |
+| XML          | 6     | 0      | 0       | 299     |
+| YAML         | 18    | 49     | 15      | 269     |
+| JSON         | 5     | 0      | 0       | 199     |
+| Assembly     | 1     | 39     | 42      | 134     |
+| Bourne Shell | 3     | 12     | 4       | 74      |
+| TOML         | 3     | 29     | 1       | 73      |
+| BASH         | 2     | 4      | 7       | 33      |
+| TOTAL        | 725   | 22,382 | 22,156  | 114,629 |
+
 # Contributing
 
 Please find our contribution guidelines within [CONTRIBUTING.md](https://github.com/sphireinc/Mantis/blob/master/CONTRIBUTING.md)
