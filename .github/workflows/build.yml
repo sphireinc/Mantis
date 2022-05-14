@@ -154,3 +154,32 @@ jobs:
         name: archive-markdown
         path: |
           docs
+
+
+    - name: Build Markdown Pages
+      run: |
+        gomarkdoc --output=docs/code/aws.md ./aws
+        gomarkdoc --output=docs/code/byte.md ./byte
+        gomarkdoc --output=docs/code/cache.md ./cache
+        gomarkdoc --output=docs/code/data.md ./data
+        gomarkdoc --output=docs/code/database.md ./database
+        gomarkdoc --output=docs/code/date.md ./date
+        gomarkdoc --output=docs/code/encoding.md ./encoding
+        gomarkdoc --output=docs/code/encryption.md ./encryption
+        gomarkdoc --output=docs/code/errors.md ./errors
+        gomarkdoc --output=docs/code/helper.md ./helper
+        gomarkdoc --output=docs/code/http.md ./http
+        gomarkdoc --output=docs/code/log.md ./log
+        gomarkdoc --output=docs/code/uuid.md ./uuid
+
+    - name: Setup git Config
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "<bot@github.com>"
+
+    - name: commit
+      run: |
+        # Stage the file, commit and push
+        git add ./docs/code
+        git commit -m "gh-pages gomarkdoc GHABOT"
+        git push origin master
