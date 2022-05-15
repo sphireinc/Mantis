@@ -4,6 +4,7 @@
 [![Go Version](https://img.shields.io/github/go-mod/go-version/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![License](https://img.shields.io/github/license/sphireinc/mantis)](https://github.com/sphireinc/Mantis/releases/latest)
 [![Codacy and CodeQL](https://github.com/sphireinc/Mantis/actions/workflows/analyze.yml/badge.svg?branch=master)](https://github.com/sphireinc/Mantis/actions/workflows/codeql-analysis.yml)
+[![Documentation](https://img.shields.io/badge/GitHub_Pages-Ready-blue)](https://sphireinc.github.io/Mantis/)
 
 <p>
     <img src="https://raw.githubusercontent.com/sphireinc/Mantis/master/_logo/mantis_logo.png" alt="Sphire Mantis Logo"/>
@@ -25,10 +26,7 @@
   <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/uuid"><img src="https://img.shields.io/badge/UUID-lightgrey" alt=""/></a>&nbsp;
 </p>
 
-
-# Warning
-
-Mantis is pre-production - use at your own risk.
+GH-PAGES
 
 # Mantis
 
@@ -39,6 +37,10 @@ written in such a manner that they accept, act on, and return data.
 
 Mantis, much like its namesake ([Jet's Go-Mantis](https://github.com/jet/go-mantis) library), is the
 "standard library" for Sphire's Golang codebase, used heavily in projects like Sphire Core and Sphire Codex. 
+
+# Warning
+
+Mantis is pre-production - use at your own risk.
 
 # Usage
 
