@@ -26,7 +26,6 @@
   <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/uuid"><img src="https://img.shields.io/badge/UUID-lightgrey" alt=""/></a>&nbsp;
 </p>
 
-GH-PAGES
 
 # Mantis
 
