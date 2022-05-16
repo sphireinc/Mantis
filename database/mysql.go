@@ -131,7 +131,7 @@ func (m *MySQL) InsertOne(namedQuery string, insertStruct any) (int64, error) {
 //			{FirstName: "Sonny"},
 // 		}
 // 		err = db.NamedExec(`INSERT INTO persons (first_name) VALUES (:first_name)`, persons)
-func (m *MySQL) Insert(namedQuery string, insertStruct []any) error {
+func (m *MySQL) Insert(namedQuery string, insertStruct any) error {
 	if !m.Connected {
 		return errors.New("not connected")
 	}
@@ -164,7 +164,7 @@ func (m *MySQL) UpdateOne(namedQuery string, updateStruct any) (int64, error) {
 //			{FirstName: "Sonny"},
 // 		}
 // 		err = db.NamedExec(`UPDATE persons SET first_name=:first_name`, persons)
-func (m *MySQL) Update(namedQuery string, updateStructs []any) error {
+func (m *MySQL) Update(namedQuery string, updateStructs any) error {
 	if !m.Connected {
 		return errors.New("not connected")
 	}
@@ -186,7 +186,7 @@ func (m *MySQL) DeleteOne(namedQuery string, deleteStruct any) error {
 //			{Id: 1},
 // 		}
 // 		err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
-func (m *MySQL) Delete(namedQuery string, deleteStructs []any) (int64, error) {
+func (m *MySQL) Delete(namedQuery string, deleteStructs any) (int64, error) {
 	results, err := m.Connection.NamedExec(namedQuery, deleteStructs)
 	if err != nil {
 		return -1, err
