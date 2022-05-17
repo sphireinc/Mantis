@@ -56,7 +56,7 @@ func (r *Redis) Set(key string, value string, expiration time.Duration) error {
 	return r.client.Set(r.context, key, value, expiration).Err()
 }
 
-// GetRawConnectionAndContext returns both our Redis client and the latest context
+// GetRawConnectionAndContext returns both our Redis Client and the latest context
 func (r *Redis) GetRawConnectionAndContext() (*redis.Client, context.Context) {
 	return r.client, r.context
 }
