@@ -2,6 +2,7 @@ package database
 
 import (
 	"encoding/json"
+
 	"github.com/aerospike/aerospike-client-go"
 )
 
