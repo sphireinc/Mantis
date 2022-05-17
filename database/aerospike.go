@@ -14,13 +14,13 @@ type AerospikeError struct {
 
 // Aerospike is our primary struct
 type Aerospike struct {
-	Client          *aerospike.Client
-	Hostname        string
-	Port            int
-	TLSName         string
-	Policy          *aerospike.ClientPolicy
-	GlobalNamespace string
-	GlobalSetName   string
+	Client          *aerospike.Client       `json:"-"`
+	Hostname        string                  `json:"hostname,omitempty"`
+	Port            int                     `json:"port,omitempty"`
+	TLSName         string                  `json:"TLSName,omitempty"`
+	Policy          *aerospike.ClientPolicy `json:"-"`
+	GlobalNamespace string                  `json:"globalNamespace,omitempty"`
+	GlobalSetName   string                  `json:"globalSetName,omitempty"`
 }
 
 // Default creates a default config based on given parameters
