@@ -11,6 +11,8 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+const mysqlErrorDuplicate = "duplicate"
+
 // MySQLError provides a common struct for MySQL Errors
 type MySQLError struct {
 	Name  string
@@ -19,7 +21,7 @@ type MySQLError struct {
 
 // MatchError matches a MySQL error with a given list of known errors (to be expanded) and returns a MySQLError
 func (m *MySQL) MatchError(err error) MySQLError {
-	matched, _ := regexp.MatchString("duplicate", strings.ToLower(err.Error()))
+	matched, _ := regexp.MatchString(mysqlErrorDuplicate, strings.ToLower(err.Error()))
 	if matched {
 		return MySQLError{
 			Name:  "duplicate",
@@ -79,6 +81,18 @@ func (m *MySQL) Connect() error {
 	m.Connection.SetMaxOpenConns(m.MaxOpenConnections)
 	m.Connected = true
 	return nil
+}
+
+// RawQuery allows one to perform a raw query
+func (m *MySQL) RawQuery(query string, args ...any) (*sql.Rows, error) {
+	if !m.Connected {
+		return nil, errors.New("not connected")
+	}
+	rows, err := m.Connection.Query(query, args)
+	if err != nil {
+		return nil, err
+	}
+	return rows, err
 }
 
 // SelectOne single result, stored within arg:into

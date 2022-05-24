@@ -115,6 +115,8 @@ to Identify Risk" presentation for the Department of Homeland Security:
 
 # GoLoC
 
+Using https://github.com/hhatto/gocloc
+
 | Language     | files | blank  | comment | code    |
 |--------------|-------|--------|---------|---------|
 | Go           | 615   | 20,351 | 22,051  | 105,753 |
