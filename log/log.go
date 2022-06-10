@@ -20,12 +20,13 @@ const (
 
 // Log is our primary log struct
 type Log struct {
-	Logger      *log.Logger `json:"logger,omitempty"`
-	Filename    string      `json:"filename,omitempty"`
-	Status      bool        `json:"status,omitempty"`
-	PrintToTerm bool        `json:"print_to_term,omitempty"`
-	Overwrite   bool        `json:"overwrite,omitempty"`
-	MinLogLevel int         `json:"minLogLevel,omitempty"`
+	Logger         *log.Logger `json:"logger,omitempty"`
+	Filename       string      `json:"filename,omitempty"`
+	Status         bool        `json:"status,omitempty"`
+	PrintToTerm    bool        `json:"print_to_term,omitempty"`
+	Overwrite      bool        `json:"overwrite,omitempty"`
+	MinLogLevel    int         `json:"min_log_level,omitempty"`
+	WriteSeparator string      `json:"write_separator,omitempty"`
 }
 
 // String converts our Log struct into a JSON string
@@ -49,10 +50,11 @@ func New(filename string, printToTerm bool, overwrite bool) (*Log, error) {
 	}
 
 	L := Log{
-		Filename:    filename,
-		PrintToTerm: printToTerm,
-		Overwrite:   overwrite,
-		MinLogLevel: INFO,
+		Filename:       filename,
+		PrintToTerm:    printToTerm,
+		Overwrite:      overwrite,
+		MinLogLevel:    INFO,
+		WriteSeparator: ", ",
 	}
 
 	flags := os.O_WRONLY | os.O_CREATE | os.O_APPEND
@@ -82,12 +84,21 @@ func (l *Log) SetLogLevel(level int) {
 }
 
 // Write a message to log and prepend time
-func (l *Log) Write(msg string) {
+func (l *Log) Write(msg ...string) {
 	if l.Status {
-		if l.PrintToTerm {
-			fmt.Println(msg)
+		logLine := ""
+		msgLen := len(msg) - 1
+		for idx, m := range msg {
+			logLine += m
+			if idx < msgLen {
+				logLine += l.WriteSeparator
+			}
 		}
-		l.Logger.Println(msg)
+
+		if l.PrintToTerm {
+			fmt.Println(logLine)
+		}
+		l.Logger.Println(logLine)
 	}
 }
 

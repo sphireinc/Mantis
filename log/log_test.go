@@ -14,9 +14,10 @@ func TestLog(t *testing.T) {
 	lg.SetLogLevel(INFO)
 
 	lg.Write("Write")
-	lg.Info("INFO")
-	lg.Warn("WARN")
-	lg.Error("ERROR")
+	lg.Write("Write", "Write Two")
+	//lg.Info("INFO")
+	//lg.Warn("WARN")
+	//lg.Error("ERROR")
 	//lg.Fatal("FATAL")
 	//lg.Panic("PANIC")
 }
