@@ -30,28 +30,36 @@ func (r *Request) Byte() []byte {
 
 // Response holds our response object, as well as a pointer to the original request
 type Response struct {
-	Request     *Request       `json:"-"`
-	RawRequest  *http.Request  `json:"-"`
-	Body        []byte         `json:"body,omitempty"`
-	BodyString  string         `json:"body_string,omitempty"`
-	RawResponse *http.Response `json:"-"`
-	Error       error          `json:"error,omitempty"`
+	Request     *Request         `json:"-"`
+	RawRequest  *http.Request    `json:"-"`
+	Body        []byte           `json:"body,omitempty"`
+	BodyString  string           `json:"body_string,omitempty"`
+	RawResponse *http.Response   `json:"-"`
+	Error       error            `json:"error,omitempty"`
+	Errors      map[string]error `json:"errors,omitempty"`
 }
 
 // Byte converts our Response struct into a JSON []byte
 func (r *Response) Byte() []byte {
 	var x map[string]interface{}
-	var err string
+	var output = make(map[string]interface{})
 
 	_ = json.Unmarshal(r.Body, &x)
 	if r.Error != nil {
-		err = r.Error.Error()
+		output["error"] = r.Error.Error()
+	} else {
+		output["body"] = x
 	}
-	marshaledStruct, _ := json.Marshal(map[string]interface{}{
-		"body":        x,
-		"body_string": r.BodyString,
-		"error":       err,
-	})
+
+	if len(r.BodyString) > 0 {
+		output["body_string"] = r.BodyString
+	}
+
+	if len(r.Errors) > 0 {
+		output["errors"] = r.Errors
+	}
+
+	marshaledStruct, _ := json.Marshal(output)
 	return marshaledStruct
 }
 
