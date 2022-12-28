@@ -3,6 +3,7 @@ module github.com/sphireinc/mantis
 go 1.18
 
 require (
+	github.com/aerospike/aerospike-client-go v4.5.2+incompatible
 	github.com/allegro/bigcache v1.2.1
 	github.com/aws/aws-sdk-go-v2 v1.13.0
 	github.com/aws/aws-sdk-go-v2/config v1.13.1
@@ -21,7 +22,6 @@ require (
 )
 
 require (
-	github.com/aerospike/aerospike-client-go v4.5.2+incompatible // indirect
 	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.8.0 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.10.0 // indirect
