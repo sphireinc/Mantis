@@ -24,6 +24,7 @@
   <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/http"><img src="https://img.shields.io/badge/HTTP-critical" alt=""/></a>&nbsp;
   <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/log"><img src="https://img.shields.io/badge/Log-blue" alt=""/></a>&nbsp;
   <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/uuid"><img src="https://img.shields.io/badge/UUID-lightgrey" alt=""/></a>&nbsp;
+  <a target="_blank" href="https://github.com/sphireinc/Mantis/tree/master/validation"><img src="https://img.shields.io/badge/Validation-critical" alt=""/></a>&nbsp;
 </p>
 
 
