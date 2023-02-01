@@ -1,105 +1,105 @@
 package http
 
 type Status struct {
-	Continue                              int64 // 100 RFC 7231, 6.2.1
-	SwitchingProtocols                    int64 // 101 - RFC 7231, 6.2.2
-	Processing                            int64 // 102 - RFC 2518, 10.1
-	EarlyHints                            int64 // 103 - RFC 8297
-	OK                                    int64 // 200 - RFC 7231, 6.3.1
-	Created                               int64 // 201 - RFC 7231, 6.3.2
-	Accepted                              int64 // 202 - RFC 7231, 6.3.3
-	NonAuthoritativeInfo                  int64 // 203 - RFC 7231, 6.3.4
-	NoContent                             int64 // 204 - RFC 7231, 6.3.5
-	ResetContent                          int64 // 205 - RFC 7231, 6.3.6
-	PartialContent                        int64 // 206 - RFC 7233, 4.1
-	MultiStatus                           int64 // 207 - RFC 4918, 11.1
-	AlreadyReported                       int64 // 208 - RFC 5842, 7.1
-	IMUsed                                int64 // 226 - RFC 3229, 10.4.1
-	MultipleChoices                       int64 // 300 - RFC 7231, 6.4.1
-	MovedPermanently                      int64 // 301 - RFC 7231, 6.4.2
-	Found                                 int64 // 302 - RFC 7231, 6.4.3
-	SeeOther                              int64 // 303 - RFC 7231, 6.4.4
-	NotModified                           int64 // 304 - RFC 7232, 4.1
-	UseProxy                              int64 // 305 - RFC 7231, 6.4.5
-	SwitchProxy                           int64 // 306 - RFC 7231, 6.4.6 (Unused)
-	TemporaryRedirect                     int64 // 307 - RFC 7231, 6.4.7
-	PermanentRedirect                     int64 // 308 - RFC 7538, 3
-	BadRequest                            int64 // 400 - RFC 7231, 6.5.1
-	Unauthorized                          int64 // 401 - RFC 7235, 3.1
-	PaymentRequired                       int64 // 402 - RFC 7231, 6.5.2
-	Forbidden                             int64 // 403 - RFC 7231, 6.5.3
-	NotFound                              int64 // 404 - RFC 7231, 6.5.4
-	MethodNotAllowed                      int64 // 405 - RFC 7231, 6.5.5
-	NotAcceptable                         int64 // 406 - RFC 7231, 6.5.6
-	ProxyAuthRequired                     int64 // 407 - RFC 7235, 3.2
-	RequestTimeout                        int64 // 408 - RFC 7231, 6.5.7
-	Conflict                              int64 // 409 - RFC 7231, 6.5.8
-	Gone                                  int64 // 410 - RFC 7231, 6.5.9
-	LengthRequired                        int64 // 411 - RFC 7231, 6.5.10
-	PreconditionFailed                    int64 // 412 - RFC 7232, 4.2
-	RequestEntityTooLarge                 int64 // 413 - RFC 7231, 6.5.11
-	RequestURITooLong                     int64 // 414 - RFC 7231, 6.5.12
-	UnsupportedMediaType                  int64 // 415 - RFC 7231, 6.5.13
-	RequestedRangeNotSatisfiable          int64 // 416 - RFC 7233, 4.4
-	ExpectationFailed                     int64 // 417 - RFC 7231, 6.5.14
-	Teapot                                int64 // 418 - RFC 7168, 2.3.3
-	MisdirectedRequest                    int64 // 421 - RFC 7540, 9.1.2
-	UnprocessableEntity                   int64 // 422 - RFC 4918, 11.2
-	Locked                                int64 // 423 - RFC 4918, 11.3
-	FailedDependency                      int64 // 424 - RFC 4918, 11.4
-	TooEarly                              int64 // 425 - RFC 8470, 5.2.
-	UpgradeRequired                       int64 // 426 - RFC 7231, 6.5.15
-	PreconditionRequired                  int64 // 428 - RFC 6585, 3
-	TooManyRequests                       int64 // 429 - RFC 6585, 4
-	RequestHeaderFieldsTooLarge           int64 // 431 - RFC 6585, 5
-	UnavailableForLegalReasons            int64 // 451 - RFC 7725, 3
-	InternalServerError                   int64 // 500 // RFC 7231, 6.6.1
-	NotImplemented                        int64 // 501 // RFC 7231, 6.6.2
-	BadGateway                            int64 // 502 // RFC 7231, 6.6.3
-	ServiceUnavailable                    int64 // 503 // RFC 7231, 6.6.4
-	GatewayTimeout                        int64 // 504 // RFC 7231, 6.6.5
-	HTTPVersionNotSupported               int64 // 505 // RFC 7231, 6.6.6
-	VariantAlsoNegotiates                 int64 // 506 // RFC 2295, 8.1
-	InsufficientStorage                   int64 // 507 // RFC 4918, 11.5
-	LoopDetected                          int64 // 508 // RFC 5842, 7.2
-	NotExtended                           int64 // 510 // RFC 2774, 7
-	NetworkAuthenticationRequired         int64 // 511 // RFC 6585, 6
-	PageExpired                           int64 // 419 - Laravel Framework
-	MethodFailure                         int64 // 420 - Spring Framework
-	BlockedByWindowsParentalControls      int64 // 450 - Microsoft
-	InvalidTokenEsri                      int64 // 498 - ArcGIS
-	TokenRequiredEsri                     int64 // 499 - ArcGIS
-	BandwidthLimitExceeded                int64 // 509 - Apache Web Server / cPanel
-	SiteIsOverloaded                      int64 // 529 - Qualys SSLLabs
-	SiteIsFrozen                          int64 // 530 - Pantheon
-	NetworkReadTimeout                    int64 // 598 - Proxies
-	NetworkConnectTimeoutError            int64 // 599 - Proxies
-	LoginTimeout                          int64 // 440 - IIS
-	RetryWith                             int64 // 449 - IIS
-	Redirect                              int64 // 451 - IIS
-	NoResponse                            int64 // 444 - Nginx
-	RequestHeaderTooLarge                 int64 // 494 - Nginx
-	SSLCertificateError                   int64 // 495 - Nginx
-	HTTPRequestSentToHTTPSPort            int64 // 497 - Nginx
-	ClientClosedRequest                   int64 // 499 - Nginx
-	WebServerReturnedAnUnknownError       int64 // 520 - Cloudflare
-	WebServerIsDown                       int64 // 521 - Cloudflare
-	ConnectionTimedOut                    int64 // 522 - Cloudflare
-	OriginIsUnreachable                   int64 // 523 - Cloudflare
-	ATimeoutOccurred                      int64 // 524 - Cloudflare
-	SSLHandshakeFailed                    int64 // 525 - Cloudflare
-	InvalidSSLCertificate                 int64 // 526 - Cloudflare
-	RailgunError                          int64 // 527 - Cloudflare
-	AWSClientClosedConnectionWithLB       int64 // 460 - AWS Elastic Load Balancer
-	AWSLBReceivedXForwardForHeaderMT30    int64 // 463 - AWS Elastic Load Balancer
-	AWSUnauthorized                       int64 // 561 - AWS Elastic Load Balancer
-	CachingResponseIsStale                int64 // 110 - Caching
-	CachingRevalidationFailed             int64 // 111 - Caching
-	CachingDisconnectedOperation          int64 // 112 - Caching
-	CachingHeuristicExpiration            int64 // 113 - Caching
-	CachingMiscellaneousWarning           int64 // 199 - Caching
-	CachingTransformationApplied          int64 // 214 - Caching
-	CachingMiscellaneousPersistentWarning int64 // 299
+	Continue                              int // 100 RFC 7231, 6.2.1
+	SwitchingProtocols                    int // 101 - RFC 7231, 6.2.2
+	Processing                            int // 102 - RFC 2518, 10.1
+	EarlyHints                            int // 103 - RFC 8297
+	OK                                    int // 200 - RFC 7231, 6.3.1
+	Created                               int // 201 - RFC 7231, 6.3.2
+	Accepted                              int // 202 - RFC 7231, 6.3.3
+	NonAuthoritativeInfo                  int // 203 - RFC 7231, 6.3.4
+	NoContent                             int // 204 - RFC 7231, 6.3.5
+	ResetContent                          int // 205 - RFC 7231, 6.3.6
+	PartialContent                        int // 206 - RFC 7233, 4.1
+	MultiStatus                           int // 207 - RFC 4918, 11.1
+	AlreadyReported                       int // 208 - RFC 5842, 7.1
+	IMUsed                                int // 226 - RFC 3229, 10.4.1
+	MultipleChoices                       int // 300 - RFC 7231, 6.4.1
+	MovedPermanently                      int // 301 - RFC 7231, 6.4.2
+	Found                                 int // 302 - RFC 7231, 6.4.3
+	SeeOther                              int // 303 - RFC 7231, 6.4.4
+	NotModified                           int // 304 - RFC 7232, 4.1
+	UseProxy                              int // 305 - RFC 7231, 6.4.5
+	SwitchProxy                           int // 306 - RFC 7231, 6.4.6 (Unused)
+	TemporaryRedirect                     int // 307 - RFC 7231, 6.4.7
+	PermanentRedirect                     int // 308 - RFC 7538, 3
+	BadRequest                            int // 400 - RFC 7231, 6.5.1
+	Unauthorized                          int // 401 - RFC 7235, 3.1
+	PaymentRequired                       int // 402 - RFC 7231, 6.5.2
+	Forbidden                             int // 403 - RFC 7231, 6.5.3
+	NotFound                              int // 404 - RFC 7231, 6.5.4
+	MethodNotAllowed                      int // 405 - RFC 7231, 6.5.5
+	NotAcceptable                         int // 406 - RFC 7231, 6.5.6
+	ProxyAuthRequired                     int // 407 - RFC 7235, 3.2
+	RequestTimeout                        int // 408 - RFC 7231, 6.5.7
+	Conflict                              int // 409 - RFC 7231, 6.5.8
+	Gone                                  int // 410 - RFC 7231, 6.5.9
+	LengthRequired                        int // 411 - RFC 7231, 6.5.10
+	PreconditionFailed                    int // 412 - RFC 7232, 4.2
+	RequestEntityTooLarge                 int // 413 - RFC 7231, 6.5.11
+	RequestURITooLong                     int // 414 - RFC 7231, 6.5.12
+	UnsupportedMediaType                  int // 415 - RFC 7231, 6.5.13
+	RequestedRangeNotSatisfiable          int // 416 - RFC 7233, 4.4
+	ExpectationFailed                     int // 417 - RFC 7231, 6.5.14
+	Teapot                                int // 418 - RFC 7168, 2.3.3
+	MisdirectedRequest                    int // 421 - RFC 7540, 9.1.2
+	UnprocessableEntity                   int // 422 - RFC 4918, 11.2
+	Locked                                int // 423 - RFC 4918, 11.3
+	FailedDependency                      int // 424 - RFC 4918, 11.4
+	TooEarly                              int // 425 - RFC 8470, 5.2.
+	UpgradeRequired                       int // 426 - RFC 7231, 6.5.15
+	PreconditionRequired                  int // 428 - RFC 6585, 3
+	TooManyRequests                       int // 429 - RFC 6585, 4
+	RequestHeaderFieldsTooLarge           int // 431 - RFC 6585, 5
+	UnavailableForLegalReasons            int // 451 - RFC 7725, 3
+	InternalServerError                   int // 500 // RFC 7231, 6.6.1
+	NotImplemented                        int // 501 // RFC 7231, 6.6.2
+	BadGateway                            int // 502 // RFC 7231, 6.6.3
+	ServiceUnavailable                    int // 503 // RFC 7231, 6.6.4
+	GatewayTimeout                        int // 504 // RFC 7231, 6.6.5
+	HTTPVersionNotSupported               int // 505 // RFC 7231, 6.6.6
+	VariantAlsoNegotiates                 int // 506 // RFC 2295, 8.1
+	InsufficientStorage                   int // 507 // RFC 4918, 11.5
+	LoopDetected                          int // 508 // RFC 5842, 7.2
+	NotExtended                           int // 510 // RFC 2774, 7
+	NetworkAuthenticationRequired         int // 511 // RFC 6585, 6
+	PageExpired                           int // 419 - Laravel Framework
+	MethodFailure                         int // 420 - Spring Framework
+	BlockedByWindowsParentalControls      int // 450 - Microsoft
+	InvalidTokenEsri                      int // 498 - ArcGIS
+	TokenRequiredEsri                     int // 499 - ArcGIS
+	BandwidthLimitExceeded                int // 509 - Apache Web Server / cPanel
+	SiteIsOverloaded                      int // 529 - Qualys SSLLabs
+	SiteIsFrozen                          int // 530 - Pantheon
+	NetworkReadTimeout                    int // 598 - Proxies
+	NetworkConnectTimeoutError            int // 599 - Proxies
+	LoginTimeout                          int // 440 - IIS
+	RetryWith                             int // 449 - IIS
+	Redirect                              int // 451 - IIS
+	NoResponse                            int // 444 - Nginx
+	RequestHeaderTooLarge                 int // 494 - Nginx
+	SSLCertificateError                   int // 495 - Nginx
+	HTTPRequestSentToHTTPSPort            int // 497 - Nginx
+	ClientClosedRequest                   int // 499 - Nginx
+	WebServerReturnedAnUnknownError       int // 520 - Cloudflare
+	WebServerIsDown                       int // 521 - Cloudflare
+	ConnectionTimedOut                    int // 522 - Cloudflare
+	OriginIsUnreachable                   int // 523 - Cloudflare
+	ATimeoutOccurred                      int // 524 - Cloudflare
+	SSLHandshakeFailed                    int // 525 - Cloudflare
+	InvalidSSLCertificate                 int // 526 - Cloudflare
+	RailgunError                          int // 527 - Cloudflare
+	AWSClientClosedConnectionWithLB       int // 460 - AWS Elastic Load Balancer
+	AWSLBReceivedXForwardForHeaderMT30    int // 463 - AWS Elastic Load Balancer
+	AWSUnauthorized                       int // 561 - AWS Elastic Load Balancer
+	CachingResponseIsStale                int // 110 - Caching
+	CachingRevalidationFailed             int // 111 - Caching
+	CachingDisconnectedOperation          int // 112 - Caching
+	CachingHeuristicExpiration            int // 113 - Caching
+	CachingMiscellaneousWarning           int // 199 - Caching
+	CachingTransformationApplied          int // 214 - Caching
+	CachingMiscellaneousPersistentWarning int // 299
 }
 
 func (s *Status) Fill() {
