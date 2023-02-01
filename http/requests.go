@@ -41,22 +41,17 @@ type Response struct {
 
 // Byte converts our Response struct into a JSON []byte
 func (r *Response) Byte() []byte {
-	var x map[string]interface{}
-	var output = make(map[string]interface{})
-
-	_ = json.Unmarshal(r.Body, &x)
-	if r.Error != nil {
-		output["error"] = r.Error.Error()
-	} else {
-		output["body"] = x
-	}
-
-	if len(r.BodyString) > 0 {
-		output["body_string"] = r.BodyString
-	}
-
-	if len(r.Errors) > 0 {
-		output["errors"] = r.Errors
+	jsonDataReader := strings.NewReader(string(r.Body))
+	decoder := json.NewDecoder(jsonDataReader)
+	var output map[string]interface{}
+	for {
+		err := decoder.Decode(&output)
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	marshaledStruct, _ := json.Marshal(output)

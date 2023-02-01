@@ -13,19 +13,19 @@ func TestResponse(T *testing.T) {
 		BodyString: "some string in the body",
 		Error:      errors.New("some error"),
 	}
-	assert.Len(T, response.Byte(), 90)
+	assert.Len(T, response.Byte(), 20)
 
 	response = Response{
 		Body:       []byte(`{"custom": "Content"}`),
 		BodyString: "some string in the body",
 	}
-	assert.Len(T, response.Byte(), 80)
+	assert.Len(T, response.Byte(), 20)
 
 	response = Response{
-		Body: []byte(`{"custom": "Content"}`),
+		Body: []byte(`{"custom": { "Content": {"x": 3}}}`),
 	}
-	assert.Len(T, response.Byte(), 57)
+	assert.Len(T, response.Byte(), 30)
 
 	response = Response{}
-	assert.Len(T, response.Byte(), 41)
+	assert.Len(T, response.Byte(), 4)
 }
