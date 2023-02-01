@@ -13,13 +13,13 @@ func TestResponse(T *testing.T) {
 		BodyString: "some string in the body",
 		Error:      errors.New("some error"),
 	}
-	assert.Len(T, response.Byte(), 20)
+	assert.Len(T, response.Byte(), 81)
 
 	response = Response{
 		Body:       []byte(`{"custom": "Content"}`),
 		BodyString: "some string in the body",
 	}
-	assert.Len(T, response.Byte(), 20)
+	assert.Len(T, response.Byte(), 60)
 
 	response = Response{
 		Body: []byte(`{"custom": { "Content": {"x": 3}}}`),

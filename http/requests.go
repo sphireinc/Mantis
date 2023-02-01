@@ -3,6 +3,7 @@ package http
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -44,16 +45,30 @@ func (r *Response) Byte() []byte {
 	jsonDataReader := strings.NewReader(string(r.Body))
 	decoder := json.NewDecoder(jsonDataReader)
 	var output map[string]interface{}
+	var errors error
 	for {
 		err := decoder.Decode(&output)
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
-			panic(err)
+			errors = fmt.Errorf("%w; ", err)
 		}
 	}
 
+	if r.Error != nil {
+		output["error"] = r.Error.Error()
+	}
+
+	if len(r.BodyString) > 0 {
+		output["body_string"] = r.BodyString
+	}
+
+	if len(r.Errors) > 0 {
+		output["errors"] = errors
+	}
+
+	//marshaledStruct, _ := json.Marshal(output)
 	marshaledStruct, _ := json.Marshal(output)
 	return marshaledStruct
 }
