@@ -11,7 +11,7 @@ const loop int = 1000
 
 func TestMemory_GetSet(t *testing.T) {
 	n := loop * loop
-	m := NewMemoryCache(int64(n), "10h")
+	m := NewMemoryCache(int64(n), "1s")
 
 	for i := 0; i < n; i++ {
 		m.Set(uint64(i), "hello", m.Config.DefaultExpiry)
@@ -24,7 +24,7 @@ func TestMemory_GetSet(t *testing.T) {
 }
 
 func TestMemory_Get(t *testing.T) {
-	m := NewMemoryCache(int64(loop), "10h")
+	m := NewMemoryCache(int64(loop), "40µs")
 	for i := 0; i < loop; i++ {
 		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
 	}
@@ -36,7 +36,7 @@ func TestMemory_Get(t *testing.T) {
 }
 
 func TestMemory_Set(t *testing.T) {
-	m := NewMemoryCache(int64(loop), "10h")
+	m := NewMemoryCache(int64(loop), "40µs")
 	for i := 0; i < loop; i++ {
 		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
 		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
@@ -51,7 +51,7 @@ func TestMemory_Set(t *testing.T) {
 }
 
 func TestMemory_Release(t *testing.T) {
-	m := NewMemoryCache(int64(loop), "10h")
+	m := NewMemoryCache(int64(loop), "40µs")
 	for i := 0; i < loop; i++ {
 		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
 	}
