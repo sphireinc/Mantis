@@ -16,7 +16,8 @@ type Memory struct {
 	capacity int64
 	store    map[uint64]item
 	Config   struct {
-		Expiry string
+		Expiry        string
+		DefaultExpiry time.Time
 	}
 }
 
@@ -24,7 +25,13 @@ func NewMemoryCache(capacity int64, expiry string) *Memory {
 	return &Memory{
 		capacity: capacity,
 		store:    make(map[uint64]item),
-		Config:   struct{ Expiry string }{Expiry: expiry},
+		Config: struct {
+			Expiry        string
+			DefaultExpiry time.Time
+		}{
+			Expiry:        expiry,
+			DefaultExpiry: time.Now().Add(time.Duration(100)),
+		},
 	}
 }
 

@@ -9,6 +9,20 @@ import (
 
 const loop int = 1000
 
+func TestMemory_GetSet(t *testing.T) {
+	n := loop * loop
+	m := NewMemoryCache(int64(n), "10h")
+
+	for i := 0; i < n; i++ {
+		m.Set(uint64(i), "hello", m.Config.DefaultExpiry)
+	}
+
+	start := time.Now()
+	_, _ = m.Get(uint64(n / 2))
+	end := time.Now()
+	assert.LessOrEqual(t, int(end.Sub(start)), 750)
+}
+
 func TestMemory_Get(t *testing.T) {
 	m := NewMemoryCache(int64(loop), "10h")
 	for i := 0; i < loop; i++ {
