@@ -68,7 +68,6 @@ func (r *Response) Byte() []byte {
 		output["errors"] = errors
 	}
 
-	//marshaledStruct, _ := json.Marshal(output)
 	marshaledStruct, _ := json.Marshal(output)
 	return marshaledStruct
 }
