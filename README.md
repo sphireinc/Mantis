@@ -40,7 +40,7 @@ Mantis, much like its namesake ([Jet's Go-Mantis](https://github.com/jet/go-mant
 
 # Warning
 
-Mantis is pre-production - use at your own risk.
+Mantis is NOT production ready code - use at your own risk.
 
 # Usage
 
