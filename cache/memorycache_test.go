@@ -29,24 +29,38 @@ func TestMemory_Get(t *testing.T) {
 		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
 	}
 
-	for i := 0; i < loop; i++ {
+	for i := 0; i < loop+1; i++ {
 		result, _ := m.Get(uint64(i))
-		assert.Equal(t, fmt.Sprintf("Iteration %d", i), result)
+		if i == loop {
+			assert.Nil(t, result)
+		} else {
+			assert.Equal(t, fmt.Sprintf("Iteration %d", i), result)
+		}
 	}
 }
 
 func TestMemory_Set(t *testing.T) {
 	m := NewMemoryCache(int64(loop), "40µs")
 	for i := 0; i < loop; i++ {
-		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
-		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
-		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
-		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
+		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now().Add(time.Second*1))
 	}
 
 	for i := 0; i < loop; i++ {
 		result, _ := m.Get(uint64(i))
 		assert.Equal(t, fmt.Sprintf("Iteration %d", i), result)
+	}
+}
+
+func TestMemory_SetRelease(t *testing.T) {
+	m := NewMemoryCache(int64(loop), "100ns")
+	for n := 0; n < 2; n++ {
+		for i := 0; i < loop; i++ {
+			m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
+		}
+	}
+
+	for i := 0; i < loop; i++ {
+		_, _ = m.Get(uint64(i))
 	}
 }
 
