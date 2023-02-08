@@ -5,6 +5,13 @@ import (
 	"time"
 )
 
+const (
+	RELEASED = iota
+	UPDATED
+	CREATED
+	NOOP
+)
+
 type item struct {
 	value        any
 	lastAccessed time.Time
@@ -41,49 +48,52 @@ func NewMemoryCache(capacity int64, expiry string) *Memory {
 
 func (m *Memory) Get(key uint64) (any, bool) {
 	m.mutex.Lock()
+	_, ok := m.store[key]
+	m.mutex.Unlock()
 
-	if item, ok := m.store[key]; ok {
-		item.lastAccessed = time.Now()
-		m.mutex.Unlock()
-		return item.value, true
+	if ok {
+		m.checkExpireAndUpdate(key, m.store[key])
+		return m.store[key].value, true
 	}
 
-	m.mutex.Unlock()
 	return nil, false
 }
 
-func (m *Memory) Set(key uint64, value any, expiration time.Time) {
+// checkExpireAndUpdate checks if KV has expired, if not updates toStore item
+// returns false if released, true if updated
+func (m *Memory) checkExpireAndUpdate(key uint64, toStore item) int {
 	m.mutex.Lock()
-	existing, ok := m.store[key]
+	_, ok := m.store[key]
+	status := NOOP
 	m.mutex.Unlock()
 
-	toStore := item{
+	if !ok {
+		m.store[key] = toStore
+		status = CREATED
+	} else {
+		// check for existence of the key, overwrite new value and return
+		expirationDiff := m.store[key].lastAccessed.Sub(m.store[key].expiration)
+		expiry, _ := time.ParseDuration(m.Config.Expiry)
+		if expirationDiff > expiry {
+			m.Release(key)
+			status = RELEASED
+		} else {
+			m.mutex.Lock()
+			m.store[key] = toStore
+			m.mutex.Unlock()
+			status = UPDATED
+		}
+	}
+	return status
+}
+
+func (m *Memory) Set(key uint64, value any, expiration time.Time) {
+	m.triggerEvict()
+	m.checkExpireAndUpdate(key, item{
 		value:        value,
 		lastAccessed: time.Now(),
 		expiration:   expiration,
-	}
-
-	// check for existence of the key, overwrite new value and return
-	if ok {
-		expirationDiff := existing.lastAccessed.Sub(existing.expiration)
-		expiry, _ := time.ParseDuration(m.Config.Expiry)
-
-		if expirationDiff > expiry {
-			m.Release(key)
-		} else {
-			m.store[key] = toStore
-		}
-		return
-	}
-
-	// Make sure we have capacity, if not then evict
-	if int64(len(m.store)) >= m.capacity {
-		m.evict()
-	}
-
-	m.mutex.Lock()
-	m.store[key] = toStore
-	m.mutex.Unlock()
+	})
 }
 
 func (m *Memory) Release(key uint64) {
@@ -94,6 +104,14 @@ func (m *Memory) Release(key uint64) {
 		m.mutex.Lock()
 		delete(m.store, key)
 		m.mutex.Unlock()
+	}
+}
+
+// triggerEvict checks if we need to evict data, and commences eviction if so
+func (m *Memory) triggerEvict() {
+	// Make sure we have capacity, if not then evict
+	if int64(len(m.store)) >= m.capacity {
+		m.evict()
 	}
 }
 
