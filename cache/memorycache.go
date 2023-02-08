@@ -79,11 +79,13 @@ func (m *Memory) checkExpireAndUpdate(key uint64, toStore item) int {
 			status = RELEASED
 		} else {
 			m.mutex.Lock()
+			toStore.lastAccessed = time.Now()
 			m.store[key] = toStore
 			m.mutex.Unlock()
 			status = UPDATED
 		}
 	}
+
 	return status
 }
 
