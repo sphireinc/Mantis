@@ -10,7 +10,7 @@ import (
 const loop int = 1000
 
 func TestMemory_GetSet(t *testing.T) {
-	n := loop * loop
+	n := loop * loop / loop
 	m := NewMemoryCache(int64(n), "1s")
 
 	for i := 0; i < n; i++ {

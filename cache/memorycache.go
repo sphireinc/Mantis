@@ -22,7 +22,7 @@ type Memory struct {
 }
 
 func NewMemoryCache(capacity int64, expiry string) *Memory {
-	return &Memory{
+	m := &Memory{
 		capacity: capacity,
 		store:    make(map[uint64]item),
 		Config: struct {
@@ -33,6 +33,11 @@ func NewMemoryCache(capacity int64, expiry string) *Memory {
 			DefaultExpiry: time.Now().Add(time.Duration(100)),
 		},
 	}
+
+	if m.Config.Expiry == "" {
+		m.Config.Expiry = m.Config.DefaultExpiry.String()
+	}
+	return m
 }
 
 func (m *Memory) Get(key uint64) (any, bool) {
@@ -49,7 +54,8 @@ func (m *Memory) Get(key uint64) (any, bool) {
 
 func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 	m.mutex.Lock()
-	defer m.mutex.Unlock()
+	_, ok := m.store[key]
+	m.mutex.Unlock()
 
 	toStore := item{
 		value:        value,
@@ -58,7 +64,11 @@ func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 	}
 
 	// check for existence of the key, overwrite new value and return
-	if _, ok := m.store[key]; ok {
+	if ok {
+		expDiff := m.store[key].lastAccessed.Sub(m.store[key].expiration)
+		if exp, _ := time.ParseDuration(m.Config.Expiry); exp > expDiff {
+			m.Release(key)
+		}
 		m.store[key] = toStore
 		return
 	}
@@ -68,7 +78,9 @@ func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 		m.evict()
 	}
 
+	m.mutex.Lock()
 	m.store[key] = toStore
+	m.mutex.Unlock()
 }
 
 func (m *Memory) Release(key uint64) {
