@@ -1,18 +1,21 @@
 package datastructures
 
-type Node struct {
+// TreeNode defines our tree node
+type TreeNode struct {
 	value int
-	left  *Node
-	right *Node
+	left  *TreeNode
+	right *TreeNode
 }
 
+// Tree defines our tree
 type Tree struct {
-	root *Node
+	root *TreeNode
 }
 
+// Insert a value into our tree
 func (t *Tree) Insert(val int) {
 	if t.root == nil {
-		t.root = &Node{value: val}
+		t.root = &TreeNode{value: val}
 		return
 	}
 
@@ -20,13 +23,13 @@ func (t *Tree) Insert(val int) {
 	for {
 		if val < currNode.value {
 			if currNode.left == nil {
-				currNode.left = &Node{value: val}
+				currNode.left = &TreeNode{value: val}
 				return
 			}
 			currNode = currNode.left
 		} else {
 			if currNode.right == nil {
-				currNode.right = &Node{value: val}
+				currNode.right = &TreeNode{value: val}
 				return
 			}
 			currNode = currNode.right
@@ -34,6 +37,7 @@ func (t *Tree) Insert(val int) {
 	}
 }
 
+// Search for a value within our tree
 func (t *Tree) Search(val int) bool {
 	currNode := t.root
 	for currNode != nil {

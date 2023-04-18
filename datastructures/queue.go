@@ -1,16 +1,19 @@
 package datastructures
 
+// QueueNode defines a queue node
 type QueueNode struct {
 	value int
 	next  *QueueNode
 }
 
+// Queue defines our queue structure
 type Queue struct {
 	head *QueueNode
 	tail *QueueNode
 	size int
 }
 
+// Enqueue adds an item onto our queue
 func (q *Queue) Enqueue(val int) {
 	newNode := &QueueNode{value: val}
 	if q.tail == nil {
@@ -23,6 +26,7 @@ func (q *Queue) Enqueue(val int) {
 	q.size++
 }
 
+// Dequeue removes an item from our queue
 func (q *Queue) Dequeue() (int, bool) {
 	if q.head == nil {
 		return 0, false
@@ -36,6 +40,7 @@ func (q *Queue) Dequeue() (int, bool) {
 	return val, true
 }
 
+// Size returns our queue size
 func (q *Queue) Size() int {
 	return q.size
 }

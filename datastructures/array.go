@@ -2,12 +2,14 @@ package datastructures
 
 const deleted = -1 // special value to mark deleted elements
 
+// Array defines our array structure
 type Array struct {
 	data       []int
 	size       int
 	deletedCnt int
 }
 
+// Append a new value to our array
 func (a *Array) Append(val int) {
 	if a.deletedCnt > 0 {
 		for i, v := range a.data {
@@ -27,6 +29,7 @@ func (a *Array) Append(val int) {
 	a.size++
 }
 
+// Get a value based on the index
 func (a *Array) Get(index int) (int, bool) {
 	if index >= 0 && index < a.size {
 		if a.data[index] != deleted {
@@ -36,6 +39,7 @@ func (a *Array) Get(index int) (int, bool) {
 	return 0, false
 }
 
+// Set a value onto the index
 func (a *Array) Set(index, val int) bool {
 	if index >= 0 && index < a.size {
 		if a.data[index] != deleted {
@@ -74,6 +78,7 @@ func (a *Array) Remove(index int) bool {
 	return true
 }
 
+// Size returns the array size
 func (a *Array) Size() int {
 	return a.size
 }

@@ -4,16 +4,19 @@ import (
 	"fmt"
 )
 
+// LinkedListNode defines our LL node
 type LinkedListNode struct {
 	value int
 	next  *LinkedListNode
 }
 
+// LinkedList defines our parent structure
 type LinkedList struct {
 	head *LinkedListNode
 	size int
 }
 
+// Insert a new value into our LL
 func (l *LinkedList) Insert(val int) {
 	newNode := &LinkedListNode{value: val}
 	if l.head == nil {
@@ -28,6 +31,7 @@ func (l *LinkedList) Insert(val int) {
 	l.size++
 }
 
+// Remove a value from our LL
 func (l *LinkedList) Remove(val int) bool {
 	if l.head == nil {
 		return false
@@ -49,10 +53,12 @@ func (l *LinkedList) Remove(val int) bool {
 	return false
 }
 
+// Size returns the size of our LL
 func (l *LinkedList) Size() int {
 	return l.size
 }
 
+// String converts our LL into a string
 func (l *LinkedList) String() string {
 	str := ""
 	currNode := l.head
