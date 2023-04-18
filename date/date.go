@@ -189,8 +189,12 @@ func DaysInMonth(year, month int) (int, error) {
 		return 0, fmt.Errorf("invalid month")
 	}
 
-	if month == 2 && IsLeapYear(year) {
-		return 29, nil
+	if month == 2 {
+		if IsLeapYear(year) {
+			return 29, nil
+		} else {
+			return 28, nil
+		}
 	}
 
 	return time.Date(year, time.Month(month), 0, 0, 0, 0, 0, time.UTC).Day(), nil
