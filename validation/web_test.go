@@ -18,10 +18,10 @@ func TestIsPort(t *testing.T) {
 }
 
 func TestIsIp(t *testing.T) {
-	assert.Equal(t, true, IsIp("127.0.0.1"))
-	assert.Equal(t, true, IsIp("::0:0:0:0:0:0:1"))
-	assert.Equal(t, false, IsIp("127.0.0"))
-	assert.Equal(t, false, IsIp("127"))
+	assert.Equal(t, true, IsIP("127.0.0.1"))
+	assert.Equal(t, true, IsIP("::0:0:0:0:0:0:1"))
+	assert.Equal(t, false, IsIP("127.0.0"))
+	assert.Equal(t, false, IsIP("127"))
 }
 
 func TestIsIpV4(t *testing.T) {
