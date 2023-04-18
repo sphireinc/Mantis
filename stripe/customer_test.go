@@ -2,9 +2,10 @@ package stripe
 
 import (
 	"errors"
+	"testing"
+
 	"github.com/stripe/stripe-go/v72/paymentmethod"
 	"github.com/stripe/stripe-go/v72/sub"
-	"testing"
 
 	"github.com/stripe/stripe-go/v72"
 	"github.com/stripe/stripe-go/v72/client"
