@@ -46,7 +46,7 @@ func TestDateToString(t *testing.T) {
 
 	for i, test := range tests {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
-			actual := test.date.DateToString()
+			actual, _ := test.date.DateToString("")
 			if !reflect.DeepEqual(actual, test.expected) {
 				t.Fatalf("expected '%s', got '%s'", test.expected, actual)
 			}
