@@ -16,6 +16,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/jwilder/gojq v0.0.0-20161018055142-c550732d4a52
 	github.com/stretchr/testify v1.5.1
+	github.com/stripe/stripe-go/v72 v72.122.0
 	github.com/victorspringer/http-cache v0.0.0-20190721184638-fe78e97af707
 	gopkg.in/jmcvetta/neoism.v1 v1.3.1
 	gopkg.in/yaml.v2 v2.4.0
