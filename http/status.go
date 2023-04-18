@@ -1,5 +1,6 @@
 package http
 
+// Status contains our HTTP statuses
 type Status struct {
 	Continue                              int // 100 RFC 7231, 6.2.1
 	SwitchingProtocols                    int // 101 - RFC 7231, 6.2.2
@@ -102,6 +103,7 @@ type Status struct {
 	CachingMiscellaneousPersistentWarning int // 299
 }
 
+// Fill our initialized Status struct with the numeric values of those HTTP status
 func (s *Status) Fill() {
 	s.Continue = 100                           // RFC 7231, 6.2.1
 	s.SwitchingProtocols = 101                 // RFC 7231, 6.2.2

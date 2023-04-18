@@ -69,18 +69,18 @@ func TestCreateCustomer(t *testing.T) {
 	}
 
 	// Test case 1: valid parameters
-	customer_, err := createCustomer(sc, "john.doe@example.com", "John Doe")
+	customerObj, err := createCustomer(sc, "john.doe@example.com", "John Doe")
 	if err != nil {
 		t.Errorf("Expected no error, but got %v", err)
 	}
-	if customer_.ID != "cus_test123" {
-		t.Errorf("Expected customer_ ID to be cus_test123, but got %v", customer_.ID)
+	if customerObj.ID != "cus_test123" {
+		t.Errorf("Expected customerObj ID to be cus_test123, but got %v", customerObj.ID)
 	}
-	if customer_.Email != "john.doe@example.com" {
-		t.Errorf("Expected customer_ email to be john.doe@example.com, but got %v", customer_.Email)
+	if customerObj.Email != "john.doe@example.com" {
+		t.Errorf("Expected customerObj email to be john.doe@example.com, but got %v", customerObj.Email)
 	}
-	if customer_.Name != "John Doe" {
-		t.Errorf("Expected customer_ name to be John Doe, but got %v", customer_.Name)
+	if customerObj.Name != "John Doe" {
+		t.Errorf("Expected customerObj name to be John Doe, but got %v", customerObj.Name)
 	}
 
 	// Test case 2: missing email
@@ -88,8 +88,8 @@ func TestCreateCustomer(t *testing.T) {
 	if err == nil {
 		t.Error("Expected an error, but got nil")
 	}
-	if err.Error() != "missing email or name in customer_ params" {
-		t.Errorf("Expected error message 'missing email or name in customer_ params', but got '%v'", err.Error())
+	if err.Error() != "missing email or name in customerObj params" {
+		t.Errorf("Expected error message 'missing email or name in customerObj params', but got '%v'", err.Error())
 	}
 
 	// Test case 3: missing name
@@ -97,8 +97,8 @@ func TestCreateCustomer(t *testing.T) {
 	if err == nil {
 		t.Error("Expected an error, but got nil")
 	}
-	if err.Error() != "missing email or name in customer_ params" {
-		t.Errorf("Expected error message 'missing email or name in customer_ params', but got '%v'", err.Error())
+	if err.Error() != "missing email or name in customerObj params" {
+		t.Errorf("Expected error message 'missing email or name in customerObj params', but got '%v'", err.Error())
 	}
 }
 

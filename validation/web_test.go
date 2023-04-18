@@ -24,27 +24,27 @@ func TestIsIp(t *testing.T) {
 }
 
 func TestIsIpV4(t *testing.T) {
-	assert.Equal(t, true, IsIpV4("127.0.0.1"))
-	assert.Equal(t, false, IsIpV4("::0:0:0:0:0:0:1"))
+	assert.Equal(t, true, IsIPV4("127.0.0.1"))
+	assert.Equal(t, false, IsIPV4("::0:0:0:0:0:0:1"))
 }
 
 func TestIsIpV6(t *testing.T) {
-	assert.Equal(t, false, IsIpV6("127.0.0.1"))
-	assert.Equal(t, true, IsIpV6("::0:0:0:0:0:0:1"))
+	assert.Equal(t, false, IsIPV6("127.0.0.1"))
+	assert.Equal(t, true, IsIPV6("::0:0:0:0:0:0:1"))
 }
 
 func TestIsUrl(t *testing.T) {
-	assert.Equal(t, true, IsUrl("http://abc.com"))
-	assert.Equal(t, true, IsUrl("https://abc.com"))
-	assert.Equal(t, true, IsUrl("abc.com"))
-	assert.Equal(t, true, IsUrl("a.b.com"))
-	assert.Equal(t, false, IsUrl("abc"))
+	assert.Equal(t, true, IsURL("http://abc.com"))
+	assert.Equal(t, true, IsURL("https://abc.com"))
+	assert.Equal(t, true, IsURL("abc.com"))
+	assert.Equal(t, true, IsURL("a.b.com"))
+	assert.Equal(t, false, IsURL("abc"))
 }
 
 func TestIsDns(t *testing.T) {
-	assert.Equal(t, true, IsDns("abc.com"))
-	assert.Equal(t, false, IsDns("a.b.com"))
-	assert.Equal(t, false, IsDns("http://abc.com"))
+	assert.Equal(t, true, IsDNS("abc.com"))
+	assert.Equal(t, false, IsDNS("a.b.com"))
+	assert.Equal(t, false, IsDNS("http://abc.com"))
 }
 
 func TestIsEmail(t *testing.T) {

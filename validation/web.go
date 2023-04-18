@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// IsPort determines if a string is a port
 func IsPort(str string) bool {
 	i, err := strconv.ParseInt(str, 10, 64)
 	if err == nil && i > 0 && i < 65536 {
@@ -16,27 +17,33 @@ func IsPort(str string) bool {
 	return false
 }
 
-func IsDns(str string) bool {
+// IsDNS determines if a string is a valid DNS entry
+func IsDNS(str string) bool {
 	return regexp.MustCompile(`^[a-zA-Z]([a-zA-Z0-9\-]+[\.]?)*[a-zA-Z0-9]$`).MatchString(str)
 }
 
+// IsEmail determines if a string is a valid email
 func IsEmail(str string) bool {
 	return regexp.MustCompile(`\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*`).MatchString(str)
 }
 
-func IsIp(str string) bool {
+// IsIP determines if a string is a valid IP address
+func IsIP(str string) bool {
 	return net.ParseIP(str) != nil
 }
 
-func IsIpV4(str string) bool {
+// IsIPV4 determines if a string is a valid IPv4 address
+func IsIPV4(str string) bool {
 	return net.ParseIP(str) != nil && strings.Contains(str, ".")
 }
 
-func IsIpV6(str string) bool {
+// IsIPV6 determines if a string is a valid IPv6 character
+func IsIPV6(str string) bool {
 	return net.ParseIP(str) != nil && strings.Contains(str, ":")
 }
 
-func IsUrl(str string) bool {
+// IsURL determines if a string is a valid URL
+func IsURL(str string) bool {
 	if str == "" || len(str) >= 2083 || len(str) <= 3 || strings.HasPrefix(str, ".") {
 		return false
 	}
