@@ -5,6 +5,7 @@ import (
 	"github.com/stripe/stripe-go/v72/client"
 )
 
+// createCustomer
 func createCustomer(sc *client.API, email, name string) (*stripe.Customer, error) {
 	params := &stripe.CustomerParams{
 		Email: stripe.String(email),
@@ -40,7 +41,7 @@ func createSubscription(sc *client.API, customerID, priceID string) (*stripe.Sub
 func listSubscriptionsForCustomer(sc *client.API, customerID string) ([]*stripe.Subscription, error) {
 	var subscriptions []*stripe.Subscription
 	params := &stripe.SubscriptionListParams{
-		Customer: stripe.String(customerID),
+		Customer: customerID,
 	}
 	i := sc.Subscriptions.List(params)
 
