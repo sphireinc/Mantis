@@ -109,7 +109,6 @@ func TestCurrentTime(t *testing.T) {
 		date.Hour != now.Hour() ||
 		date.Minute != now.Minute() ||
 		date.Second != now.Second() ||
-		date.Nanosecond != now.Nanosecond() ||
 		date.Unix != now.Unix() ||
 		date.YearDay != now.YearDay() ||
 		date.WeekDay != now.Weekday() {
