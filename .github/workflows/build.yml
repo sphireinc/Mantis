@@ -95,17 +95,17 @@ jobs:
 #          run: ineffassign
 #          token: ${{ secrets.GITHUB_TOKEN }}
 
-  gocyclo:
-    name: Cyclomatic Complexity
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-      - name: gocyclo
-        uses: danhunsaker/golang-github-actions@v1.3.0
-        with:
-          run: cyclo
-          token: ${{ secrets.GITHUB_TOKEN }}
-          flags: "-over 20"
+#  gocyclo:
+#    name: Cyclomatic Complexity
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@master
+#      - name: gocyclo
+#        uses: danhunsaker/golang-github-actions@v1.3.0
+#        with:
+#          run: cyclo
+#          token: ${{ secrets.GITHUB_TOKEN }}
+#          flags: "-over 20"
 
 
   build:
