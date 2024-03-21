@@ -130,10 +130,10 @@ jobs:
         go mod vendor
 
     - name: Set Up GoTestFmt
-      uses: haveyoudebuggedit/gotestfmt-action@v2
+      uses: GoTestTools/gotestfmt-action@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        version: v2.0.0
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: v2.0.0
 
     - name: Test ${{ matrix.go }}
       run: |
