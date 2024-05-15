@@ -1,8 +1,9 @@
 package validation
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIsAllUpper(t *testing.T) {

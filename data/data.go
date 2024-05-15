@@ -23,9 +23,10 @@ const (
 
 // Exists determines whether a given Path, File, or Directory exists
 // use constants:
-//	 Path int = iota
-//	 File
-//	 Directory
+//
+//	Path int = iota
+//	File
+//	Directory
 func Exists(path string, pathType int) (bool, error) {
 	fileInfo, err := os.Stat(path)
 

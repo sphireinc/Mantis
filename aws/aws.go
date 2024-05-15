@@ -15,8 +15,9 @@ type AWS struct {
 }
 
 // New creates a new AWS config using the context and region specified
-//   If you want an empty context, set ctx to context.TODO()
-//   region should be an AWS region, like "us-west-2"
+//
+//	If you want an empty context, set ctx to context.TODO()
+//	region should be an AWS region, like "us-west-2"
 func New(ctx context.Context, region string) *AWS {
 	// Using the SDK's default configuration, loading additional config
 	// and credentials values from the environment variables, shared

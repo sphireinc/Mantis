@@ -5,6 +5,10 @@ import (
 	"time"
 )
 
+// RELEASED is a status enum for a released item
+// UPDATED is a status enum for an updated value in an existing kv item
+// CREATED is a status enum for a created kv item
+// NOOP is a status for no operation
 const (
 	RELEASED = iota
 	UPDATED
@@ -12,17 +16,20 @@ const (
 	NOOP
 )
 
+// item is an item and its metadata in our cache
 type item struct {
 	value        any
 	lastAccessed time.Time
 	expiration   time.Time
 }
 
+// memoryConfig holds our expiry configuration
 type memoryConfig struct {
 	Expiry        string
 	DefaultExpiry time.Time
 }
 
+// Memory holds our cache
 type Memory struct {
 	mutex    sync.RWMutex
 	capacity int64
@@ -30,6 +37,7 @@ type Memory struct {
 	Config   memoryConfig
 }
 
+// NewMemoryCache creates and returns a new in memory cache
 func NewMemoryCache(capacity int64, expiry string) *Memory {
 	m := &Memory{
 		capacity: capacity,
@@ -46,6 +54,7 @@ func NewMemoryCache(capacity int64, expiry string) *Memory {
 	return m
 }
 
+// Get the value associated with a key in our cache
 func (m *Memory) Get(key uint64) (any, bool) {
 	m.mutex.Lock()
 	_, ok := m.store[key]
@@ -89,6 +98,7 @@ func (m *Memory) checkExpireAndUpdate(key uint64, toStore item) int {
 	return status
 }
 
+// Set a new kv pair in our memory cache
 func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 	m.triggerEvict()
 	m.checkExpireAndUpdate(key, item{
@@ -98,6 +108,7 @@ func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 	})
 }
 
+// Release an item from our memory cache
 func (m *Memory) Release(key uint64) {
 	m.mutex.RLock()
 	_, ok := m.store[key]

@@ -96,8 +96,9 @@ func (m *MySQL) RawQuery(query string, args ...any) (*sql.Rows, error) {
 }
 
 // SelectOne single result, stored within arg:into
-//      country := Country{}
-//      country, err := db.Select(&country, "SELECT * FROM countries WHERE name='Germany' ORDER BY name ASC")
+//
+//	country := Country{}
+//	country, err := db.Select(&country, "SELECT * FROM countries WHERE name='Germany' ORDER BY name ASC")
 func (m *MySQL) SelectOne(into any, query string, args ...any) (any, error) {
 	if !m.Connected {
 		return into, errors.New("not connected")
@@ -110,8 +111,9 @@ func (m *MySQL) SelectOne(into any, query string, args ...any) (any, error) {
 }
 
 // Select for more than one result is expected
-//      countries := []Countries{}
-//      countries, err := db.Select(&countries, "SELECT * FROM countries ORDER BY name ASC")
+//
+//	countries := []Countries{}
+//	countries, err := db.Select(&countries, "SELECT * FROM countries ORDER BY name ASC")
 func (m *MySQL) Select(into any, query string, args ...any) (any, error) {
 	if !m.Connected {
 		return into, errors.New("not connected")
@@ -121,8 +123,9 @@ func (m *MySQL) Select(into any, query string, args ...any) (any, error) {
 }
 
 // InsertOne one struct into a named query using sqlx standards
-// 		person := Person{ FirstName: "Ardie" }
-// 		lastInsertId, err = db.NamedExec(`INSERT INTO persons (first_name) VALUES (:first_name)`, person)
+//
+//	person := Person{ FirstName: "Ardie" }
+//	lastInsertId, err = db.NamedExec(`INSERT INTO persons (first_name) VALUES (:first_name)`, person)
 func (m *MySQL) InsertOne(namedQuery string, insertStruct any) (int64, error) {
 	if !m.Connected {
 		return -1, errors.New("not connected")
@@ -140,11 +143,12 @@ func (m *MySQL) InsertOne(namedQuery string, insertStruct any) (int64, error) {
 }
 
 // Insert many structs into a named query using sqlx standards
-// 		persons := []Person{
-// 			{FirstName: "Ardie"},
-//			{FirstName: "Sonny"},
-// 		}
-// 		err = db.NamedExec(`INSERT INTO persons (first_name) VALUES (:first_name)`, persons)
+//
+//	persons := []Person{
+//		{FirstName: "Ardie"},
+//		{FirstName: "Sonny"},
+//	}
+//	err = db.NamedExec(`INSERT INTO persons (first_name) VALUES (:first_name)`, persons)
 func (m *MySQL) Insert(namedQuery string, insertStruct any) error {
 	if !m.Connected {
 		return errors.New("not connected")
@@ -154,8 +158,9 @@ func (m *MySQL) Insert(namedQuery string, insertStruct any) error {
 }
 
 // UpdateOne performs an update of one record
-// 		persons := Person{ FirstName: "Ardie" }
-// 		err = db.NamedExec(`UPDATE persons SET first_name=:first_name`, persons)
+//
+//	persons := Person{ FirstName: "Ardie" }
+//	err = db.NamedExec(`UPDATE persons SET first_name=:first_name`, persons)
 func (m *MySQL) UpdateOne(namedQuery string, updateStruct any) (int64, error) {
 	if !m.Connected {
 		return -1, errors.New("not connected")
@@ -173,11 +178,12 @@ func (m *MySQL) UpdateOne(namedQuery string, updateStruct any) (int64, error) {
 }
 
 // Update performs an update of many records
-// 		persons := []Person{
-// 			{FirstName: "Ardie"},
-//			{FirstName: "Sonny"},
-// 		}
-// 		err = db.NamedExec(`UPDATE persons SET first_name=:first_name`, persons)
+//
+//	persons := []Person{
+//		{FirstName: "Ardie"},
+//		{FirstName: "Sonny"},
+//	}
+//	err = db.NamedExec(`UPDATE persons SET first_name=:first_name`, persons)
 func (m *MySQL) Update(namedQuery string, updateStructs any) error {
 	if !m.Connected {
 		return errors.New("not connected")
@@ -187,19 +193,21 @@ func (m *MySQL) Update(namedQuery string, updateStructs any) error {
 }
 
 // DeleteOne performs a deletion
-// 		persons := Person{Id: 0}
-// 		err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
+//
+//	persons := Person{Id: 0}
+//	err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
 func (m *MySQL) DeleteOne(namedQuery string, deleteStruct any) error {
 	_, err := m.Connection.NamedExec(namedQuery, deleteStruct)
 	return err
 }
 
 // Delete performs a deletion
-// 		persons := []Person{
-// 			{Id: 0},
-//			{Id: 1},
-// 		}
-// 		err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
+//
+//	persons := []Person{
+//		{Id: 0},
+//		{Id: 1},
+//	}
+//	err = db.NamedExec(`DELETE FROM persons WHERE id=:id`, persons)
 func (m *MySQL) Delete(namedQuery string, deleteStructs any) (int64, error) {
 	results, err := m.Connection.NamedExec(namedQuery, deleteStructs)
 	if err != nil {

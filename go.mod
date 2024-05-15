@@ -1,6 +1,6 @@
 module github.com/sphireinc/mantis
 
-go 1.18
+go 1.22.3
 
 require (
 	github.com/aerospike/aerospike-client-go v4.5.2+incompatible
@@ -17,6 +17,7 @@ require (
 	github.com/jwilder/gojq v0.0.0-20161018055142-c550732d4a52
 	github.com/stretchr/testify v1.5.1
 	github.com/stripe/stripe-go/v72 v72.122.0
+	github.com/stripe/stripe-mock v0.160.0
 	github.com/victorspringer/http-cache v0.0.0-20190721184638-fe78e97af707
 	gopkg.in/jmcvetta/neoism.v1 v1.3.1
 	gopkg.in/yaml.v2 v2.4.0
@@ -43,12 +44,20 @@ require (
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/lestrrat-go/jspointer v0.0.0-20181205001929-82fadba7561c // indirect
+	github.com/lestrrat-go/jsref v0.0.0-20181205001954-1b590508f37d // indirect
+	github.com/lestrrat-go/jsschema v0.0.0-20181205002244-5c81c58ffcc3 // indirect
+	github.com/lestrrat-go/jsval v0.0.0-20181205002323-20277e9befc0 // indirect
+	github.com/lestrrat-go/pdebug v0.0.0-20180220043849-39f9a71bcabe // indirect
+	github.com/lestrrat-go/structinfo v0.0.0-20190212233437-acd51874663b // indirect
+	github.com/pkg/errors v0.8.1-0.20170505043639-c605e284fe17 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.6.1 // indirect
+	github.com/xeipuuv/gojsonschema v1.2.0 // indirect
 	github.com/yuin/gopher-lua v0.0.0-20220504180219-658193537a64 // indirect
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
+	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sync v0.0.0-20220513210516-0976fa681c29 // indirect
-	golang.org/x/sys v0.1.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/jmcvetta/napping.v3 v3.2.0 // indirect
 )

@@ -25,11 +25,11 @@ func createPaymentSource(sc *client.API, customerID, token string) (*stripe.Paym
 			Token: stripe.String(token),
 		},
 	}
-	return sc.CustomerSources.New(params), nil
+	return sc.PaymentSource.New(params)
 }
 
 func chargeCustomer(sc *client.API, customerID, sourceID string, amount int64, currency, description string) (*stripe.Charge, error) {
-	src, err := getSource(sourceID)
+	_, err := getSource(sourceID)
 	if err != nil {
 		panic(err)
 	}
@@ -38,7 +38,7 @@ func chargeCustomer(sc *client.API, customerID, sourceID string, amount int64, c
 		Currency:    stripe.String(currency),
 		Description: stripe.String(description),
 		Customer:    stripe.String(customerID),
-		Source:      src,
+		//Source:      src, // TODO:
 	}
 	return sc.Charges.New(params)
 }

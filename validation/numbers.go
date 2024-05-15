@@ -5,15 +5,18 @@ import (
 	"regexp"
 )
 
+// IsIntStr determines if a string is made up of all ints
 func IsIntStr(str string) bool {
 	return regexp.MustCompile(`^[\+-]?\d+$`).MatchString(str)
 }
 
+// IsCreditCard determines if a string is a valid credit card number
 func IsCreditCard(str string) bool {
 	reg := regexp.MustCompile(`^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|(222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11}|6[27][0-9]{14})$`)
 	return reg.MatchString(str)
 }
 
+// IsZeroValue detrmine if a value is of...zero value
 func IsZeroValue(value interface{}) bool {
 	if value == nil {
 		return true
