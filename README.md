@@ -117,7 +117,7 @@ to Identify Risk" presentation for the Department of Homeland Security:
 
 # GoLoC
 
-Using https://github.com/hhatto/gocloc
+Using <https://github.com/hhatto/gocloc>
 
 | Language     | files | blank  | comment | code    |
 |--------------|-------|--------|---------|---------|
@@ -143,5 +143,5 @@ Please find our contribution guidelines within [CONTRIBUTING.md](https://github.
 Thanks to all below for their contributions, inspiration, or otherwise:
 
 * [norunners](https://github.com/norunners) for his contribution towards Mantis' Go 1.18 build update
-* https://github.com/dec0dOS/amazing-github-template for the `.github ISSUE_TEMPLATE`
-* https://github.com/junosuarez/CONTRIBUTING.md for the `CONTRIBUTING.md` template
+* <https://github.com/dec0dOS/amazing-github-template> for the `.github ISSUE_TEMPLATE`
+* <https://github.com/junosuarez/CONTRIBUTING.md> for the `CONTRIBUTING.md` template
