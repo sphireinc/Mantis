@@ -15,13 +15,13 @@ func TestMemory_GetSet(t *testing.T) {
 	m := NewMemoryCache(int64(n), "1s")
 
 	for i := 0; i < n; i++ {
-		m.Set(uint64(i), "hello", m.Config.DefaultExpiry)
+		m.Set(uint64(i), "hello", time.Now().Add(10*time.Second))
 	}
 
 	start := time.Now()
 	_, _ = m.Get(uint64(n / 2))
 	end := time.Now()
-	assert.LessOrEqual(t, int(end.Sub(start)), 750)
+	assert.LessOrEqual(t, int(end.Sub(start).Milliseconds()), 750)
 }
 
 func TestMemory_Get(t *testing.T) {

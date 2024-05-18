@@ -25,8 +25,8 @@ type item struct {
 
 // memoryConfig holds our expiry configuration
 type memoryConfig struct {
-	Expiry        string
-	DefaultExpiry time.Time
+	Expiry        time.Duration
+	DefaultExpiry time.Duration
 }
 
 // Memory holds our cache
@@ -39,30 +39,30 @@ type Memory struct {
 
 // NewMemoryCache creates and returns a new in memory cache
 func NewMemoryCache(capacity int64, expiry string) *Memory {
+	expiryDuration, err := time.ParseDuration(expiry)
+	if err != nil {
+		expiryDuration = time.Second
+	}
 	m := &Memory{
 		capacity: capacity,
 		store:    make(map[uint64]item),
 		Config: memoryConfig{
-			Expiry:        expiry,
-			DefaultExpiry: time.Now().Add(time.Duration(100)),
+			Expiry:        expiryDuration,
+			DefaultExpiry: 100 * time.Millisecond,
 		},
-	}
-
-	if m.Config.Expiry == "" {
-		m.Config.Expiry = m.Config.DefaultExpiry.String()
 	}
 	return m
 }
 
 // Get the value associated with a key in our cache
 func (m *Memory) Get(key uint64) (any, bool) {
-	m.mutex.Lock()
-	_, ok := m.store[key]
-	m.mutex.Unlock()
+	m.mutex.RLock()
+	item, ok := m.store[key]
+	m.mutex.RUnlock()
 
 	if ok {
-		m.checkExpireAndUpdate(key, m.store[key])
-		return m.store[key].value, true
+		m.checkExpireAndUpdate(key, item)
+		return item.value, true
 	}
 
 	return nil, false
@@ -72,25 +72,23 @@ func (m *Memory) Get(key uint64) (any, bool) {
 // returns false if released, true if updated
 func (m *Memory) checkExpireAndUpdate(key uint64, toStore item) int {
 	m.mutex.Lock()
+	defer m.mutex.Unlock()
+
 	_, ok := m.store[key]
 	status := NOOP
-	m.mutex.Unlock()
 
 	if !ok {
 		m.store[key] = toStore
 		status = CREATED
 	} else {
 		// check for existence of the key, overwrite new value and return
-		expirationDiff := m.store[key].lastAccessed.Sub(m.store[key].expiration)
-		expiry, _ := time.ParseDuration(m.Config.Expiry)
-		if expirationDiff > expiry {
+		expirationDiff := time.Since(m.store[key].lastAccessed)
+		if expirationDiff > m.Config.Expiry {
 			m.Release(key)
 			status = RELEASED
 		} else {
-			m.mutex.Lock()
 			toStore.lastAccessed = time.Now()
 			m.store[key] = toStore
-			m.mutex.Unlock()
 			status = UPDATED
 		}
 	}
@@ -110,14 +108,9 @@ func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 
 // Release an item from our memory cache
 func (m *Memory) Release(key uint64) {
-	m.mutex.RLock()
-	_, ok := m.store[key]
-	m.mutex.RUnlock()
-	if ok {
-		m.mutex.Lock()
-		delete(m.store, key)
-		m.mutex.Unlock()
-	}
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
+	delete(m.store, key)
 }
 
 // triggerEvict checks if we need to evict data, and commences eviction if so
@@ -130,11 +123,12 @@ func (m *Memory) triggerEvict() {
 
 // evict records from memory on an LRU basis
 func (m *Memory) evict() {
-	now := time.Now()
-	accessCutoff, _ := time.ParseDuration(m.Config.Expiry)
+	m.mutex.Lock()
+	defer m.mutex.Unlock()
 
+	now := time.Now()
 	for k, v := range m.store {
-		if now.Sub(v.lastAccessed) > accessCutoff {
+		if now.Sub(v.lastAccessed) > m.Config.Expiry {
 			delete(m.store, k)
 		}
 	}
