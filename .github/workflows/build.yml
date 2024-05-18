@@ -112,7 +112,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [ '1.18.0-beta1' ]
+        go: [ '1.22.3' ]
     steps:
     - name: Checkout Code ${{ matrix.go }}
       uses: actions/checkout@v2
@@ -140,13 +140,13 @@ jobs:
         set -euo pipefail
         go test -json -v ./... 2>&1 | tee /tmp/gotest.log | gotestfmt
         
-    - name: Upload test log
-      uses: actions/upload-artifact@v2
-      if: always()
-      with:
-        name: test-log
-        path: /tmp/gotest.log
-        if-no-files-found: error
+    # - name: Upload test log
+    #   uses: actions/upload-artifact@v2
+    #   if: always()
+    #   with:
+    #     name: test-log
+    #     path: /tmp/gotest.log
+    #     if-no-files-found: error
 
     - name: Archive markdown artifacts
       uses: actions/upload-artifact@v3
