@@ -1,9 +1,35 @@
 package byte
 
 import (
+	"bytes"
 	"fmt"
 	"testing"
 )
+
+func TestBytesFormat(t *testing.T) {
+	tests := []struct {
+		value    Bytes
+		format   string
+		expected string
+	}{
+		{value: 512, format: "%d", expected: "512 B"},
+		{value: 512, format: "%s", expected: "512 B"},
+		{value: 2048, format: "%s", expected: "2 KiB"},
+		{value: 1000, format: "%+s", expected: "1 KB"},
+		{value: -1024, format: "%s", expected: "-1 KiB"},
+		{value: 1536, format: "%.2s", expected: "1.50 KiB"},
+	}
+
+	for _, test := range tests {
+		t.Run(fmt.Sprintf("%v as %s", test.value, test.format), func(t *testing.T) {
+			var buf bytes.Buffer
+			_, _ = fmt.Fprintf(&buf, test.format, test.value)
+			if buf.String() != test.expected {
+				t.Errorf("expected %q, got %q", test.expected, buf.String())
+			}
+		})
+	}
+}
 
 func TestBytesStringer(t *testing.T) {
 	tests := []struct {
