@@ -35,3 +35,13 @@ func (s *Stack) Pop() (int, bool) {
 func (s *Stack) Size() int {
 	return s.size
 }
+
+// IsEmpty returns true if the stack is empty
+func (s *Stack) IsEmpty() bool {
+	return s.size == 0
+}
+
+// Clear the stack
+func (s *Stack) Clear() {
+	s.top = nil
+}
