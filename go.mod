@@ -1,6 +1,6 @@
 module github.com/sphireinc/mantis
 
-go 1.22.3
+go 1.22
 
 require (
 	github.com/aerospike/aerospike-client-go v4.5.2+incompatible
