@@ -53,6 +53,22 @@ func (l *LinkedList) Remove(val int) bool {
 	return false
 }
 
+// Reverse reverses the linked list in place
+func (l *LinkedList) Reverse() {
+	var prev *LinkedListNode = nil
+	curr := l.head
+	var next *LinkedListNode = nil
+
+	for curr != nil {
+		next = curr.next
+		curr.next = prev
+		prev = curr
+		curr = next
+	}
+
+	l.head = prev
+}
+
 // Size returns the size of our LL
 func (l *LinkedList) Size() int {
 	return l.size
