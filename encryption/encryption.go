@@ -120,6 +120,8 @@ func (h *MHash) Hash() {
 			hasher = sha512.New512_224()
 		case Sha512256:
 			hasher = sha512.New512_256()
+		default:
+			hasher = sha256.New()
 		}
 
 		hasher.Write([]byte(h.input))
