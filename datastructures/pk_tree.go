@@ -71,12 +71,13 @@ func (tree *PKTreeNode) FindByIDDFS(id string) *PKTreeNode {
 	}
 
 	if len(tree.children) <= 0 {
-		return tree
+		return nil
 	}
+
 	for _, child := range tree.children {
-		tree = child.FindByIDDFS(id)
+		return child.FindByIDDFS(id)
 	}
-	return tree
+	return nil
 }
 
 // Remove a given node from our tree

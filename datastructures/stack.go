@@ -44,4 +44,5 @@ func (s *Stack) IsEmpty() bool {
 // Clear the stack
 func (s *Stack) Clear() {
 	s.top = nil
+	s.size = 0
 }
