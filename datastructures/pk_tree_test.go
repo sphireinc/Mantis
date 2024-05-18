@@ -1,4 +1,4 @@
-package data
+package datastructures
 
 import (
 	"testing"
@@ -6,8 +6,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createNewTree() *TreeNode {
-	tree := NewTree("1", "first", "hello world")
+func createNewPKTree() *PKTreeNode {
+	tree := NewPKTree("1", "first", "hello world")
 	_, _ = tree.Insert("2", "two", "hello world two", "1")
 	_, _ = tree.Insert("3", "three", "hello world three", "2")
 	_, _ = tree.Insert("4", "four", "hello world four", "2")
@@ -17,13 +17,13 @@ func createNewTree() *TreeNode {
 	return tree
 }
 
-func TestTree_NewTree(t *testing.T) {
-	tree := NewTree("1", "first", "hello world")
+func TestPKTree_NewPKTree(t *testing.T) {
+	tree := NewPKTree("1", "first", "hello world")
 	assert.NotNil(t, tree)
 }
 
-func TestTree_Insert(t *testing.T) {
-	tree := createNewTree()
+func TestPKTree_Insert(t *testing.T) {
+	tree := createNewPKTree()
 
 	_, err := tree.Insert("2", "two", "hello world two", "1")
 	assert.Equal(t, "duplicate child id", err.Error())
@@ -38,20 +38,20 @@ func TestTree_Insert(t *testing.T) {
 	assert.Equal(t, 3, len(tree.FindByID("1").children))
 }
 
-func TestTree_FindById(t *testing.T) {
-	tree := createNewTree()
+func TestPKTree_FindById(t *testing.T) {
+	tree := createNewPKTree()
 	assert.Equal(t, 2, len(tree.FindByID("5").children))
 }
 
-func TestTree_FindByIdDFS(t *testing.T) {
-	tree := createNewTree()
+func TestPKTree_FindByIdDFS(t *testing.T) {
+	tree := createNewPKTree()
 	five := tree.FindByIDDFS("5")
 	assert.Equal(t, 2, len(five.children))
 	assert.Equal(t, "five", five.name)
 }
 
-func TestTree_Remove(t *testing.T) {
-	tree := createNewTree()
+func TestPKTree_Remove(t *testing.T) {
+	tree := createNewPKTree()
 	five := tree.FindByID("5")
 	assert.NotNil(t, five)
 	tree.Remove(five)

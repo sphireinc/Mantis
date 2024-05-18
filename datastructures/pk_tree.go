@@ -1,4 +1,4 @@
-package data
+package datastructures
 
 import (
 	"errors"
@@ -6,18 +6,18 @@ import (
 
 // source & credit: https://ieftimov.com/post/golang-datastructures-trees/
 
-// TreeNode is a node within our tree
-type TreeNode struct {
+// PKTreeNode is a node within our tree
+type PKTreeNode struct {
 	id       string
 	name     string
 	value    any
-	parent   *TreeNode
-	children []*TreeNode
+	parent   *PKTreeNode
+	children []*PKTreeNode
 }
 
-// NewTree creates a new tree
-func NewTree(id string, name string, value any) *TreeNode {
-	return &TreeNode{
+// NewPKTree creates a new tree
+func NewPKTree(id string, name string, value any) *PKTreeNode {
+	return &PKTreeNode{
 		id:    id,
 		name:  name,
 		value: value,
@@ -25,7 +25,7 @@ func NewTree(id string, name string, value any) *TreeNode {
 }
 
 // Insert a new node into our tree under a given parent
-func (tree *TreeNode) Insert(id string, name string, value any, parentID string) (bool, error) {
+func (tree *PKTreeNode) Insert(id string, name string, value any, parentID string) (bool, error) {
 	parent := tree.FindByID(parentID)
 	if parent == nil {
 		return false, errors.New("parent is nil")
@@ -37,7 +37,7 @@ func (tree *TreeNode) Insert(id string, name string, value any, parentID string)
 		}
 	}
 
-	child := &TreeNode{
+	child := &PKTreeNode{
 		id:     id,
 		name:   name,
 		value:  value,
@@ -49,8 +49,8 @@ func (tree *TreeNode) Insert(id string, name string, value any, parentID string)
 }
 
 // FindByID finds a given node by its ID (BFS)
-func (tree *TreeNode) FindByID(id string) *TreeNode {
-	queue := append(make([]*TreeNode, 0), tree)
+func (tree *PKTreeNode) FindByID(id string) *PKTreeNode {
+	queue := append(make([]*PKTreeNode, 0), tree)
 	for len(queue) > 0 {
 		next := queue[0]
 		queue = queue[1:]
@@ -65,7 +65,7 @@ func (tree *TreeNode) FindByID(id string) *TreeNode {
 }
 
 // FindByIDDFS finds a given node by its ID (DFS)
-func (tree *TreeNode) FindByIDDFS(id string) *TreeNode {
+func (tree *PKTreeNode) FindByIDDFS(id string) *PKTreeNode {
 	if tree.id == id {
 		return tree
 	}
@@ -80,7 +80,7 @@ func (tree *TreeNode) FindByIDDFS(id string) *TreeNode {
 }
 
 // Remove a given node from our tree
-func (tree *TreeNode) Remove(node *TreeNode) {
+func (tree *PKTreeNode) Remove(node *PKTreeNode) {
 	for idx, sibling := range node.parent.children {
 		if sibling == node {
 			node.parent.children = append(
