@@ -57,12 +57,12 @@ func NewMemoryCache(capacity int64, expiry string) *Memory {
 // Get the value associated with a key in our cache
 func (m *Memory) Get(key uint64) (any, bool) {
 	m.mutex.RLock()
-	item, ok := m.store[key]
+	_item, ok := m.store[key]
 	m.mutex.RUnlock()
 
 	if ok {
-		m.checkExpireAndUpdate(key, item)
-		return item.value, true
+		m.checkExpireAndUpdate(key, _item)
+		return _item.value, true
 	}
 
 	return nil, false
