@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const loop int = 1000
+var loop int = 1000
 
 func TestMemory_GetSet(t *testing.T) {
 	n := loop * loop / loop
@@ -25,14 +25,20 @@ func TestMemory_GetSet(t *testing.T) {
 }
 
 func TestMemory_Get(t *testing.T) {
-	m := NewMemoryCache(int64(loop), "40µs")
+	m := NewMemoryCache(int64(loop), "5ms")
 	for i := 0; i < loop; i++ {
-		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now())
+		// Sleep for a short period to ensure some items expire
+		m.Set(uint64(i), fmt.Sprintf("Iteration %d", i), time.Now().Add(50*time.Millisecond))
 	}
+
+	time.Sleep(60 * time.Millisecond)
 
 	for i := 0; i < loop+1; i++ {
 		result, _ := m.Get(uint64(i))
 		if i == loop {
+			assert.Nil(t, result)
+		} else if result == nil {
+			// Check if expired
 			assert.Nil(t, result)
 		} else {
 			assert.Equal(t, fmt.Sprintf("Iteration %d", i), result)

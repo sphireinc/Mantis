@@ -74,16 +74,15 @@ func (m *Memory) checkExpireAndUpdate(key uint64, toStore item) int {
 	m.mutex.Lock()
 	defer m.mutex.Unlock()
 
-	_, ok := m.store[key]
+	existingItem, ok := m.store[key]
 	status := NOOP
 
 	if !ok {
 		m.store[key] = toStore
 		status = CREATED
 	} else {
-		// check for existence of the key, overwrite new value and return
-		expirationDiff := time.Since(m.store[key].lastAccessed)
-		if expirationDiff > m.Config.Expiry {
+		// Correctly check against the expiration time
+		if time.Now().After(existingItem.expiration) {
 			m.Release(key)
 			status = RELEASED
 		} else {
@@ -108,9 +107,8 @@ func (m *Memory) Set(key uint64, value any, expiration time.Time) {
 
 // Release an item from our memory cache
 func (m *Memory) Release(key uint64) {
-	m.mutex.Lock()
-	defer m.mutex.Unlock()
 	delete(m.store, key)
+	return
 }
 
 // triggerEvict checks if we need to evict data, and commences eviction if so
