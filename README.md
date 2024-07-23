@@ -38,9 +38,9 @@ written in such a manner that they accept, act on, and return data.
 Mantis, much like its namesake ([Jet's Go-Mantis](https://github.com/jet/go-mantis) library), is the
 "standard library" for Sphire's Golang codebase, used heavily in projects like Sphire Core and Sphire Codex. 
 
-# Warning
+# API Docs
 
-Mantis is NOT production ready code - use at your own risk.
+[Mantis API docs are hosted on github.io](https://sphireinc.github.io/Mantis/)
 
 # Usage
 
