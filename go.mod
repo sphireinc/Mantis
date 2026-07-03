@@ -1,7 +1,6 @@
 module github.com/sphireinc/mantis
 
-go 1.22
-toolchain go1.24.1
+go 1.25.0
 
 require (
 	github.com/aerospike/aerospike-client-go v4.5.2+incompatible
@@ -47,7 +46,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.6.1 // indirect
 	github.com/yuin/gopher-lua v0.0.0-20220504180219-658193537a64 // indirect
-	golang.org/x/net v0.38.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/sync v0.0.0-20220513210516-0976fa681c29 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/jmcvetta/napping.v3 v3.2.0 // indirect
