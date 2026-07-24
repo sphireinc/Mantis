@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.43.0
 	github.com/aws/aws-sdk-go-v2/config v1.32.31
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.61.0
-	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.13.0
+	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.44.0
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/go-sql-driver/mysql v1.10.0
