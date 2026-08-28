@@ -1,7 +1,6 @@
 package errors
 
 import (
-	"fmt"
 	"testing"
 	"time"
 )
@@ -17,7 +16,7 @@ func TestNew(t *testing.T) {
 		t.Fatalf("Message  fail, test 1")
 	}
 	if err.Time().After(end) || err.Time().Before(start) {
-		t.Fatalf(fmt.Sprintf("Time was %v, after %v and before %v", err.Time(), start, end))
+		t.Fatalf("Time was %v, after %v and before %v", err.Time(), start, end)
 	}
 
 	start = time.Now()
@@ -30,6 +29,6 @@ func TestNew(t *testing.T) {
 		t.Fatalf("Message  fail, test 1")
 	}
 	if err.Time().After(end) || err.Time().Before(start) {
-		t.Fatalf(fmt.Sprintf("Time was %v, after %v and before %v", err.Time(), start, end))
+		t.Fatalf("Time was %v, after %v and before %v", err.Time(), start, end)
 	}
 }

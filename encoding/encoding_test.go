@@ -59,7 +59,7 @@ func TestBase64Decode(t *testing.T) {
 		t.Run(fmt.Sprintf("%d", i), func(t *testing.T) {
 			decodedStr, err := Base64Decode(test.encodedStr)
 			if err != nil {
-				t.Fatalf(err.Error())
+				t.Fatal(err)
 			}
 			if test.rawStr != string(decodedStr) {
 				t.Fatalf("expected '%s', got '%s'", test.rawStr, string(decodedStr))

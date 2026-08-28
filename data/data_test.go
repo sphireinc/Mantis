@@ -17,13 +17,13 @@ func TestExists(t *testing.T) {
 	// Directory
 	dir, err := ioutil.TempDir("", "tmp")
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	check, err := Exists(dir, Directory)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	if check == false {
@@ -33,19 +33,19 @@ func TestExists(t *testing.T) {
 	// File
 	file, err := ioutil.TempFile("", "tmpfile")
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	helper.DeferFileClose(file)
 
 	_, err = Exists(file.Name(), File)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	// Path
 	_, err = Exists(dir, Path)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 }
 
@@ -143,15 +143,15 @@ func TestUnmarshalFile(t *testing.T) {
 	// Create our temp files
 	yamlFile, err := ioutil.TempFile("", "tmpfile.*.yaml")
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	jsonFile, err := ioutil.TempFile("", "tmpfile.*.json")
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	bsonFile, err := ioutil.TempFile("", "tmpfile.*.bson")
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	// Defer close files
@@ -162,15 +162,15 @@ func TestUnmarshalFile(t *testing.T) {
 	// Write our data to our files
 	_, err = yamlFile.Write(yamlData)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	_, err = jsonFile.Write(jsonData)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 	_, err = bsonFile.Write(yamlData)
 	if err != nil {
-		t.Fatalf(err.Error())
+		t.Fatal(err)
 	}
 
 	_, err = UnmarshalFile(yamlFile.Name())

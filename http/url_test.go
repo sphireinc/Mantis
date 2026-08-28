@@ -28,7 +28,7 @@ func TestParseBodyIntoStruct(t *testing.T) {
 	rSVal := ReaderStruct{}
 
 	if err := ParseBodyIntoStruct(val, &rSVal); err != nil {
-		t.Errorf("ParseBodyIntoStruct Failed while reading: " + err.Error())
+		t.Errorf("ParseBodyIntoStruct Failed while reading: %v", err)
 	}
 
 	if rSVal.A != "123" {
